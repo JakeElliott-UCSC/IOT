@@ -30,7 +30,7 @@ esp_err_t i2c_master_read_byte(i2c_port_t i2c_num, uint8_t addr, uint8_t* data) 
     i2c_master_write_byte(cmd, (addr << 1) | I2C_MASTER_READ, true);
     i2c_master_read_byte(cmd, data, I2C_MASTER_NACK);
     i2c_master_stop(cmd);
-    esp_err_t ret = i2c_master_cmd_begin(i2c_num, cmd, 1000 / portTICK_RATE_MS);
+    esp_err_t ret = i2c_master_cmd_begin(i2c_num, cmd, 1000 / portTICK_PERIOD_MS);
     i2c_cmd_link_delete(cmd);
     return ret;
 }
@@ -54,7 +54,7 @@ void app_main() {
     i2c_master_init();
 
     while (1) {
-        vTaskDelay(1000 / portTICK_RATE_MS);
+        vTaskDelay(1000 / portTICK_PERIOD_MS);
         shtc3_read_temperature();
     }
 }
