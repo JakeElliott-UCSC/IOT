@@ -79,7 +79,7 @@ static esp_err_t read_temperature(float *temperature)
         uint16_t humid_raw = (sensor_data[3] << 8) | sensor_data[4];
         *temperature = -45 + (175 * ((float)temp_raw / 65535));
         // this value is not returned by the function
-        float humidity = 50 * humid_raw;
+        float humidity = 100 * (humid_raw/65535);
         ESP_LOGI(TAG, "Read temperature: %.2f C", *temperature);
         ESP_LOGI(TAG, "Read Humidity: %.2f %%", humidity);
     } else {
@@ -95,9 +95,10 @@ void app_main(void)
     ESP_LOGI(TAG, "I2C Initialized Successfully");
 
     while (1) {
+        printf("Temperature and Humidity:\n");
         if (read_temperature(&temperature) == ESP_OK) {
             //printf("Temperature: %.2f°C\n", temperature);
-            printf("Temperature and Humidity:\n");
+            //printf("Temperature and Humidity:\n");
         } else {
             printf("Failed to read temperature!\n");
         }
