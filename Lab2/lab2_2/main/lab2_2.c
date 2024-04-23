@@ -63,7 +63,7 @@ static esp_err_t shtc3_read_temperature(float *temperature) {
     i2c_master_read_byte(cmd, &data_h, ACK_VAL);
     i2c_master_read_byte(cmd, &data_l, NACK_VAL);
     i2c_master_stop(cmd);
-    esp_err_t ret = i2c_master_cmd_begin(I2C_MASTER_NUM, cmd, 1000 / portTICK_RATE_MS);
+    esp_err_t ret = i2c_master_cmd_begin(I2C_MASTER_NUM, cmd, 1000 / portTICK_PERIOD_MS);
     i2c_cmd_link_delete(cmd);
     
     if (ret == ESP_OK) {
