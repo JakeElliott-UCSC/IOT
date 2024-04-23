@@ -182,7 +182,7 @@ static void flushSHTC3() {
     // End Transmission
     i2c_cmd_link_delete(cmd);
     if (ret != ESP_OK) {
-        ESP_LOGE(TAG, "Flush failed!");
+        ESP_LOGI(TAG, "Flush failed successfully!!");
     }
 
     // Wait for sensor to finish sleeping
