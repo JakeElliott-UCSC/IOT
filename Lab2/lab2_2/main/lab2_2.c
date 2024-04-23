@@ -207,6 +207,7 @@ void app_main(void)
     ESP_LOGI(TAG, "I2C Initialized Successfully");
 
     while (1) {
+        WakeupSHTC3();
         printf("Temperature and Humidity:\n");
         if (read_temperature(&temperature) == ESP_OK) {
             //printf("Temperature: %.2f°C\n", temperature);
