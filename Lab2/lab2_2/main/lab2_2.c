@@ -79,7 +79,7 @@ static esp_err_t read_temperature(float *temperature)
         uint16_t humid_raw = (sensor_data[3] << 8) | sensor_data[4];
         *temperature = -45 + (175 * ((float)temp_raw / 65535));
         // this value is not returned by the function
-        float humidity = (100 * ((float)humid_raw/65535));
+        //float humidity = (100 * ((float)humid_raw/65535));
         ESP_LOGI(TAG, "Read temperature: %.2f C", *temperature);
         //ESP_LOGI(TAG, "Read Humidity: %.2f %%", humidity);
     } else {
@@ -89,7 +89,7 @@ static esp_err_t read_temperature(float *temperature)
 }
 
 /**
- * @brief Read temperature value from SHTC3 sensor
+ * @brief Read humidity value from SHTC3 sensor
  */
 static esp_err_t read_humidity(float *humidity)
 {
@@ -132,7 +132,7 @@ static esp_err_t read_humidity(float *humidity)
         // this value is not returned by the function
         *humidity = (100 * ((float)humid_raw/65535));
         //ESP_LOGI(TAG, "Read temperature: %.2f C", *temperature);
-        ESP_LOGI(TAG, "Read Humidity: %.2f %%", humidity);
+        ESP_LOGI(TAG, "Read Humidity: %.2f %%", *humidity);
     } else {
         ESP_LOGE(TAG, "Failed to read humidity!");
     }
