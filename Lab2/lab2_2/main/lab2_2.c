@@ -6,8 +6,8 @@
 #include "sdkconfig.h"
 
 // Constants
-#define I2C_MASTER_SCL_IO           9        // SCL pin
-#define I2C_MASTER_SDA_IO           8        // SDA pin
+#define I2C_MASTER_SCL_IO           8        // SCL pin
+#define I2C_MASTER_SDA_IO           10        // SDA pin
 #define I2C_MASTER_FREQ_HZ          100000   // I2C master clock frequency
 #define I2C_MASTER_NUM              I2C_NUM_0 // I2C port number
 #define SHTC3_SENSOR_ADDR           0x70     // SHTC3 I2C address
