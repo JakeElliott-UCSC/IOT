@@ -76,7 +76,7 @@ static esp_err_t read_temperature(float *temperature)
     if (ret == ESP_OK) {
         // Convert the data
         uint16_t temp_raw = (sensor_data[0] << 8) | sensor_data[1];
-        uint16_t humid_raw = (sensor_data[3] << 8) | sensor_data[4];
+        //uint16_t humid_raw = (sensor_data[3] << 8) | sensor_data[4];
         *temperature = -45 + (175 * ((float)temp_raw / 65535));
         // this value is not returned by the function
         //float humidity = (100 * ((float)humid_raw/65535));
@@ -96,34 +96,44 @@ static esp_err_t read_humidity(float *humidity)
     uint8_t sensor_data[3];
     esp_err_t ret;
 
+    // Wake up the sensor
     i2c_cmd_handle_t cmd = i2c_cmd_link_create();
     i2c_master_start(cmd);
     i2c_master_write_byte(cmd, (SHTC3_SENSOR_ADDR << 1) | I2C_MASTER_WRITE, ACK_CHECK_EN);
     i2c_master_write_byte(cmd, 0x35, ACK_CHECK_EN); // Wakeup command
     i2c_master_write_byte(cmd, 0x17, ACK_CHECK_EN);
     i2c_master_stop(cmd);
+    // Send and recieve with sensor
     ret = i2c_master_cmd_begin(I2C_MASTER_NUM, cmd, 1000 / portTICK_PERIOD_MS);
+    // End Transmission
     i2c_cmd_link_delete(cmd);
     if (ret != ESP_OK) {
         ESP_LOGE(TAG, "Sensor wake-up command failed!");
         return ret;
     }
 
+    // Wait for sensor to wake up
     vTaskDelay(pdMS_TO_TICKS(10)); // Delay for sensor wakeup
 
+
+    // Send read command
     cmd = i2c_cmd_link_create();
     i2c_master_start(cmd);
     i2c_master_write_byte(cmd, (SHTC3_SENSOR_ADDR << 1) | I2C_MASTER_WRITE, ACK_CHECK_EN);
     i2c_master_write_byte(cmd, 0x5C, ACK_CHECK_EN); // Humidity read command
     i2c_master_write_byte(cmd, 0x24, ACK_CHECK_EN);
-
+    // Read data from sensor
     i2c_master_start(cmd);
     i2c_master_write_byte(cmd, (SHTC3_SENSOR_ADDR << 1) | I2C_MASTER_READ, ACK_CHECK_EN);
     i2c_master_read(cmd, sensor_data, 6, I2C_MASTER_LAST_NACK); // Read 6 bytes data
     i2c_master_stop(cmd);
+
+    // send and read from sensor
     ret = i2c_master_cmd_begin(I2C_MASTER_NUM, cmd, 1000 / portTICK_PERIOD_MS);
+    // end transmission
     i2c_cmd_link_delete(cmd);
 
+    // Process data if OK
     if (ret == ESP_OK) {
         // Convert the data
         //uint16_t temp_raw = (sensor_data[0] << 8) | sensor_data[1];
@@ -136,7 +146,51 @@ static esp_err_t read_humidity(float *humidity)
     } else {
         ESP_LOGE(TAG, "Failed to read humidity!");
     }
+
     return ret;
+}
+
+static void WakeupSHTC3(){
+    // Wake up the sensor
+    i2c_cmd_handle_t cmd = i2c_cmd_link_create();
+    i2c_master_start(cmd);
+    i2c_master_write_byte(cmd, (SHTC3_SENSOR_ADDR << 1) | I2C_MASTER_WRITE, ACK_CHECK_EN);
+    i2c_master_write_byte(cmd, 0x35, ACK_CHECK_EN); // Wakeup command
+    i2c_master_write_byte(cmd, 0x17, ACK_CHECK_EN);
+    i2c_master_stop(cmd);
+    // Send and recieve with sensor
+    ret = i2c_master_cmd_begin(I2C_MASTER_NUM, cmd, 1000 / portTICK_PERIOD_MS);
+    // End Transmission
+    i2c_cmd_link_delete(cmd);
+    if (ret != ESP_OK) {
+        ESP_LOGE(TAG, "Sensor wake-up command failed!");
+    }
+
+    // Wait for sensor to wake up
+    vTaskDelay(pdMS_TO_TICKS(10)); // Delay for sensor wakeup
+
+    return;
+}
+
+static void SutdownSHTC3() {
+    // Wake up the sensor
+    i2c_cmd_handle_t cmd = i2c_cmd_link_create();
+    i2c_master_start(cmd);
+    i2c_master_write_byte(cmd, (SHTC3_SENSOR_ADDR << 1) | I2C_MASTER_WRITE, ACK_CHECK_EN);
+    i2c_master_write_byte(cmd, 0xB0, ACK_CHECK_EN); // Sleep command
+    i2c_master_write_byte(cmd, 0x98, ACK_CHECK_EN);
+    i2c_master_stop(cmd);
+    // Send and recieve with sensor
+    ret = i2c_master_cmd_begin(I2C_MASTER_NUM, cmd, 1000 / portTICK_PERIOD_MS);
+    // End Transmission
+    i2c_cmd_link_delete(cmd);
+    if (ret != ESP_OK) {
+        ESP_LOGE(TAG, "Sensor sleep command failed!");
+    }
+
+    // Wait for sensor to finish sleeping
+    vTaskDelay(pdMS_TO_TICKS(10)); // Delay for sensor sleep
+    return;
 }
 
 void app_main(void)
