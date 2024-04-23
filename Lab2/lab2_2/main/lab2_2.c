@@ -6,8 +6,8 @@
 #include "sdkconfig.h"
 
 // Constants
-#define I2C_MASTER_SCL_IO           8        // SCL pin
-#define I2C_MASTER_SDA_IO           10        // SDA pin
+#define I2C_MASTER_SCL_IO           9        // SCL pin
+#define I2C_MASTER_SDA_IO           8        // SDA pin
 #define I2C_MASTER_FREQ_HZ          100000   // I2C master clock frequency
 #define I2C_MASTER_NUM              I2C_NUM_0 // I2C port number
 #define SHTC3_SENSOR_ADDR           0x70     // SHTC3 I2C address
@@ -63,4 +63,11 @@ static esp_err_t shtc3_read_temperature(float *temperature) {
     i2c_master_read_byte(cmd, &data_h, ACK_VAL);
     i2c_master_read_byte(cmd, &data_l, NACK_VAL);
     i2c_master_stop(cmd);
-    esp_err_t ret
+    esp_err_t ret = i2c_master_cmd_begin(I2C_MASTER_NUM, cmd, 1000 / portTICK_RATE_MS);
+    i2c_cmd_link_delete(cmd);
+    
+    if (ret == ESP_OK) {
+        *temperature = ((data_h << 8) | data_l) * 175.0 / 65535.0 - 45;
+    }
+    return ret;
+}
