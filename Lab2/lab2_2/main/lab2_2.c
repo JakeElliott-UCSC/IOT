@@ -151,6 +151,9 @@ static esp_err_t read_humidity(float *humidity)
 }
 
 static void WakeupSHTC3(){
+
+    esp_err_t ret;
+
     // Wake up the sensor
     i2c_cmd_handle_t cmd = i2c_cmd_link_create();
     i2c_master_start(cmd);
@@ -172,7 +175,10 @@ static void WakeupSHTC3(){
     return;
 }
 
-static void SutdownSHTC3() {
+static void ShutdownSHTC3() {
+
+    esp_err_t ret;
+
     // Wake up the sensor
     i2c_cmd_handle_t cmd = i2c_cmd_link_create();
     i2c_master_start(cmd);
@@ -215,6 +221,8 @@ void app_main(void)
         } else {
             printf("Failed to read humidity!\n");
         }
-        vTaskDelay(pdMS_TO_TICKS(2000)); // Poll every 2 seconds
+        vTaskDelay(pdMS_TO_TICKS(3000)); // Poll every 2 seconds
+
+        ShutdownSHTC3();
     }
 }
