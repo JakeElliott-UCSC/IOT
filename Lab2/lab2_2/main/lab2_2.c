@@ -65,7 +65,7 @@ static esp_err_t read_temperature(float *temperature)
     i2c_master_write_byte(cmd, (SHTC3_SENSOR_ADDR << 1) | I2C_MASTER_WRITE, ACK_CHECK_EN);
     i2c_master_write_byte(cmd, 0x7C, ACK_CHECK_EN); // Temperature read command
     i2c_master_write_byte(cmd, 0xA2, ACK_CHECK_EN);
-    
+
     i2c_master_start(cmd);
     i2c_master_write_byte(cmd, (SHTC3_SENSOR_ADDR << 1) | I2C_MASTER_READ, ACK_CHECK_EN);
     i2c_master_read(cmd, sensor_data, 6, I2C_MASTER_LAST_NACK); // Read 6 bytes data
@@ -76,8 +76,12 @@ static esp_err_t read_temperature(float *temperature)
     if (ret == ESP_OK) {
         // Convert the data
         uint16_t temp_raw = (sensor_data[0] << 8) | sensor_data[1];
+        uint16_t humid_raw = (sensor_data[3] << 8) | sensor_data[4];
         *temperature = -45 + (175 * ((float)temp_raw / 65535));
+        // this value is not returned by the function
+        humidity = 50 * huid_raw;
         ESP_LOGI(TAG, "Read temperature: %.2f C", *temperature);
+        ESP_LOGI(TAG, "Read Humidity: %.2f %%", humidity);
     } else {
         ESP_LOGE(TAG, "Failed to read temperature!");
     }
@@ -92,7 +96,8 @@ void app_main(void)
 
     while (1) {
         if (read_temperature(&temperature) == ESP_OK) {
-            printf("Temperature: %.2f°C\n", temperature);
+            //printf("Temperature: %.2f°C\n", temperature);
+            printf("Temperature and Humidity:\n");
         } else {
             printf("Failed to read temperature!\n");
         }
