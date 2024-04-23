@@ -166,6 +166,30 @@ static void ShutdownSHTC3() {
     return;
 }
 
+static void flushSHTC3() {
+    uint8_t sensor_data[3];
+    esp_err_t ret;
+    i2c_cmd_handle_t cmd = i2c_cmd_link_create();
+
+
+    i2c_master_start(cmd);
+    i2c_master_read(cmd, sensor_data, 6, I2C_MASTER_LAST_NACK); // Read 6 bytes data
+    i2c_master_stop(cmd);
+
+
+    // Send and recieve with sensor
+    ret = i2c_master_cmd_begin(I2C_MASTER_NUM, cmd, 1000 / portTICK_PERIOD_MS);
+    // End Transmission
+    i2c_cmd_link_delete(cmd);
+    if (ret != ESP_OK) {
+        ESP_LOGE(TAG, "Flush failed!");
+    }
+
+    // Wait for sensor to finish sleeping
+    vTaskDelay(pdMS_TO_TICKS(10)); // Delay for sensor sleep
+    return;
+}
+
 void app_main(void)
 {
     float temperature = 0.0;
@@ -173,10 +197,11 @@ void app_main(void)
     ESP_ERROR_CHECK(i2c_master_init());
     ESP_LOGI(TAG, "I2C Initialized Successfully");
     ShutdownSHTC3();
-    vTaskDelay(pdMS_TO_TICKS(3000)); // Poll every 2 seconds
-
-
-
+    vTaskDelay(pdMS_TO_TICKS(1000));
+    WakeupSHTC3();
+    flushSHTC3();
+    ShutdownSHTC3();
+    vTaskDelay(pdMS_TO_TICKS(1000));
 
     while (1) {
         WakeupSHTC3();
