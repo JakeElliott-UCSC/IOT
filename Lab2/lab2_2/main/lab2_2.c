@@ -48,7 +48,8 @@ static esp_err_t read_temperature(float *temperature)
     i2c_cmd_handle_t cmd = i2c_cmd_link_create();
     i2c_master_start(cmd);
     i2c_master_write_byte(cmd, (SHTC3_SENSOR_ADDR << 1) | I2C_MASTER_WRITE, ACK_CHECK_EN);
-    i2c_master_write_byte(cmd, 0x7C, ACK_CHECK_EN); // Wakeup command
+    i2c_master_write_byte(cmd, 0x35, ACK_CHECK_EN); // Wakeup command
+    i2c_master_write_byte(cmd, 0x17, ACK_CHECK_EN);
     i2c_master_stop(cmd);
     ret = i2c_master_cmd_begin(I2C_MASTER_NUM, cmd, 1000 / portTICK_PERIOD_MS);
     i2c_cmd_link_delete(cmd);
@@ -62,7 +63,9 @@ static esp_err_t read_temperature(float *temperature)
     cmd = i2c_cmd_link_create();
     i2c_master_start(cmd);
     i2c_master_write_byte(cmd, (SHTC3_SENSOR_ADDR << 1) | I2C_MASTER_WRITE, ACK_CHECK_EN);
-    i2c_master_write_byte(cmd, 0xE7, ACK_CHECK_EN); // Temperature read command
+    i2c_master_write_byte(cmd, 0x7C, ACK_CHECK_EN); // Temperature read command
+    i2c_master_write_byte(cmd, 0xA2, ACK_CHECK_EN);
+    
     i2c_master_start(cmd);
     i2c_master_write_byte(cmd, (SHTC3_SENSOR_ADDR << 1) | I2C_MASTER_READ, ACK_CHECK_EN);
     i2c_master_read(cmd, sensor_data, 6, I2C_MASTER_LAST_NACK); // Read 6 bytes data
@@ -85,6 +88,7 @@ void app_main(void)
 {
     float temperature = 0.0;
     ESP_ERROR_CHECK(i2c_master_init());
+    ESP_LOGI(TAG, "I2C Initialized Successfully");
 
     while (1) {
         if (read_temperature(&temperature) == ESP_OK) {
