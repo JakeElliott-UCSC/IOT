@@ -173,6 +173,10 @@ void app_main(void)
     ESP_ERROR_CHECK(i2c_master_init());
     ESP_LOGI(TAG, "I2C Initialized Successfully");
     ShutdownSHTC3();
+    vTaskDelay(pdMS_TO_TICKS(3000)); // Poll every 2 seconds
+
+
+
 
     while (1) {
         WakeupSHTC3();
