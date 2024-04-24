@@ -153,7 +153,7 @@ static esp_err_t read_humidity(float *humidity)
 
     // check data for accuracy
     uint8_t data[2] = {sensor_data[0],sensor_data[1]};
-    uint8_t crc = 0;//sensor_data[2];
+    uint8_t crc = sensor_data[2];
     if (checksum(crc,data,2)) {
         ESP_LOGI(TAG, "Humidity Good Read");
     }
@@ -255,14 +255,8 @@ void app_main(void)
     ESP_ERROR_CHECK(i2c_master_init());
     ESP_LOGI(TAG, "I2C Initialized Successfully");
     // Trying to remove the initial error message
-    // shutdown, wait, wake up, flush initial message, shutdown, wait
-    ShutdownSHTC3();
-    vTaskDelay(pdMS_TO_TICKS(1000));
-    WakeupSHTC3();
+    // flush initial message
     flushSHTC3();
-    ShutdownSHTC3();
-    vTaskDelay(pdMS_TO_TICKS(1000));
-
     // wake up, read temp and humidity, wait 2 seconds, shutdown
     while (1) {
         WakeupSHTC3();
