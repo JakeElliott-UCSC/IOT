@@ -229,8 +229,7 @@ void app_main(void)
         } else {
             printf("Failed to read humidity!\n");
         }
-        vTaskDelay(pdMS_TO_TICKS(2000)); // Poll every 2 seconds
-
         ShutdownSHTC3();
+        vTaskDelay(pdMS_TO_TICKS(2000)); // Poll every 2 seconds
     }
 }
