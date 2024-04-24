@@ -37,6 +37,29 @@ static esp_err_t i2c_master_init(void)
     return i2c_driver_install(i2c_master_port, conf.mode, 0, 0, 0);
 }
 
+// checksum: CRC given by sensor (one byte data)
+// data: the two byte data from sensor (byte array)
+// len: length of data array
+uint8_t checksum(uint8_t checksum, uint8_t *data, size_t len)
+{
+    uint8_t crc = 0xff;
+    size_t i, j;
+    for (i = 0; i < len; i++) {
+        crc ^= data[i];
+        for (j = 0; j < 8; j++) {
+            if ((crc & 0x80) != 0)
+                crc = (uint8_t)((crc << 1) ^ 0x31);
+            else
+                crc <<= 1;
+        }
+    }
+    // return all good or no good signal
+    if (crc == checksum) {
+        return 1;
+    }
+    else return 0;
+}
+
 /**
  * @brief Read temperature value from SHTC3 sensor
  */
@@ -72,10 +95,10 @@ static esp_err_t read_temperature(float *temperature)
     uint8_t *data = [sensor_data[0],sensor_data[1]];
     uint8_t crc = sensor_data[2];
     if (checksum(crc,&data,2)) {
-        ESP_LOGE(TAG, "Temperature Good Read", *temperature, fahrenheit);
+        ESP_LOGE(TAG, "Temperature Good Read");
     }
     else {
-        ESP_LOGE(TAG, "Temperature Bad Read", *temperature, fahrenheit);
+        ESP_LOGE(TAG, "Temperature Bad Read");
     }
 
     // Convert to Celsius
@@ -208,28 +231,9 @@ static void flushSHTC3() {
     vTaskDelay(pdMS_TO_TICKS(10)); // Delay for sensor sleep
     return;
 }
-// checksum: CRC given by sensor (one byte data)
-// data: the two byte data from sensor (byte array)
-// len: length of data array
-uint8_t checksum(uint8_t checksum, uint8_t *data, size_t len)
-{
-    uint8_t crc = 0xff;
-    size_t i, j;
-    for (i = 0; i < len; i++) {
-        crc ^= data[i];
-        for (j = 0; j < 8; j++) {
-            if ((crc & 0x80) != 0)
-                crc = (uint8_t)((crc << 1) ^ 0x31);
-            else
-                crc <<= 1;
-        }
-    }
-    // return all good or no good signal
-    if (crc == checksum) {
-        return 1;
-    }
-    else return 0;
-}
+
+
+
 
 void app_main(void)
 {
