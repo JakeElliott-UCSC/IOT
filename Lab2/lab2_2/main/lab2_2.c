@@ -64,9 +64,10 @@ static esp_err_t read_temperature(float *temperature)
         uint16_t temp_raw = (sensor_data[0] << 8) | sensor_data[1];
         //uint16_t humid_raw = (sensor_data[3] << 8) | sensor_data[4];
         *temperature = -45 + (175 * ((float)temp_raw / 65535));
+        fahrenheit = *temperature * 1.8 + 32;
         // this value is not returned by the function
         //float humidity = (100 * ((float)humid_raw/65535));
-        ESP_LOGI(TAG, "Read temperature: %.2f C", *temperature);
+        ESP_LOGI(TAG, "Read temperature: %.2f C (%.2f F)", *temperature, fahrenheit);
         //ESP_LOGI(TAG, "Read Humidity: %.2f %%", humidity);
     } else {
         ESP_LOGE(TAG, "Failed to read temperature!");
@@ -135,6 +136,9 @@ static void WakeupSHTC3(){
     if (ret != ESP_OK) {
         ESP_LOGE(TAG, "Sensor wake-up command failed!");
     }
+    else {
+        ESP_LOGE(TAG, "Sensor Awake");
+    }
 
     // Wait for sensor to wake up
     vTaskDelay(pdMS_TO_TICKS(10)); // Delay for sensor wakeup
@@ -159,6 +163,9 @@ static void ShutdownSHTC3() {
     i2c_cmd_link_delete(cmd);
     if (ret != ESP_OK) {
         ESP_LOGE(TAG, "Sensor sleep command failed!");
+    }
+    else {
+        ESP_LOGE(TAG, "Sensor Asleep");
     }
 
     // Wait for sensor to finish sleeping
