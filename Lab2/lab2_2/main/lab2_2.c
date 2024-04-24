@@ -64,7 +64,7 @@ static esp_err_t read_temperature(float *temperature)
         uint16_t temp_raw = (sensor_data[0] << 8) | sensor_data[1];
         //uint16_t humid_raw = (sensor_data[3] << 8) | sensor_data[4];
         *temperature = -45 + (175 * ((float)temp_raw / 65535));
-        uint16_t fahrenheit = *temperature * 1.8 + 32;
+        float fahrenheit = *temperature * 1.8 + 32;
         // this value is not returned by the function
         //float humidity = (100 * ((float)humid_raw/65535));
         ESP_LOGI(TAG, "Read temperature: %.2f C (%.2f F)", *temperature, fahrenheit);
