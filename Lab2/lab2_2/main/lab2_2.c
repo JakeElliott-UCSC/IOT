@@ -91,11 +91,13 @@ static esp_err_t read_temperature(float *temperature)
     
     // Extract Data
     uint16_t temp_raw = (sensor_data[0] << 8) | sensor_data[1];
+
+
     // check data for accuracy
     uint8_t data[2] = {sensor_data[0],sensor_data[1]};
     uint8_t crc = sensor_data[2];
     if (checksum(crc,data,2)) {
-        ESP_LOGE(TAG, "Temperature Good Read");
+        ESP_LOGI(TAG, "Temperature Good Read");
     }
     else {
         ESP_LOGE(TAG, "Temperature Bad Read");
@@ -138,18 +140,28 @@ static esp_err_t read_humidity(float *humidity)
 
     // Process data if OK
     if (ret == ESP_OK) {
-        // Convert the data
-        //uint16_t temp_raw = (sensor_data[0] << 8) | sensor_data[1];
-        uint16_t humid_raw = (sensor_data[0] << 8) | sensor_data[1];
-        //*temperature = -45 + (175 * ((float)temp_raw / 65535));
-        // this value is not returned by the function
-        *humidity = (100 * ((float)humid_raw/65535));
-        //ESP_LOGI(TAG, "Read temperature: %.2f C", *temperature);
-        ESP_LOGI(TAG, "Read Humidity: %.2f %%", *humidity);
     } else {
         ESP_LOGE(TAG, "Failed to read humidity!");
     }
 
+    // Extract the data
+    uint16_t humid_raw = (sensor_data[0] << 8) | sensor_data[1];
+
+    // check data for accuracy
+    uint8_t data[2] = {sensor_data[0],sensor_data[1]};
+    uint8_t crc = sensor_data[2];
+    if (checksum(crc,data,2)) {
+        ESP_LOGI(TAG, "Humidity Good Read");
+    }
+    else {
+        ESP_LOGE(TAG, "Humidity Bad Read");
+    }
+
+
+
+    // Convert the data
+    *humidity = (100 * ((float)humid_raw/65535));
+    ESP_LOGI(TAG, "Read Humidity: %.2f %%", *humidity);
     return ret;
 }
 
