@@ -196,6 +196,8 @@ void app_main(void)
     float humidity = 0.0;
     ESP_ERROR_CHECK(i2c_master_init());
     ESP_LOGI(TAG, "I2C Initialized Successfully");
+    // Trying to remove the initial error message
+    // shutdown, wait, wake up, flush initial message, shutdown, wait
     ShutdownSHTC3();
     vTaskDelay(pdMS_TO_TICKS(1000));
     WakeupSHTC3();
@@ -203,6 +205,7 @@ void app_main(void)
     ShutdownSHTC3();
     vTaskDelay(pdMS_TO_TICKS(1000));
 
+    // wake up, read temp and humidity, wait 2 seconds, shutdown
     while (1) {
         WakeupSHTC3();
         printf("Temperature and Humidity:\n");
@@ -219,7 +222,7 @@ void app_main(void)
         } else {
             printf("Failed to read humidity!\n");
         }
-        vTaskDelay(pdMS_TO_TICKS(3000)); // Poll every 2 seconds
+        vTaskDelay(pdMS_TO_TICKS(2000)); // Poll every 2 seconds
 
         ShutdownSHTC3();
     }
