@@ -59,19 +59,31 @@ static esp_err_t read_temperature(float *temperature)
     ret = i2c_master_cmd_begin(I2C_MASTER_NUM, cmd, 1000 / portTICK_PERIOD_MS);
     i2c_cmd_link_delete(cmd);
 
+    // do not progress if data is not OK
     if (ret == ESP_OK) {
-        // Convert the data
-        uint16_t temp_raw = (sensor_data[0] << 8) | sensor_data[1];
-        //uint16_t humid_raw = (sensor_data[3] << 8) | sensor_data[4];
-        *temperature = -45 + (175 * ((float)temp_raw / 65535));
-        float fahrenheit = *temperature * 1.8 + 32;
-        // this value is not returned by the function
-        //float humidity = (100 * ((float)humid_raw/65535));
-        ESP_LOGI(TAG, "Read temperature: %.2f C (%.2f F)", *temperature, fahrenheit);
-        //ESP_LOGI(TAG, "Read Humidity: %.2f %%", humidity);
     } else {
         ESP_LOGE(TAG, "Failed to read temperature!");
+        return ret;
     }
+    
+    // Extract Data
+    uint16_t temp_raw = (sensor_data[0] << 8) | sensor_data[1];
+    // check data for accuracy
+    uint8_t *data = [sensor_data[0],sensor_data[1]];
+    uint8_t crc = sensor_data[2];
+    if (checksum(crc,&data,2)) {
+        ESP_LOGE(TAG, "Temperature Good Read", *temperature, fahrenheit);
+    }
+    else {
+        ESP_LOGE(TAG, "Temperature Bad Read", *temperature, fahrenheit);
+    }
+
+    // Convert to Celsius
+    *temperature = -45 + (175 * ((float)temp_raw / 65535));
+    // Convert to Farenheit
+    float fahrenheit = *temperature * 1.8 + 32;
+    // Return temperature
+    ESP_LOGI(TAG, "Read temperature: %.2f C (%.2f F)", *temperature, fahrenheit);
     return ret;
 }
 
@@ -195,6 +207,28 @@ static void flushSHTC3() {
     // Wait for sensor to finish sleeping
     vTaskDelay(pdMS_TO_TICKS(10)); // Delay for sensor sleep
     return;
+}
+// checksum: CRC given by sensor (one byte data)
+// data: the two byte data from sensor (byte array)
+// len: length of data array
+uint8_t checksum(uint8_t checksum, uint8_t *data, size_t len)
+{
+    uint8_t crc = 0xff;
+    size_t i, j;
+    for (i = 0; i < len; i++) {
+        crc ^= data[i];
+        for (j = 0; j < 8; j++) {
+            if ((crc & 0x80) != 0)
+                crc = (uint8_t)((crc << 1) ^ 0x31);
+            else
+                crc <<= 1;
+        }
+    }
+    // return all good or no good signal
+    if (crc == checksum) {
+        return 1;
+    }
+    else return 0;
 }
 
 void app_main(void)
