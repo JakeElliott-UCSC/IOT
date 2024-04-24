@@ -165,7 +165,7 @@ static void ShutdownSHTC3() {
         ESP_LOGE(TAG, "Sensor sleep command failed!");
     }
     else {
-        ESP_LOGE(TAG, "Sensor Asleep");
+        ESP_LOGE(TAG, "Sensor Asleep\n");
     }
 
     // Wait for sensor to finish sleeping
