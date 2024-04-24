@@ -147,6 +147,10 @@ static esp_err_t read_humidity(float *humidity)
     // Extract the data
     uint16_t humid_raw = (sensor_data[0] << 8) | sensor_data[1];
 
+    // Convert the data
+    *humidity = (100 * ((float)humid_raw/65535));
+    ESP_LOGI(TAG, "Read Humidity: %.2f %%", *humidity);
+
     // check data for accuracy
     uint8_t data[2] = {sensor_data[0],sensor_data[1]};
     uint8_t crc = sensor_data[2];
@@ -159,9 +163,6 @@ static esp_err_t read_humidity(float *humidity)
 
 
 
-    // Convert the data
-    *humidity = (100 * ((float)humid_raw/65535));
-    ESP_LOGI(TAG, "Read Humidity: %.2f %%", *humidity);
     return ret;
 }
 
