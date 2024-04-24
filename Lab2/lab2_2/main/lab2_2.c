@@ -92,7 +92,7 @@ static esp_err_t read_temperature(float *temperature)
     // Extract Data
     uint16_t temp_raw = (sensor_data[0] << 8) | sensor_data[1];
     // check data for accuracy
-    uint8_t data[2] = [sensor_data[0],sensor_data[1]];
+    uint8_t data[2] = {sensor_data[0],sensor_data[1]};
     uint8_t crc = sensor_data[2];
     if (checksum(crc,data,2)) {
         ESP_LOGE(TAG, "Temperature Good Read");
