@@ -193,9 +193,11 @@ static esp_err_t read_humidity(float *humidity)
     ESP_LOGI(TAG, "Read Humidity: %.2f %%", *humidity);
 
     // check data for accuracy
-    uint8_t data[2] = {sensor_data[0],sensor_data[1]};
+    uint8_t data[2] = {sensor_data[0],sensor_data[1]}; 
     uint8_t crc = sensor_data[2];
-    if (checksum(crc,data,2)) {
+
+
+    if (crc8(crc,humid_raw)) {
         ESP_LOGI(TAG, "Humidity Good Read");
     }
     else {
