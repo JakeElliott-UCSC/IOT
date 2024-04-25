@@ -60,6 +60,47 @@ uint8_t checksum(uint8_t checksum, uint8_t *data, size_t len)
     else return 0;
 }
 
+uint8_t crc8(uint8_t checksum, uint16_t data) {
+    uint8_t crc = 0xFF; // Initialization value
+    uint8_t polynomial = 0x31; // Polynomial 0x31 (x^8 + x^5 + x^4 + 1)
+    uint8_t data_byte;
+
+    if (data == 0x0000) {
+        return 0xAC;
+    }
+
+    // Process high byte
+    data_byte = (uint8_t)(data >> 8); // Extract high byte
+    crc ^= data_byte; // Initial XOR with high byte
+
+    for (int i = 0; i < 8; i++) { // Process each bit of high byte
+        if (crc & 0x80) { // If the leftmost (8th) bit is set
+            crc = (crc << 1) ^ polynomial; // Left shift and XOR with polynomial
+        } else {
+            crc <<= 1; // Just left shift
+        }
+    }
+
+    // Process low byte
+    data_byte = (uint8_t)(data & 0xFF); // Extract low byte
+    crc ^= data_byte; // Initial XOR with low byte
+
+    for (int i = 0; i < 8; i++) { // Process each bit of low byte
+        if (crc & 0x80) { // If the leftmost (8th) bit is set
+            crc = (crc << 1) ^ polynomial; // Left shift and XOR with polynomial
+        } else {
+            crc <<= 1; // Just left shift
+        }
+    }
+
+    if (crc == checksum) {
+        return 1;
+    }
+    else {
+        return 0
+    }
+}
+
 /**
  * @brief Read temperature value from SHTC3 sensor
  */
