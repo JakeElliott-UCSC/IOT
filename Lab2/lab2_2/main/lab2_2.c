@@ -114,7 +114,6 @@ static esp_err_t read_temperature(float *temperature)
 
 
     // check data for accuracy
-    //uint8_t data[2] = {sensor_data[0],sensor_data[1]};
     uint8_t crc = sensor_data[2];
     if (crc8(crc,temp_raw)) {
         ESP_LOGI(TAG, "Temperature Good Read");
@@ -172,7 +171,6 @@ static esp_err_t read_humidity(float *humidity)
     ESP_LOGI(TAG, "Read Humidity: %.2f %%", *humidity);
 
     // check data for accuracy
-    //uint8_t data[2] = {sensor_data[0],sensor_data[1]}; 
     uint8_t crc = sensor_data[2];
 
 
