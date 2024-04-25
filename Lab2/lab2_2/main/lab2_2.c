@@ -37,29 +37,8 @@ static esp_err_t i2c_master_init(void)
     return i2c_driver_install(i2c_master_port, conf.mode, 0, 0, 0);
 }
 
-// checksum: CRC given by sensor (one byte data)
-// data: the two byte data from sensor (byte array)
-// len: length of data array
-uint8_t checksum(uint8_t checksum, uint8_t *data, size_t len)
-{
-    uint8_t crc = 0xff;
-    size_t i, j;
-    for (i = 0; i < len; i++) {
-        crc ^= data[i];
-        for (j = 0; j < 8; j++) {
-            if ((crc & 0x80) != 0)
-                crc = (uint8_t)((crc << 1) ^ 0x31);
-            else
-                crc <<= 1;
-        }
-    }
-    // return all good or no good signal
-    if (crc == checksum) {
-        return 1;
-    }
-    else return 0;
-}
-
+// checksum: the checksum byte provided by the sensor
+// data: the two bytes representing sensor data
 uint8_t crc8(uint8_t checksum, uint16_t data) {
     uint8_t crc = 0xFF; // Initialization value
     uint8_t polynomial = 0x31; // Polynomial 0x31 (x^8 + x^5 + x^4 + 1)
