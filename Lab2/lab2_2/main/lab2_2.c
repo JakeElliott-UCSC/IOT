@@ -97,7 +97,7 @@ uint8_t crc8(uint8_t checksum, uint16_t data) {
         return 1;
     }
     else {
-        return 0
+        return 0;
     }
 }
 
