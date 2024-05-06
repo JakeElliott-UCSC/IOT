@@ -8,7 +8,7 @@
 
 
 
-static const char *TAG = "main";
+
 
 /**
  * @brief i2c master initialization
