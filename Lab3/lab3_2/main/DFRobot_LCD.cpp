@@ -10,6 +10,7 @@
  * @version  V1.0
  * @date  2017-2-10
  */
+extern "C" {
 
 #include <stdio.h>
 #include <string.h>
@@ -313,3 +314,4 @@ void DFRobot_LCD::draw_horizontal_graph(uint8_t row, uint8_t column, uint8_t len
 void DFRobot_LCD::draw_vertical_graph(uint8_t row, uint8_t column, uint8_t len,  uint8_t pixel_row_end){}
 void DFRobot_LCD::setContrast(uint8_t new_val){}
 
+}
