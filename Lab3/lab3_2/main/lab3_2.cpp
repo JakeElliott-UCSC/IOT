@@ -36,7 +36,7 @@ static esp_err_t i2c_master_init(void)
 }
 
 
-
+DFRobot_LCD lcd(16,2);  //16 characters and 2 lines of show
 
 extern "C" void app_main(void)
 {
@@ -47,6 +47,9 @@ extern "C" void app_main(void)
     // initial verification of life
     printf("Hello World - Lab 3.3\n");
     vTaskDelay(pdMS_TO_TICKS(2000));
+
+    //lcd.init();
+
     while (1) {
         printf("Hello World - Lab 3.3\n");
         vTaskDelay(pdMS_TO_TICKS(2000)); // Poll every 2 seconds
