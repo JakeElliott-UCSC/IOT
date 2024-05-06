@@ -16,7 +16,6 @@
 #define __DFRobot_LCD_H__
 
 #include <inttypes.h>
-#include "Print.h"
 
 
 /*!
