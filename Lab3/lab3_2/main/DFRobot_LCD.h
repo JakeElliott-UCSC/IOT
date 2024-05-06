@@ -96,9 +96,9 @@
 #define LCD_5x8DOTS 0x00
 
 
-class DFRobot_LCD : public Print 
-{
-
+//class DFRobot_LCD : public Print {
+class DFRobot_LCD {
+  
 public:
 
   /*!
@@ -214,7 +214,7 @@ public:
   void draw_horizontal_graph(uint8_t row, uint8_t column, uint8_t len,  uint8_t pixel_col_end);
   void draw_vertical_graph(uint8_t row, uint8_t column, uint8_t len,  uint8_t pixel_col_end);
   
-  using Print::write;
+  //using Print::write;
   
 private:
   void begin(uint8_t cols, uint8_t rows, uint8_t charsize = LCD_5x8DOTS);
