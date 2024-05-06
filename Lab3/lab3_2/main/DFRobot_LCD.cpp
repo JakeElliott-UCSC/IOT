@@ -308,6 +308,8 @@ void DFRobot_LCD::send(uint8_t *data, uint8_t len)
 
 void DFRobot_LCD::setReg(uint8_t addr, uint8_t data)
 {
+    esp_err_t ret;
+
     i2c_cmd_handle_t cmd = i2c_cmd_link_create();
     i2c_master_start(cmd); // transmit to device #4
     i2c_master_write_byte(cmd, (addr << 1), ACK_CHECK_EN);
@@ -324,7 +326,6 @@ void DFRobot_LCD::setReg(uint8_t addr, uint8_t data)
     if (ret == ESP_OK) {
     } else {
         ESP_LOGE(TAG, "Failed to SET REG!");
-        return ret;
     }
 
 }
