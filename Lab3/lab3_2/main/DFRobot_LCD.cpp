@@ -296,6 +296,8 @@ void DFRobot_LCD::begin(uint8_t cols, uint8_t lines, uint8_t dotsize)
 
 void DFRobot_LCD::send(uint8_t *data, uint8_t len)
 {
+    esp_err_t ret;
+
     i2c_cmd_handle_t cmd = i2c_cmd_link_create();
     i2c_master_start(cmd);        // transmit to device #4
     i2c_master_write_byte(cmd, (_lcdAddr << 1), ACK_CHECK_EN);
@@ -304,6 +306,18 @@ void DFRobot_LCD::send(uint8_t *data, uint8_t len)
 		vTaskDelay(pdMS_TO_TICKS(5));
     }
     i2c_master_stop(cmd);                     // stop transmitting
+
+    ret = i2c_master_cmd_begin(I2C_MASTER_NUM, cmd, 1000 / portTICK_PERIOD_MS);
+    i2c_cmd_link_delete(cmd);
+
+    // do not progress if data is not OK
+    if (ret == ESP_OK) {
+    } else {
+        ESP_LOGE(TAG, "Failed to SEND data over link!");
+    }
+
+
+
 }
 
 void DFRobot_LCD::setReg(uint8_t addr, uint8_t data)
