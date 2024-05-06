@@ -4,7 +4,7 @@
 #include "esp_system.h"
 #include "esp_log.h"
 #include "driver/i2c.h"
-#include "DFRobot_LCD.h"
+
 
 // Constants
 #define I2C_MASTER_SCL_IO    8    /*!< GPIO number used for I2C master clock */
@@ -40,7 +40,8 @@ static esp_err_t i2c_master_init(void)
 
 
 
-
+extern "C" {
+#include "DFRobot_LCD.h"
 void app_main(void)
 {
     // initialize i2c on the chip
@@ -51,4 +52,5 @@ void app_main(void)
         printf("Hello World - Lab 3.3\n");
         vTaskDelay(pdMS_TO_TICKS(2000)); // Poll every 2 seconds
     }
+}
 }
