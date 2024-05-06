@@ -314,7 +314,7 @@ void DFRobot_LCD::send(uint8_t *data, uint8_t len)
     if (ret == ESP_OK) {
     } else {
         ESP_LOGE(TAG, "Failed to SEND data over link!");
-        printf("ret = %i\n",esp_err_t);
+        printf("ret = %i\n",ret);
     }
 
 
