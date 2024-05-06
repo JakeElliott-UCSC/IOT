@@ -11,6 +11,9 @@
  * @date  2017-2-10
  */
 
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 #ifndef __DFRobot_LCD_H__
 #define __DFRobot_LCD_H__
@@ -91,9 +94,6 @@
 #define LCD_5x10DOTS 0x04
 #define LCD_5x8DOTS 0x00
 
-#ifdef __cplusplus
-extern "C" {
-#endif
 
 class DFRobot_LCD : public Print 
 {
@@ -231,8 +231,8 @@ private:
   uint8_t _backlightval;
 };
 
-#ifdef __cplusplus
-}
 #endif
 
+#ifdef __cplusplus
+}
 #endif

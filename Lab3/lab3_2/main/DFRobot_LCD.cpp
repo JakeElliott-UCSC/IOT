@@ -14,8 +14,6 @@
 #include <stdio.h>
 #include <string.h>
 #include <inttypes.h>
-
-
 #include "DFRobot_LCD.h"
 
 const uint8_t color_define[4][3] = 
