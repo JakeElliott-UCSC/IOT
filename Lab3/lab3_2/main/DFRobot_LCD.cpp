@@ -10,7 +10,7 @@
  * @version  V1.0
  * @date  2017-2-10
  */
-extern "C" {
+
 
 #include <stdio.h>
 #include <string.h>
@@ -287,6 +287,7 @@ void DFRobot_LCD::send(uint8_t *data, uint8_t len)
 {
     i2c_cmd_handle_t cmd = i2c_cmd_link_create();
     i2c_master_start(cmd);        // transmit to device #4
+    i2c_master_write_byte(cmd, (_lcdAddr << 1), ACK_CHECK_EN);
     for(int i=0; i<len; i++) {
         i2c_master_write_byte(cmd, data[i], ACK_CHECK_EN);
 		delay(5);
@@ -298,9 +299,23 @@ void DFRobot_LCD::setReg(uint8_t addr, uint8_t data)
 {
     i2c_cmd_handle_t cmd = i2c_cmd_link_create();
     i2c_master_start(cmd); // transmit to device #4
-    i2c_master_write_byte(cmd, addr, ACK_CHECK_EN);
+    i2c_master_write_byte(cmd, (addr << 1), ACK_CHECK_EN);
+    //i2c_master_write_byte(cmd, _RGBAddr, ACK_CHECK_EN);
+    // RGB address for V2.0 LCD screen
+    i2c_master_write_byte(cmd, 0x2D, ACK_CHECK_EN);
     i2c_master_write_byte(cmd, data, ACK_CHECK_EN);
     i2c_master_stop(cmd);    // stop transmitting
+
+    ret = i2c_master_cmd_begin(I2C_MASTER_NUM, cmd, 1000 / portTICK_PERIOD_MS);
+    i2c_cmd_link_delete(cmd);
+
+    // do not progress if data is not OK
+    if (ret == ESP_OK) {
+    } else {
+        ESP_LOGE(TAG, "Failed to SET REG!");
+        return ret;
+    }
+
 }
 
 /************************unsupported API functions***************************/
@@ -313,5 +328,3 @@ uint8_t DFRobot_LCD::init_bargraph(uint8_t graphtype){return 0;}
 void DFRobot_LCD::draw_horizontal_graph(uint8_t row, uint8_t column, uint8_t len,  uint8_t pixel_col_end){}
 void DFRobot_LCD::draw_vertical_graph(uint8_t row, uint8_t column, uint8_t len,  uint8_t pixel_row_end){}
 void DFRobot_LCD::setContrast(uint8_t new_val){}
-
-}

@@ -41,7 +41,7 @@ static esp_err_t i2c_master_init(void)
 
 
 
-void app_main(void)
+extern "C" void app_main(void)
 {
     // initialize i2c on the chip
     ESP_ERROR_CHECK(i2c_master_init());

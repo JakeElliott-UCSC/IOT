@@ -11,9 +11,6 @@
  * @date  2017-2-10
  */
 
-#ifdef __cplusplus
-extern "C" {
-#endif
 
 #ifndef __DFRobot_LCD_H__
 #define __DFRobot_LCD_H__
@@ -25,7 +22,8 @@ extern "C" {
  *  @brief Device I2C Arress
  */
 #define LCD_ADDRESS     (0x7c>>1)
-#define RGB_ADDRESS     (0xc0>>1)
+//#define RGB_ADDRESS     (0xc0>>1)
+#define RGB_ADDRESS     (0x2D)
 
 
 /*!
@@ -37,9 +35,12 @@ extern "C" {
 #define BLUE            3
 #define ONLY            3
 
-#define REG_RED         0x04        // pwm2
-#define REG_GREEN       0x03        // pwm1
-#define REG_BLUE        0x02        // pwm0
+// #define REG_RED         0x04        // pwm2
+// #define REG_GREEN       0x03        // pwm1
+// #define REG_BLUE        0x02        // pwm0
+#define REG_RED         0x01        // pwm2
+#define REG_GREEN       0x02        // pwm1
+#define REG_BLUE        0x03        // pwm0
 #define REG_ONLY        0x02
 
 #define REG_MODE1       0x00
@@ -233,6 +234,3 @@ private:
 
 #endif
 
-#ifdef __cplusplus
-}
-#endif
