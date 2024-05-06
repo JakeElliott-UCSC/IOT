@@ -22,6 +22,21 @@
 #include "driver/i2c.h"
 #include "DFRobot_LCD.h"
 
+// Constants
+#define I2C_MASTER_SCL_IO    8    /*!< GPIO number used for I2C master clock */
+#define I2C_MASTER_SDA_IO    10    /*!< GPIO number used for I2C master data  */
+#define I2C_MASTER_NUM       I2C_NUM_0 /*!< I2C port number for master dev */
+#define I2C_MASTER_FREQ_HZ   100000   /*!< I2C master clock frequency */
+#define SHTC3_SENSOR_ADDR    0x70     /*!< Slave address of the SHTC3 sensor */
+
+#define ACK_CHECK_EN         0x1     /*!< I2C master will check ack from slave*/
+#define ACK_CHECK_DIS        0x0     /*!< I2C master will not check ack from slave */
+#define ACK_VAL              0x0     /*!< I2C ack value */
+#define NACK_VAL             0x1     /*!< I2C nack value */
+
+
+
+
 const uint8_t color_define[4][3] = 
 {
     {255, 255, 255},            // white
@@ -223,7 +238,8 @@ void DFRobot_LCD::load_custom_character(uint8_t char_num, uint8_t *rows){
 void DFRobot_LCD::printstr(const char c[]){
 	///< This function is not identical to the function used for "real" I2C displays
 	///< it's here so the user sketch doesn't have to be changed 
-	print(c);
+	//print(c);
+    printf("Oops! DFRobot_LCD::printstr is not written yet!\n");
 }
 
 /*******************************private*******************************/
