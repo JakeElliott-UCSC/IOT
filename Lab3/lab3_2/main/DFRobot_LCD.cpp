@@ -48,13 +48,13 @@ void DFRobot_LCD::init()
 void DFRobot_LCD::clear()
 {
     command(LCD_CLEARDISPLAY);        // clear display, set cursor position to zero
-    delayMicroseconds(2000);          // this command takes a long time!
+    vTaskDelay(pdMS_TO_TICKS(2));          // this command takes a long time!
 }
 
 void DFRobot_LCD::home()
 {
     command(LCD_RETURNHOME);        // set cursor position to zero
-    delayMicroseconds(2000);        // this command takes a long time!
+    vTaskDelay(pdMS_TO_TICKS(2));        // this command takes a long time!
 }
 
 void DFRobot_LCD::noDisplay()
@@ -243,7 +243,7 @@ void DFRobot_LCD::begin(uint8_t cols, uint8_t lines, uint8_t dotsize)
     ///< SEE PAGE 45/46 FOR INITIALIZATION SPECIFICATION!
     ///< according to datasheet, we need at least 40ms after power rises above 2.7V
     ///< before sending commands. Arduino can turn on way befer 4.5V so we'll wait 50
-    delay(50);
+    vTaskDelay(pdMS_TO_TICKS(50));
 
 
     ///< this is according to the hitachi HD44780 datasheet
@@ -251,11 +251,11 @@ void DFRobot_LCD::begin(uint8_t cols, uint8_t lines, uint8_t dotsize)
 
     ///< Send function set command sequence
     command(LCD_FUNCTIONSET | _showfunction);
-    delay(5);  // wait more than 4.1ms
+    vTaskDelay(pdMS_TO_TICKS(5));  // wait more than 4.1ms
 	
 	///< second try
     command(LCD_FUNCTIONSET | _showfunction);
-    delay(5);
+    vTaskDelay(pdMS_TO_TICKS(5));
 
     ///< third go
     command(LCD_FUNCTIONSET | _showfunction);
@@ -295,7 +295,7 @@ void DFRobot_LCD::send(uint8_t *data, uint8_t len)
     i2c_master_write_byte(cmd, (_lcdAddr << 1), ACK_CHECK_EN);
     for(int i=0; i<len; i++) {
         i2c_master_write_byte(cmd, data[i], ACK_CHECK_EN);
-		delay(5);
+		vTaskDelay(pdMS_TO_TICKS(5));
     }
     i2c_master_stop(cmd);                     // stop transmitting
 }
