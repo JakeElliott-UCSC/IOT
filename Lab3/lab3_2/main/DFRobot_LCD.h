@@ -23,7 +23,7 @@
  */
 #define LCD_ADDRESS     (0x7c>>1)
 //#define RGB_ADDRESS     (0xc0>>1)
-#define RGB_ADDRESS     (0x2D>>1)
+#define RGB_ADDRESS     (0x2D)
 
 
 /*!
