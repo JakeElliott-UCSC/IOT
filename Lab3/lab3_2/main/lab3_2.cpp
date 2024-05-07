@@ -53,6 +53,10 @@ extern "C" void app_main(void)
 
     while (1) {
 
+        lcd.setCursor(0,0);
+
+        lcd.setRGB(0,255,0);
+
 
 
         printf("Hello World - Lab 3.3\n");
