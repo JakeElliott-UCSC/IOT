@@ -329,10 +329,11 @@ void DFRobot_LCD::setReg(uint8_t addr, uint8_t data)
     i2c_cmd_handle_t cmd = i2c_cmd_link_create();
     i2c_master_start(cmd); // transmit to device #4
     //i2c_master_write_byte(cmd, (addr << 1), ACK_CHECK_EN);
-    i2c_master_write_byte(cmd, (_RGBAddr<<1), ACK_CHECK_EN);
-    vTaskDelay(pdMS_TO_TICKS(5));
+    //i2c_master_write_byte(cmd, (_RGBAddr<<1), ACK_CHECK_EN);
+    
     // RGB address for V2.0 LCD screen
-    //i2c_master_write_byte(cmd, 0x2D, ACK_CHECK_EN);
+    i2c_master_write_byte(cmd, 0x2D, ACK_CHECK_EN);
+    vTaskDelay(pdMS_TO_TICKS(5));
     i2c_master_write_byte(cmd, 0x80, ACK_CHECK_EN);
     vTaskDelay(pdMS_TO_TICKS(5));
     i2c_master_write_byte(cmd, addr, ACK_CHECK_EN);
