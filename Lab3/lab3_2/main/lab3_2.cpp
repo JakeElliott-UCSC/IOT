@@ -23,14 +23,6 @@ static esp_err_t i2c_master_init(void)
     conf.sda_pullup_en = GPIO_PULLUP_ENABLE;
     conf.scl_pullup_en = GPIO_PULLUP_ENABLE;
     conf.master.clk_speed = I2C_MASTER_FREQ_HZ;
-    //  {
-    //     .mode = I2C_MODE_MASTER,
-    //     .sda_io_num = I2C_MASTER_SDA_IO,
-    //     .scl_io_num = I2C_MASTER_SCL_IO,
-    //     .sda_pullup_en = GPIO_PULLUP_ENABLE,
-    //     .scl_pullup_en = GPIO_PULLUP_ENABLE,
-    //     .master.clk_speed = I2C_MASTER_FREQ_HZ,
-    // };
     i2c_param_config(i2c_master_port, &conf);
     return i2c_driver_install(i2c_master_port, conf.mode, 0, 0, 0);
 }
@@ -62,8 +54,6 @@ extern "C" void app_main(void)
         lcd.setCursor(0,1);
         
         lcd.printstr("Elliott");
-
-
 
         printf("Hello World - Lab 3.3\n");
         vTaskDelay(pdMS_TO_TICKS(2000)); // Poll every 2 seconds
