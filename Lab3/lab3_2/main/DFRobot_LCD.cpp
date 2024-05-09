@@ -236,7 +236,7 @@ void DFRobot_LCD::printstr(const char c[]){
     int i = 0;
     while (c[i] != NULL) {
         write(c[i]);
-        i++
+        i++;
     }
 
 
