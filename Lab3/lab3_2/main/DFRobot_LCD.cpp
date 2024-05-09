@@ -230,15 +230,14 @@ void DFRobot_LCD::printstr(const char c[]){
 	///< it's here so the user sketch doesn't have to be changed 
 	//print(c);
 
-    send(c,c.size());
+    // send(c,c.size());
 
 
-    // int i = 0;
-    // while (c[i] != NULL) {
-        
-
-    //     i++
-    // }
+    int i = 0;
+    while (c[i] != NULL) {
+        write(c[i]);
+        i++
+    }
 
 
 
