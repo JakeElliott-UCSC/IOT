@@ -259,7 +259,9 @@ static void flushSHTC3() {
 
 
 
-
+// data variables
+float temperature = 0.0;
+float humidity = 0.0;
 
 
 extern "C" void app_main(void)
@@ -267,6 +269,10 @@ extern "C" void app_main(void)
     // initialize i2c on the chip
     ESP_ERROR_CHECK(i2c_master_init());
     ESP_LOGI(TAG, "I2C Initialized Successfully");
+
+    // flush initial message from temp sensor
+    flushSHTC3();
+
 
     // initial verification of life
     printf("Hello World - Lab 3.3\n");
@@ -277,14 +283,39 @@ extern "C" void app_main(void)
     lcd.init();
 
     while (1) {
-
+        // begin writing at the top of lcd
         lcd.setCursor(0,0);
-
+        // set color
         lcd.setRGB(0,255,0);
+
+        WakeupSHTC3();
+        printf("Temperature and Humidity:\n");
+        if (read_temperature(&temperature) == ESP_OK) {
+            //printf("Temperature: %.2f°C\n", temperature);
+            //printf("Temperature and Humidity:\n");
+            lcd.printstr("Temp: %iC",Temperature);
+        } else {
+            printf("Failed to read temperature!\n");
+        }
+
+        // write humidity below temperature
+        lcd.setCursor(0,1);
+
+        if (read_humidity(&humidity) == ESP_OK) {
+            //printf("Temperature: %.2f°C\n", temperature);
+            //printf("Temperature and Humidity:\n");
+        } else {
+            printf("Failed to read humidity!\n");
+            lcd.printstr("Temp: %i%",Humidity);
+        }
+        ShutdownSHTC3();
+        vTaskDelay(pdMS_TO_TICKS(2000)); // Poll every 2 seconds
+
+        
 
         lcd.printstr("Hello CSE121!");
 
-        lcd.setCursor(0,1);
+        
         
         lcd.printstr("Elliott");
 
