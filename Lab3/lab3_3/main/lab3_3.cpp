@@ -298,7 +298,7 @@ extern "C" void app_main(void)
             //printf("Temperature: %.2f°C\n", temperature);
             //printf("Temperature and Humidity:\n");
             lcd.printstr("Temp: ");
-            lcd.write(std::to_string((int)temperature));
+            lcd.write(to_string((int)temperature));
             lcd.printstr("C");
         } else {
             printf("Failed to read temperature!\n");
@@ -311,7 +311,7 @@ extern "C" void app_main(void)
             //printf("Temperature: %.2f°C\n", temperature);
             //printf("Temperature and Humidity:\n");
             lcd.printstr("Hum : ");
-            lcd.write(std::to_string((int)humidity));
+            lcd.write(to_string((int)humidity));
             lcd.printstr("%");
         } else {
             printf("Failed to read humidity!\n");
