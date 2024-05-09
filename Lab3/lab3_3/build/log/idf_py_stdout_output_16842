@@ -1,0 +1,64 @@
+ESP-ROM:esp32c3-api1-20210207
+Build:Feb  7 2021
+rst:0x15 (USB_UART_CHIP_RESET),boot:0xc (SPI_FAST_FLASH_BOOT)
+Saved PC:0x40382a9a
+SPIWP:0xee
+mode:DIO, clock div:1
+load:0x3fcd5820,len:0x1738
+load:0x403cc710,len:0xb9c
+load:0x403ce710,len:0x2e40
+entry 0x403cc71a
+[0;32mI (24) boot: ESP-IDF v5.3-dev-3225-g5a40bb8746 2nd stage bootloader[0m
+[0;32mI (24) boot: compile time May  9 2024 21:26:12[0m
+[0;32mI (25) boot: chip revision: v0.4[0m
+[0;32mI (29) boot.esp32c3: SPI Speed      : 80MHz[0m
+[0;32mI (34) boot.esp32c3: SPI Mode       : DIO[0m
+[0;32mI (38) boot.esp32c3: SPI Flash Size : 2MB[0m
+[0;32mI (43) boot: Enabling RNG early entropy source...[0m
+[0;32mI (49) boot: Partition Table:[0m
+[0;32mI (52) boot: ## Label            Usage          Type ST Offset   Length[0m
+[0;32mI (59) boot:  0 nvs              WiFi data        01 02 00009000 00006000[0m
+[0;32mI (67) boot:  1 phy_init         RF data          01 01 0000f000 00001000[0m
+[0;32mI (74) boot:  2 factory          factory app      00 00 00010000 00100000[0m
+[0;32mI (82) boot: End of partition table[0m
+[0;32mI (86) esp_image: segment 0: paddr=00010020 vaddr=3c020020 size=0ac10h ( 44048) map[0m
+[0;32mI (101) esp_image: segment 1: paddr=0001ac38 vaddr=3fc8c200 size=012c4h (  4804) load[0m
+[0;32mI (104) esp_image: segment 2: paddr=0001bf04 vaddr=40380000 size=04114h ( 16660) load[0m
+[0;32mI (114) esp_image: segment 3: paddr=00020020 vaddr=42000020 size=196d0h (104144) map[0m
+[0;32mI (136) esp_image: segment 4: paddr=000396f8 vaddr=40384114 size=0809ch ( 32924) load[0m
+[0;32mI (146) boot: Loaded app from partition at offset 0x10000[0m
+[0;32mI (146) boot: Disabling RNG early entropy source...[0m
+[0;32mI (158) cpu_start: Unicore app[0m
+[0;32mI (166) cpu_start: Pro cpu start user code[0m
+[0;32mI (167) cpu_start: cpu freq: 160000000 Hz[0m
+[0;32mI (167) app_init: Application information:[0m
+[0;32mI (169) app_init: Project name:     lab3_3[0m
+[0;32mI (174) app_init: App version:      8cba337-dirty[0m
+[0;32mI (180) app_init: Compile time:     May  9 2024 21:25:50[0m
+[0;32mI (186) app_init: ELF file SHA256:  3d04fcc17...[0m
+[0;32mI (191) app_init: ESP-IDF:          v5.3-dev-3225-g5a40bb8746[0m
+[0;32mI (197) efuse_init: Min chip rev:     v0.3[0m
+[0;32mI (202) efuse_init: Max chip rev:     v1.99 [0m
+[0;32mI (207) efuse_init: Chip rev:         v0.4[0m
+[0;32mI (212) heap_init: Initializing. RAM available for dynamic allocation:[0m
+[0;32mI (219) heap_init: At 3FC8E460 len 00031BA0 (198 KiB): RAM[0m
+[0;32mI (225) heap_init: At 3FCC0000 len 0001C710 (113 KiB): Retention RAM[0m
+[0;32mI (232) heap_init: At 3FCDC710 len 00002950 (10 KiB): Retention RAM[0m
+[0;32mI (239) heap_init: At 50000200 len 00001DE8 (7 KiB): RTCRAM[0m
+[0;32mI (246) spi_flash: detected chip: generic[0m
+[0;32mI (250) spi_flash: flash io: dio[0m
+[0;33mW (254) spi_flash: Detected size(4096k) larger than the size in the binary image header(2048k). Using the size in the binary image header.[0m
+[0;33mW (267) i2c: This driver is an old driver, please migrate your application code to adapt `driver/i2c_master.h`[0m
+[0;32mI (278) sleep: Configure to isolate all GPIO pins in sleep state[0m
+[0;32mI (285) sleep: Enable automatic switching of GPIO sleep configuration[0m
+[0;32mI (292) main_task: Started on CPU0[0m
+[0;32mI (292) main_task: Calling app_main()[0m
+[0;32mI (292) main: I2C Initialized Successfully[0m
+Hello World - Lab 3.3
+Hello World - Lab 3.3
+Hello World - Lab 3.3
+Hello World - Lab 3.3
+Hello World - Lab 3.3
+Hello World - Lab 3.3
+Hello World - Lab 3.3
+Hello World - Lab 3.3

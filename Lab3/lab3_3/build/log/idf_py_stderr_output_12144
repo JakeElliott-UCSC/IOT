@@ -1,0 +1,1 @@
+ninja: error: '/home/ubuntu/esp/IOT/Lab3/lab3_3/main/lab3_3.c', needed by 'esp-idf/main/CMakeFiles/__idf_main.dir/lab3_3.c.obj', missing and no known rule to make it
