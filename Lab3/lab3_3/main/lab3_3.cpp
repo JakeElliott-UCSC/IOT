@@ -293,7 +293,9 @@ extern "C" void app_main(void)
         if (read_temperature(&temperature) == ESP_OK) {
             //printf("Temperature: %.2f°C\n", temperature);
             //printf("Temperature and Humidity:\n");
-            lcd.printstr("Temp: %iC",temperature);
+            lcd.printstr("Temp: ");
+            lcd.write(temperature);
+            lcd.printstr("C");
         } else {
             printf("Failed to read temperature!\n");
         }
@@ -304,9 +306,11 @@ extern "C" void app_main(void)
         if (read_humidity(&humidity) == ESP_OK) {
             //printf("Temperature: %.2f°C\n", temperature);
             //printf("Temperature and Humidity:\n");
+            lcd.printstr("Hum : ");
+            lcd.write(humidity);
+            lcd.printstr("%");
         } else {
             printf("Failed to read humidity!\n");
-            lcd.printstr("Temp: %i%",humidity);
         }
         ShutdownSHTC3();
         vTaskDelay(pdMS_TO_TICKS(2000)); // Poll every 2 seconds
