@@ -36,7 +36,7 @@ extern "C" void app_main(void)
     ESP_LOGI(TAG, "I2C Initialized Successfully");
 
     // initial verification of life
-    printf("Hello World - Lab 3.3\n");
+    printf("Hello World - Lab 3.2\n");
     vTaskDelay(pdMS_TO_TICKS(2000));
 
     DFRobot_LCD lcd(16,2,LCD_ADDRESS,RGB_ADDRESS);  //16 characters and 2 lines of show
