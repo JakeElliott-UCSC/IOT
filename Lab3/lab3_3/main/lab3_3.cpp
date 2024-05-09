@@ -315,6 +315,6 @@ extern "C" void app_main(void)
             printf("Failed to read humidity!\n");
         }
         ShutdownSHTC3();
-        vTaskDelay(pdMS_TO_TICKS(2000)); // Poll every 2 seconds
+        vTaskDelay(pdMS_TO_TICKS(1000)); // Poll every 2 seconds
     }
 }
