@@ -316,16 +316,5 @@ extern "C" void app_main(void)
         }
         ShutdownSHTC3();
         vTaskDelay(pdMS_TO_TICKS(2000)); // Poll every 2 seconds
-
-        
-
-        lcd.printstr("Hello CSE121!");
-
-        
-        
-        lcd.printstr("Elliott");
-
-        printf("Hello World - Lab 3.3\n");
-        vTaskDelay(pdMS_TO_TICKS(2000)); // Poll every 2 seconds
     }
 }
