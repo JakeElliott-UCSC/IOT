@@ -230,6 +230,8 @@ void DFRobot_LCD::printstr(const char c[]){
 	///< it's here so the user sketch doesn't have to be changed 
 	//print(c);
     printf("Oops! DFRobot_LCD::printstr is not written yet!\n");
+    printf("Failed String: \n");
+    //ESP_LOGE(TAG, "%s\n",c);
 }
 
 /*******************************private*******************************/

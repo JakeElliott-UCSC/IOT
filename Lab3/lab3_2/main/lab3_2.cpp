@@ -57,6 +57,12 @@ extern "C" void app_main(void)
 
         lcd.setRGB(0,255,0);
 
+        lcd.printstr("Hello CSE121!");
+
+        lcd.setCursor(0,1);
+        
+        lcd.printstr("Elliott");
+
 
 
         printf("Hello World - Lab 3.3\n");
