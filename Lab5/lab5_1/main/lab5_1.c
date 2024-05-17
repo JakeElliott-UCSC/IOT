@@ -33,14 +33,12 @@ void printMorseCharacter(int code) {
         return;
     }
 
-
+    // print morse code
     while (character != 2) {
 
-        //printf("flag\n");
-        //printf("i: %d, j: %d\n",i,j);
+        // extract current morse character
         character = ((code % ((int)pow(10,i))) / ((int)pow(10,j)));
-        //printf("character num: %d\n",character);
-
+        // interpret current morse character
         switch (character) {
             case 0:
                 printf(".");
@@ -52,8 +50,10 @@ void printMorseCharacter(int code) {
                 printf(" ");
                 break;
         }
+        // incrament counters
         i++;
         j++;
+        // fail safe
         if (i > 20) {
             ESP_LOGE(TAG, "ERROR: printMorseCharacter exceeded 20 iterations");
             break;
@@ -66,15 +66,17 @@ void printMorseString(const char* message){
     // message must be null terminated
     int x = 0;
 
-
+    // iterate over characters in message string
     while (message[x] != NULL) {
-
+        printMorseCharacter(MorseArray[message[x]]);
         x++;
         if (x > 15) {
             ESP_LOGE(TAG, "ERROR: printMorseString exceeded 15 iterations");
             break;
         }
     }
+    // finish line
+    printf("\n");
 }
 
 
@@ -172,20 +174,24 @@ void app_main(void)
 
 
     // print the letter Q code
-    printMorseCharacter(MorseArray[(int)'H']);
-    printMorseCharacter(MorseArray[(int)'E']);
-    printMorseCharacter(MorseArray[(int)'L']);
-    printMorseCharacter(MorseArray[(int)'L']);
-    printMorseCharacter(MorseArray[(int)'O']);
+    // printMorseCharacter(MorseArray[(int)'H']);
+    // printMorseCharacter(MorseArray[(int)'E']);
+    // printMorseCharacter(MorseArray[(int)'L']);
+    // printMorseCharacter(MorseArray[(int)'L']);
+    // printMorseCharacter(MorseArray[(int)'O']);
 
-    printMorseCharacter(MorseArray[(int)' ']);
+    // printMorseCharacter(MorseArray[(int)' ']);
 
-    printMorseCharacter(MorseArray[(int)'E']);
-    printMorseCharacter(MorseArray[(int)'S']);
-    printMorseCharacter(MorseArray[(int)'P']);
-    printMorseCharacter(MorseArray[(int)'3']);
-    printMorseCharacter(MorseArray[(int)'2']);
-    printf("\n");
+    // printMorseCharacter(MorseArray[(int)'E']);
+    // printMorseCharacter(MorseArray[(int)'S']);
+    // printMorseCharacter(MorseArray[(int)'P']);
+    // printMorseCharacter(MorseArray[(int)'3']);
+    // printMorseCharacter(MorseArray[(int)'2']);
+    // printf("\n");
+
+    const char* message "Hello esp32\0";
+
+    printMorseString(message);
 
 
     while (1) {
