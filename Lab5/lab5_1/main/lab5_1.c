@@ -174,11 +174,11 @@ void app_main(void)
 
     printMorseCharacter(MorseArray[(int)' ']);
 
-    printMorseCharacter(MorseArray[(int)'W']);
-    printMorseCharacter(MorseArray[(int)'O']);
-    printMorseCharacter(MorseArray[(int)'R']);
-    printMorseCharacter(MorseArray[(int)'L']);
-    printMorseCharacter(MorseArray[(int)'D']);
+    printMorseCharacter(MorseArray[(int)'E']);
+    printMorseCharacter(MorseArray[(int)'S']);
+    printMorseCharacter(MorseArray[(int)'P']);
+    printMorseCharacter(MorseArray[(int)'3']);
+    printMorseCharacter(MorseArray[(int)'2']);
     printf("\n");
 
 
