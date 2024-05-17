@@ -45,6 +45,9 @@ void printMorseCharacter(int code) {
             case 2:
                 printf(" ");
                 break;
+            case 3:
+                printf("/ ");
+                break;
         }
         i++;
         j++;
@@ -85,7 +88,7 @@ void printMorseString(const char* message){
 void app_main(void)
 {
     // set morse code values
-    MorseArray[(int)' '] = 2;
+    MorseArray[(int)' '] = 3;
 
     MorseArray[(int)'a'] = 210;
     MorseArray[(int)'b'] = 20001;
