@@ -243,6 +243,14 @@ void app_main(void)
 
     const char* message = "Hello esp32\0";
 
+    printf("Beginning Morse Code LED in...\n");
+    vTaskDelay(pdMS_TO_TICKS(time_delta));
+    printf("3...\n");
+    vTaskDelay(pdMS_TO_TICKS(time_delta));
+    printf("2...\n");
+    vTaskDelay(pdMS_TO_TICKS(time_delta));
+    printf("1...\n");
+
     printMorseString(message);
 
     vTaskDelay(pdMS_TO_TICKS(5000));
