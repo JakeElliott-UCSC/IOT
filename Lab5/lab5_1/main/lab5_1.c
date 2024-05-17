@@ -27,6 +27,12 @@ void printMorseCharacter(int code) {
 
     int character = 0;
 
+    // handle special character
+    if (code == 3) {
+        printf("/ ");
+        return;
+    }
+
 
     while (character != 2) {
 
@@ -44,9 +50,6 @@ void printMorseCharacter(int code) {
                 break;
             case 2:
                 printf(" ");
-                break;
-            case 3:
-                printf("/ ");
                 break;
         }
         i++;
