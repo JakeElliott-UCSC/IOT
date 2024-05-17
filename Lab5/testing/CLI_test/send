@@ -1,0 +1,18 @@
+#!/bin/bash
+
+if [ "$#" -ne 2 ]; then
+    echo "Usage: $0 <count> <message>"
+    exit 1
+fi
+
+COUNT=$1
+MESSAGE=$2
+
+idf.py build flash monitor
+
+sleep 5
+
+echo "Sending command to ESP32C3..."
+echo -e "$COUNT '$MESSAGE'\n" > /dev/ttyUSB0
+
+wait
