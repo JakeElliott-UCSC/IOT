@@ -27,7 +27,11 @@ void app_main(void)
         // set gpio pin 2 to high
         gpio_set_level(LED_PIN, 1);
         // Delay for 1 second
-        vTaskDelay(pdMS_TO_TICKS(1000));  
+        vTaskDelay(pdMS_TO_TICKS(1000));
+
+        gpio_set_level(LED_PIN, 0);
+
+        vTaskDelay(pdMS_TO_TICKS(1000));
 
 
         // int adc_value = adc1_get_raw(ADC_CHANNEL);  // Get ADC value
