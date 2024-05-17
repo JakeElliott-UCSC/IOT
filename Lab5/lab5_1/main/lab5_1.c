@@ -21,7 +21,8 @@ void app_main(void)
     esp_rom_gpio_pad_select_gpio(LED_PIN);
     gpio_set_direction(LED_PIN, GPIO_MODE_OUTPUT);
 
-    int time_delta = 60;
+    // 60 seems too quick. 125 might be the fastest
+    int time_delta = 250;
 
     while (1) {
         // liveliness signal
