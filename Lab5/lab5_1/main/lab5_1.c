@@ -18,7 +18,7 @@ void app_main(void)
     adc1_config_channel_atten(ADC_CHANNEL, ADC_ATTEN_DB_0);  // Set attenuation to 0dB
 
     // Configure LED pin
-    gpio_pad_select_gpio(LED_PIN);
+    esp_rom_gpio_pad_select_gpio(LED_PIN);
     gpio_set_direction(LED_PIN, GPIO_MODE_OUTPUT);
 
     while (1) {
