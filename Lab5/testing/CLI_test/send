@@ -13,6 +13,6 @@ idf.py build flash monitor
 sleep 5
 
 echo "Sending command to ESP32C3..."
-echo -e "$COUNT '$MESSAGE'\n" > /dev/ttyUSB0
+echo -e "$COUNT '$MESSAGE'\n" > /dev/ttyACM0
 
 wait
