@@ -21,7 +21,7 @@ void app_main(void)
     esp_rom_gpio_pad_select_gpio(LED_PIN);
     gpio_set_direction(LED_PIN, GPIO_MODE_OUTPUT);
 
-    int time_delta = 125;
+    int time_delta = 60;
 
     while (1) {
         // liveliness signal
