@@ -63,6 +63,7 @@ void printMorseLED(int character) {
             // High for one time unit
             gpio_set_level(LED_PIN, 1);
             vTaskDelay(pdMS_TO_TICKS(time_delta));
+            break;
         case 2:
             // Low for one time unit
             gpio_set_level(LED_PIN, 0);
@@ -73,6 +74,7 @@ void printMorseLED(int character) {
             // Low for one time unit
             gpio_set_level(LED_PIN, 0);
             vTaskDelay(pdMS_TO_TICKS(time_delta));
+            break;
     }
 }
 
@@ -114,7 +116,7 @@ void printMorseCharacter(int code) {
                 break;
         }
         // interpret current morse character in LED morse
-
+        printMorseLED(character);
 
 
         // incrament counters
