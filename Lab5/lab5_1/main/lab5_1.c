@@ -68,7 +68,7 @@ void printMorseString(const char* message){
 
     // iterate over characters in message string
     while (message[x] != NULL) {
-        printMorseCharacter(MorseArray[message[x]]);
+        printMorseCharacter((int)MorseArray[message[x]]);
         x++;
         if (x > 15) {
             ESP_LOGE(TAG, "ERROR: printMorseString exceeded 15 iterations");
@@ -189,7 +189,7 @@ void app_main(void)
     // printMorseCharacter(MorseArray[(int)'2']);
     // printf("\n");
 
-    const char* message "Hello esp32\0";
+    const char* message = "Hello esp32\0";
 
     printMorseString(message);
 
