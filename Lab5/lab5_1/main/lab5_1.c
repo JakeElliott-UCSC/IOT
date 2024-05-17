@@ -18,6 +18,48 @@ int MorseArray[123] = {1,2,3};
 
 static const char *TAG = "ADC_LED_Example";
 
+// print morse character and a space after
+void printMorseCharacter(int code) {
+
+    int i = 1;
+    int j = 0;
+
+    int character = 0;
+
+
+    while (character != 2) {
+        //printf("flag\n");
+        //printf("i: %d, j: %d\n",i,j);
+        character = ((code % ((int)pow(10,i))) / ((int)pow(10,j)));
+        printf("character num: %d\n",character);
+
+        i++;
+        j++;
+        if (i > 20) {
+            ESP_LOGE(TAG, "ERROR: printMorseCharacter exceeded 20 iterations");
+            break;
+        }
+    }
+}
+
+void printMorseString(const char* message){
+    // iterate over string until message is complete
+    // message must be null terminated
+    int x = 0;
+
+
+    while (message[x] != NULL) {
+
+        x++
+        if (x > 15) {
+            ESP_LOGE(TAG, "ERROR: printMorseString exceeded 15 iterations");
+            break;
+        }
+    }
+}
+
+
+
 
 
 
@@ -106,10 +148,16 @@ void app_main(void)
     // 60 seems too quick. 125 might be the fastest
     int time_delta = 250;
 
+
+
+    // print the letter Q code
+    printMorseCharacter(MorseArray[(int)'Q']);
+
+
     while (1) {
         // liveliness signal
         ESP_LOGI(TAG, "Hello World");
-        printf("a in morse: %d",MorseArray[(int)'a']);
+        
         // set gpio pin 2 to high
         gpio_set_level(LED_PIN, 1);
         // Delay for 1 second
