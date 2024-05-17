@@ -19,8 +19,71 @@ int MorseArray[123] = {1,2,3};
 
 static const char *TAG = "ADC_LED_Example";
 
+
+void printMorseLED(int character) {
+    int time_delta = 300;
+
+    // handle special character
+    if (character == 3) {
+        // High for one time unit
+        gpio_set_level(LED_PIN, 0);
+        vTaskDelay(pdMS_TO_TICKS(time_delta));
+        // high for one time unit
+        gpio_set_level(LED_PIN, 0);
+        vTaskDelay(pdMS_TO_TICKS(time_delta));
+        // High for one time unit
+        gpio_set_level(LED_PIN, 0);
+        vTaskDelay(pdMS_TO_TICKS(time_delta));
+        return;
+    }
+
+
+
+
+    switch (character){
+        // print dot
+        case 0:
+            // Low for one time unit
+            gpio_set_level(LED_PIN, 0);
+            vTaskDelay(pdMS_TO_TICKS(time_delta));
+            // high for one time unit
+            gpio_set_level(LED_PIN, 1);
+            vTaskDelay(pdMS_TO_TICKS(time_delta));
+            // Low for one time unit
+            gpio_set_level(LED_PIN, 0);
+            vTaskDelay(pdMS_TO_TICKS(time_delta));
+            break;
+        case 1:
+            // High for one time unit
+            gpio_set_level(LED_PIN, 1);
+            vTaskDelay(pdMS_TO_TICKS(time_delta));
+            // high for one time unit
+            gpio_set_level(LED_PIN, 1);
+            vTaskDelay(pdMS_TO_TICKS(time_delta));
+            // High for one time unit
+            gpio_set_level(LED_PIN, 1);
+            vTaskDelay(pdMS_TO_TICKS(time_delta));
+        case 2:
+            // Low for one time unit
+            gpio_set_level(LED_PIN, 0);
+            vTaskDelay(pdMS_TO_TICKS(time_delta));
+            // Low for one time unit
+            gpio_set_level(LED_PIN, 0);
+            vTaskDelay(pdMS_TO_TICKS(time_delta));
+            // Low for one time unit
+            gpio_set_level(LED_PIN, 0);
+            vTaskDelay(pdMS_TO_TICKS(time_delta));
+    }
+}
+
+
+
+
+
+
 // print morse character and a space after
 void printMorseCharacter(int code) {
+
 
     int i = 1;
     int j = 0;
@@ -38,7 +101,7 @@ void printMorseCharacter(int code) {
 
         // extract current morse character
         character = ((code % ((int)pow(10,i))) / ((int)pow(10,j)));
-        // interpret current morse character
+        // interpret current morse character in ascii
         switch (character) {
             case 0:
                 printf(".");
@@ -50,6 +113,10 @@ void printMorseCharacter(int code) {
                 printf(" ");
                 break;
         }
+        // interpret current morse character in LED morse
+
+
+
         // incrament counters
         i++;
         j++;
@@ -169,29 +236,14 @@ void app_main(void)
     gpio_set_direction(LED_PIN, GPIO_MODE_OUTPUT);
 
     // 60 seems too quick. 125 might be the fastest
-    int time_delta = 250;
+    int time_delta = 1000;
 
-
-
-    // print the letter Q code
-    // printMorseCharacter(MorseArray[(int)'H']);
-    // printMorseCharacter(MorseArray[(int)'E']);
-    // printMorseCharacter(MorseArray[(int)'L']);
-    // printMorseCharacter(MorseArray[(int)'L']);
-    // printMorseCharacter(MorseArray[(int)'O']);
-
-    // printMorseCharacter(MorseArray[(int)' ']);
-
-    // printMorseCharacter(MorseArray[(int)'E']);
-    // printMorseCharacter(MorseArray[(int)'S']);
-    // printMorseCharacter(MorseArray[(int)'P']);
-    // printMorseCharacter(MorseArray[(int)'3']);
-    // printMorseCharacter(MorseArray[(int)'2']);
-    // printf("\n");
 
     const char* message = "Hello esp32\0";
 
     printMorseString(message);
+
+    vTaskDelay(pdMS_TO_TICKS(5000));
 
 
     while (1) {
