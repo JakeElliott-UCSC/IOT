@@ -85,6 +85,8 @@ void printMorseString(const char* message){
 void app_main(void)
 {
     // set morse code values
+    MorseArray[(int)' '] = 2;
+
     MorseArray[(int)'a'] = 210;
     MorseArray[(int)'b'] = 20001;
     MorseArray[(int)'c'] = 20101;
@@ -164,7 +166,19 @@ void app_main(void)
 
 
     // print the letter Q code
-    printMorseCharacter(MorseArray[(int)'Q']);
+    printMorseCharacter(MorseArray[(int)'H']);
+    printMorseCharacter(MorseArray[(int)'E']);
+    printMorseCharacter(MorseArray[(int)'L']);
+    printMorseCharacter(MorseArray[(int)'L']);
+    printMorseCharacter(MorseArray[(int)'O']);
+
+    printMorseCharacter(MorseArray[(int)' ']);
+
+    printMorseCharacter(MorseArray[(int)'W']);
+    printMorseCharacter(MorseArray[(int)'O']);
+    printMorseCharacter(MorseArray[(int)'R']);
+    printMorseCharacter(MorseArray[(int)'L']);
+    printMorseCharacter(MorseArray[(int)'D']);
     printf("\n");
 
 
