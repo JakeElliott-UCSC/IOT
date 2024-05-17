@@ -21,17 +21,19 @@ void app_main(void)
     esp_rom_gpio_pad_select_gpio(LED_PIN);
     gpio_set_direction(LED_PIN, GPIO_MODE_OUTPUT);
 
+    int time_delta = 500;
+
     while (1) {
         // liveliness signal
         ESP_LOGI(TAG, "Hello World");
         // set gpio pin 2 to high
         gpio_set_level(LED_PIN, 1);
         // Delay for 1 second
-        vTaskDelay(pdMS_TO_TICKS(1000));
+        vTaskDelay(pdMS_TO_TICKS(time_delta));
 
         gpio_set_level(LED_PIN, 0);
 
-        vTaskDelay(pdMS_TO_TICKS(1000));
+        vTaskDelay(pdMS_TO_TICKS(time_delta));
 
 
         // int adc_value = adc1_get_raw(ADC_CHANNEL);  // Get ADC value
