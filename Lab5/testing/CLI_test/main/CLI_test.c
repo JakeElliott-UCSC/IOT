@@ -51,7 +51,7 @@ void app_main(void) {
         if (len > 0) {
             data[len] = '\0'; // Null-terminate the received data
             //parse_and_execute_command((char *)data);
-            printf("first character: %c",data[0]);
+            printf("first character: %c\n",data[0]);
         }
         vTaskDelay(100 / portTICK_PERIOD_MS); // Delay to prevent task from consuming too much CPU
     }
