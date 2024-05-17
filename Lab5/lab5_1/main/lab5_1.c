@@ -45,7 +45,7 @@ void printMorseLED(int character) {
             vTaskDelay(pdMS_TO_TICKS(time_delta));
             // Low for three time units
             gpio_set_level(LED_PIN, 0);
-            vTaskDelay(pdMS_TO_TICKS(time_delta * 3));
+            vTaskDelay(pdMS_TO_TICKS(time_delta * 10));
             break;
         case 1:
             // Low for one time unit
@@ -61,7 +61,7 @@ void printMorseLED(int character) {
         case 2:
             // Low for 5 time units
             gpio_set_level(LED_PIN, 0);
-            vTaskDelay(pdMS_TO_TICKS(time_delta*5));
+            vTaskDelay(pdMS_TO_TICKS(time_delta*20));
             break;
     }
 }
