@@ -30,14 +30,22 @@ void printMorseCharacter(int code) {
 
     while (character != 2) {
 
-        if (character == 2) {
-            break;
-        }
         //printf("flag\n");
         //printf("i: %d, j: %d\n",i,j);
         character = ((code % ((int)pow(10,i))) / ((int)pow(10,j)));
-        printf("character num: %d\n",character);
+        //printf("character num: %d\n",character);
 
+        switch (character) {
+            case 0:
+                printf(".");
+                break;
+            case 1:
+                printf("-");
+                break;
+            case 2:
+                printf(" ");
+                break;
+        }
         i++;
         j++;
         if (i > 20) {
@@ -157,6 +165,7 @@ void app_main(void)
 
     // print the letter Q code
     printMorseCharacter(MorseArray[(int)'Q']);
+    printf("\n");
 
 
     while (1) {
