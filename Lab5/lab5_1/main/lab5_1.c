@@ -21,7 +21,7 @@ static const char *TAG = "ADC_LED_Example";
 
 
 void printMorseLED(int character) {
-    int time_delta = 300;
+    int time_delta = 500;
 
     // handle special character
     if (character == 3) {
