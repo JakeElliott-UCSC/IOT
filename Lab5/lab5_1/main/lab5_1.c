@@ -21,19 +21,13 @@ static const char *TAG = "ADC_LED_Example";
 
 
 void printMorseLED(int character) {
-    int time_delta = 500;
+    int time_delta = 200;
 
     // handle special character
     if (character == 3) {
         // High for one time unit
         gpio_set_level(LED_PIN, 0);
-        vTaskDelay(pdMS_TO_TICKS(time_delta));
-        // high for one time unit
-        gpio_set_level(LED_PIN, 0);
-        vTaskDelay(pdMS_TO_TICKS(time_delta));
-        // High for one time unit
-        gpio_set_level(LED_PIN, 0);
-        vTaskDelay(pdMS_TO_TICKS(time_delta));
+        vTaskDelay(pdMS_TO_TICKS(time_delta * 5));
         return;
     }
 
@@ -49,31 +43,25 @@ void printMorseLED(int character) {
             // high for one time unit
             gpio_set_level(LED_PIN, 1);
             vTaskDelay(pdMS_TO_TICKS(time_delta));
+            // Low for three time units
+            gpio_set_level(LED_PIN, 0);
+            vTaskDelay(pdMS_TO_TICKS(time_delta * 2));
+            break;
+        case 1:
             // Low for one time unit
             gpio_set_level(LED_PIN, 0);
             vTaskDelay(pdMS_TO_TICKS(time_delta));
-            break;
-        case 1:
-            // High for one time unit
+            // high for three time units
             gpio_set_level(LED_PIN, 1);
-            vTaskDelay(pdMS_TO_TICKS(time_delta));
-            // high for one time unit
-            gpio_set_level(LED_PIN, 1);
-            vTaskDelay(pdMS_TO_TICKS(time_delta));
-            // High for one time unit
-            gpio_set_level(LED_PIN, 1);
+            vTaskDelay(pdMS_TO_TICKS(time_delta * 3));
+            // Low for one time unit
+            gpio_set_level(LED_PIN, 0);
             vTaskDelay(pdMS_TO_TICKS(time_delta));
             break;
         case 2:
-            // Low for one time unit
+            // Low for 5 time units
             gpio_set_level(LED_PIN, 0);
-            vTaskDelay(pdMS_TO_TICKS(time_delta));
-            // Low for one time unit
-            gpio_set_level(LED_PIN, 0);
-            vTaskDelay(pdMS_TO_TICKS(time_delta));
-            // Low for one time unit
-            gpio_set_level(LED_PIN, 0);
-            vTaskDelay(pdMS_TO_TICKS(time_delta));
+            vTaskDelay(pdMS_TO_TICKS(time_delta*5));
             break;
     }
 }
