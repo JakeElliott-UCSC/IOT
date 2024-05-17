@@ -29,6 +29,10 @@ void printMorseCharacter(int code) {
 
 
     while (character != 2) {
+
+        if (character == 2) {
+            break;
+        }
         //printf("flag\n");
         //printf("i: %d, j: %d\n",i,j);
         character = ((code % ((int)pow(10,i))) / ((int)pow(10,j)));
