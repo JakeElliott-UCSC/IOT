@@ -1,7 +1,7 @@
 import gpiozero
 import time
 
-led = LED(17)
+led = gpiozero.LED(17)
 
 
 while true:
