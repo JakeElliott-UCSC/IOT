@@ -8,7 +8,7 @@ x = 0
 
 while x < 20:
     led.on()
-    time.sleep(1)
+    time.sleep(0.25)
     led.off()
-    time.sleep(1)
+    time.sleep(0.25)
     x = x+1
