@@ -72,13 +72,17 @@ MorseArray = {
 x = 0
 time_delta = 0.2
 
+def printMorse(message):
+    for i in message:
+        for j in MorseArray[i]:
+            print(j,end='')
+        print(' ',end='')
+    print()
 
-for i in "Hello World":
-    for j in MorseArray[i]:
-        print(j,end='')
-    print(' ',end='')
 
-print()
+printMorse("Hello World")
+printMorse("ESP")
+
 
 
 while x < 20:
