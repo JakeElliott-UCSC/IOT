@@ -110,8 +110,8 @@ def printMorse(message):
     print()
 
 
-print("from Python: " + sys.argv[0])
 print("from Python: " + sys.argv[1])
+print("from Python: " + sys.argv[2])
 
 
 
