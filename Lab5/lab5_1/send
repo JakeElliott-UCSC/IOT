@@ -1,0 +1,7 @@
+#!/bin/sh
+
+
+COUNT=$1
+MESSAGE=$2
+
+python3 FlashLED.py $COUNT $MESSAGE
