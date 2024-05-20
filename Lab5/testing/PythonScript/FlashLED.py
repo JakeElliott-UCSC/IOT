@@ -109,10 +109,11 @@ def printMorse(message):
         print(' ',end='',flush=True)
     print()
 
-print("Arg2: " + sys.argv[2])
+message = " ".join(sys.argv[2:])
 
+print("Arg2: " + message)
 # print the message  multiple times
 for rep in range(int(sys.argv[1])):
-    printMorse(sys.argv[2])
+    printMorse(message)
 
 
