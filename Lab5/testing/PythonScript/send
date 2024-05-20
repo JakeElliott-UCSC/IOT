@@ -1,5 +1,5 @@
 #!/bin/sh
-ls
+
 
 COUNT=$1
 MESSAGE=$2

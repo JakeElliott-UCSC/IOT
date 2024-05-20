@@ -1,14 +1,8 @@
 import gpiozero
 import time
+import sys
 
 led = gpiozero.LED(17)
-
-# MorseArray = [0] * 123
-
-# # 'a' = 97 in decimal
-# MorseArray[ord('a') - ord('0')] = 210
-
-# print(MorseArray[ord('a') - ord('0')])
 
 MorseArray = {
     ' ':[' '],
@@ -79,9 +73,17 @@ MorseArray = {
               }
 
 
-
 x = 0
 time_delta = 0.2
+
+
+
+
+
+
+
+
+
 
 def printMorse(message):
     for i in message:
@@ -108,8 +110,37 @@ def printMorse(message):
     print()
 
 
+print("from Python: " + sys.argv[0])
+print("from Python: " + sys.argv[1])
+
+
+
+
+
+
 printMorse("Hello World")
 printMorse("ESP 32")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
