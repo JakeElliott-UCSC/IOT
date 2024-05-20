@@ -45,8 +45,10 @@ x = 0
 time_delta = 0.2
 
 
+for i in "Hello World":
+    print(MorseArray[i],end='')
 
-
+print()
 
 
 while x < 20:
