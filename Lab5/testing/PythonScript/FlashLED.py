@@ -8,7 +8,7 @@ MorseArray = [0] * 123
 # 'a' = 97 in decimal
 MorseArray[ord('a') - ord('0')] = 210
 
-print(ord('a') - ord('0'))
+print(MorseArray[ord('a') - ord('0')])
 
 
 x = 0
