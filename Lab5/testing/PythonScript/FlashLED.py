@@ -87,7 +87,23 @@ def printMorse(message):
     for i in message:
         for j in MorseArray[i]:
             print(j,end='')
-        print(' ',end='')
+            if j == '.':
+                led.off()
+                time.sleep(time_delta)
+                led.on()
+                time.sleep(time_delta)
+                led.off()
+                time.sleep(time_delta*10)
+            if j == '-':
+                led.off()
+                time.sleep(time_delta)
+                led.on()
+                time.sleep(time_delta*10)
+                led.off()
+                time.sleep(time_delta)
+            if j == ' ':
+                led.off()
+                time.sleep(time_delta*20)
     print()
 
 
