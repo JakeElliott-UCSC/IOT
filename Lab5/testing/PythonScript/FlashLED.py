@@ -3,8 +3,26 @@ import time
 
 led = gpiozero.LED(17)
 
+MorseArray = []
+
+# 'a' = 97 in decimal
+MorseArray['a'] = 210
+
+print(MorseArray[97])
+
+
 x = 0
 time_delta = 0.2
+
+
+
+
+
+
+
+
+
+
 
 while x < 20:
     led.on()
