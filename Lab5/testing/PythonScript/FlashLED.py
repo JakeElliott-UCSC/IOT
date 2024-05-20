@@ -3,12 +3,22 @@ import time
 
 led = gpiozero.LED(17)
 
-MorseArray = [0] * 123
+# MorseArray = [0] * 123
 
-# 'a' = 97 in decimal
-MorseArray[ord('a') - ord('0')] = 210
+# # 'a' = 97 in decimal
+# MorseArray[ord('a') - ord('0')] = 210
 
-print(MorseArray[ord('a') - ord('0')])
+# print(MorseArray[ord('a') - ord('0')])
+
+MorseArray = {
+    'a':210,
+    'b':20001
+              }
+
+
+print(MorseArray['a'])
+
+
 
 
 x = 0
