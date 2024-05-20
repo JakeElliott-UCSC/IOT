@@ -11,6 +11,7 @@ led = gpiozero.LED(17)
 # print(MorseArray[ord('a') - ord('0')])
 
 MorseArray = {
+    ' ':[' '],
     'a':['.','-'],
     'b':['-','.','.','.'],
     'c':['-','.','-','.'],
