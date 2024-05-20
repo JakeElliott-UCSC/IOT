@@ -4,6 +4,4 @@
 COUNT=$1
 MESSAGE=$2
 
-echo "$COUNT $MESSAGE"
-
 python3 FlashLED.py $COUNT $MESSAGE

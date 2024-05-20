@@ -109,7 +109,7 @@ def printMorse(message):
         print(' ',end='',flush=True)
     print()
 
-
+print("Arg2: " + sys.argv[2])
 
 # print the message  multiple times
 for rep in range(int(sys.argv[1])):
