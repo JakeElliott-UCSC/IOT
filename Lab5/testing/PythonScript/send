@@ -4,4 +4,4 @@ ls
 COUNT=$1
 MESSAGE=$2
 
-echo "$COUNT $MEESSAGE"
+echo "$COUNT $COUNT"
