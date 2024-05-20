@@ -22,6 +22,7 @@ print(MorseArray['b'])
 
 for i in MorseArray['b']:
     print(i,end='')
+print()
 
 
 x = 0
