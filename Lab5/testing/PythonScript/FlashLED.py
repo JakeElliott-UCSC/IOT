@@ -86,7 +86,7 @@ time_delta = 0.2
 def printMorse(message):
     for i in message:
         for j in MorseArray[i]:
-            print(j,end='')
+            print(j,end='',flush=True)
             if j == '.':
                 led.off()
                 time.sleep(time_delta)
@@ -104,7 +104,7 @@ def printMorse(message):
             if j == ' ':
                 led.off()
                 time.sleep(time_delta*20)
-        print(' ',end='')
+        print(' ',end='',flush=True)
     print()
 
 
