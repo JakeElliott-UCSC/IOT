@@ -6,7 +6,7 @@ led = gpiozero.LED(17)
 MorseArray = [0] * 123
 
 # 'a' = 97 in decimal
-MorseArray[ord('5') - ord('0')] = 210
+MorseArray[ord('a') - ord('0')] = 210
 
 print(MorseArray[97])
 
