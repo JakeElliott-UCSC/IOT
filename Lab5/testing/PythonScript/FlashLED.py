@@ -116,7 +116,7 @@ print("from Python: " + sys.argv[2])
 
 
 for rep in range(int(sys.argv[1])):
-    printf(sys.argv[2])
+    print(sys.argv[2])
     #printMorse(sys.argv[2])
 
 
