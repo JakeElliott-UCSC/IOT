@@ -46,7 +46,9 @@ time_delta = 0.2
 
 
 for i in "hello world":
-    print(MorseArray[i],end='')
+    for j in MorseArray[i]:
+        print(j,end='')
+    print(' ',end='')
 
 print()
 
