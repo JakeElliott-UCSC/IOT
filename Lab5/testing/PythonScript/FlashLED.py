@@ -5,7 +5,7 @@ import sys
 led = gpiozero.LED(17)
 
 MorseArray = {
-    ' ':[' '],
+    ' ':['/ '],
     'a':['.','-'],
     'b':['-','.','.','.'],
     'c':['-','.','-','.'],
@@ -110,45 +110,9 @@ def printMorse(message):
     print()
 
 
-print("from Python: " + sys.argv[1])
-print("from Python: " + sys.argv[2])
 
-
-
+# print the message  multiple times
 for rep in range(int(sys.argv[1])):
-    print(sys.argv[2])
-    #printMorse(sys.argv[2])
+    printMorse(sys.argv[2])
 
 
-printMorse("Hello World")
-printMorse("ESP 32")
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-while x < 20:
-    led.on()
-    time.sleep(time_delta)
-    led.off()
-    time.sleep(time_delta)
-    x = x+1
