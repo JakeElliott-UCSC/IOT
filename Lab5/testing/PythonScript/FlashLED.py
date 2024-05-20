@@ -12,24 +12,20 @@ led = gpiozero.LED(17)
 
 MorseArray = {
     'a':210,
-    'b':20001
+    'b':[1,0,0,0]
               }
 
 
 
 
-print(MorseArray['a'])
+print(MorseArray['b'])
 
-
+for i in MorseArray['b']:
+    print(i)
 
 
 x = 0
 time_delta = 0.2
-
-
-
-
-
 
 
 
