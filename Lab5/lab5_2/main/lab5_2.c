@@ -140,6 +140,7 @@ void app_main(void)
 
         morseSignal = readMorse(debouncedSignal);
         printf("Morse Signal: %d\n",morseSignal);
+        printf("charIncoming: %d\n",charIncoming);
 
         // if we see a space character, a new morse character is comming
         if (morseSignal == 2) {
