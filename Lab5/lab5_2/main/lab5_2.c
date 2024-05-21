@@ -110,11 +110,11 @@ void printMorse(int symbol) {
     switch (symbol) {
         case 0:
         printf(".");
-        fflush(stdout);
+        //fflush(stdout);
         break;
         case 1:
         printf("-");
-        fflush(stdout);
+        //fflush(stdout);
         break;
         case 10:
         //printf("Nothing\n");
@@ -127,6 +127,7 @@ void printMorse(int symbol) {
 
 void app_main(void)
 {
+    setbuf(stdout, NULL);
     // Configure ADC
     adc1_config_width(ADC_WIDTH_BIT_12);  // Set ADC width to 12 bits
     adc1_config_channel_atten(ADC_CHANNEL, ADC_ATTEN_DB_0);  // Set attenuation to 0dB
