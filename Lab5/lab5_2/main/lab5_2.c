@@ -64,7 +64,7 @@ int readMorse(int signal) {
         readArray[i] = oldval;
         // prevent memory fault error
         if (i < (READ_ARRAY_SIZE - 1)){
-            oldval = readArray[i+1]
+            oldval = readArray[i+1];
         }
     }
 
