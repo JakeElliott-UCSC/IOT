@@ -65,10 +65,6 @@ void readMorse(int signal) {
         shiftval = readArray[i];
         readArray[i] = oldval;
         oldval = shiftval;
-        // prevent memory fault error
-        if (i < (READ_ARRAY_SIZE - 1)){
-            oldval = readArray[i+1];
-        }
     }
 
     // interpret the data (first 10 bits)
