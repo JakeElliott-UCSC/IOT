@@ -82,7 +82,7 @@ int readMorse(int signal) {
         printf(".");
     }
     else if (morseCharacter == 0) {
-        printf(" ")
+        printf(" ");
     }
 
 
