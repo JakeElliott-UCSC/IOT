@@ -8,28 +8,32 @@
 
 static const char *TAG = "ADC Example";
 
-int debounceArray[3];
+int debounceArray[4];
 int debouncedSignal = 0;
 
 void debounceSignal(int signal) {
     // enter values into array
     int oldValue0;
     int oldValue1;
+    int oldValue2;
     oldValue0 = debounceArray[0];
     oldValue1 = debounceArray[1];
+    oldValue2 = debounceArray[2];
     if (signal > 40) {
         debounceArray[0] = 1;
         debounceArray[1] = oldValue0;
         debounceArray[2] = oldValue1;
+        debounceArray[3] = oldValue2;
     }
     else {
         debounceArray[0] = 0;
         debounceArray[1] = oldValue0;
         debounceArray[2] = oldValue1;
+        debounceArray[3] = oldValue2;
     }
 
     // interpret debounce array
-    int highSignal = debounceArray[0] + debounceArray[0] + debounceArray[0];
+    int highSignal = debounceArray[0] + debounceArray[1] + debounceArray[2] + debounceArray[3];
     if (highSignal == 3) {
         debouncedSignal = 1;
     }
@@ -58,6 +62,6 @@ void app_main(void)
         else {
             ESP_LOGE(TAG, "Light Off");
         }
-        vTaskDelay(pdMS_TO_TICKS(500));  // Delay for 1 second
+        vTaskDelay(pdMS_TO_TICKS(250));  // Delay for 1 second
     }
 }
