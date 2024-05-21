@@ -52,7 +52,7 @@ void debounceSignal(int signal) {
 }
 
 // each bit read is 0.025 seconds
-int readMorse(signal) {
+int readMorse(int signal) {
     
     // feed new data into array
     int oldval = readArray[0];
