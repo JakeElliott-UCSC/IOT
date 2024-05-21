@@ -29,7 +29,7 @@ void debounceSignal(int signal) {
     }
 
     // interpret debounce array
-    int highSignal = debounceArray[0] + debounceArray[0] + debounceArray[0]
+    int highSignal = debounceArray[0] + debounceArray[0] + debounceArray[0];
     if (highSignal == 3) {
         debouncedSignal = 1;
     }
