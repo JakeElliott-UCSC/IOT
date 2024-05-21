@@ -58,7 +58,7 @@ void debounceSignal(int signal) {
 // 1 = - (4 bits)
 // 0 = . (32 bits)
 // 2 = space
-void readMorse(int signal) {
+int readMorse(int signal) {
     
     // feed new data into array
     int oldval = readArray[0];
