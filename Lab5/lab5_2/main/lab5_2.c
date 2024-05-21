@@ -15,6 +15,9 @@ int debouncedSignal = 0;
 
 int readArray[READ_ARRAY_SIZE];
 
+int charIncoming = 1;
+int morseSignal = 0;
+
 
 // dash - high for 800
 // dot - high for 100
@@ -52,6 +55,9 @@ void debounceSignal(int signal) {
 }
 
 // each bit read is 0.025 seconds
+// 1 = - (4 bits)
+// 0 = . (32 bits)
+// 2 = space
 void readMorse(int signal) {
     
     // feed new data into array
@@ -73,16 +79,29 @@ void readMorse(int signal) {
         morseCharacter += readArray[i];
     }
 
+    if (morseCharacter == 0){
+        return 2;
+    }
+    else if (morseCharacter == 10) {
+        return 1;
+    }
+    else if ((readArray[0] + readArray[READ_ARRAY_SIZE-1] == 0) && morseCharacter > 4) {
+
+    }
+
     //printf("morseCharacter: %d\n",morseCharacter);
-    if (morseCharacter > 6) {
-        printf("-");
-    }
-    else if (morseCharacter > 4) {
-        printf(".");
-    }
-    else if (morseCharacter == 0) {
-        printf(" ");
-    }
+    // if (morseCharacter > 6) {
+    //     //printf("-");
+    //     return 1;
+    // }
+    // else if (morseCharacter > 4) {
+    //     //printf(".");
+    //     return 0;
+    // }
+    // else if (morseCharacter == 0) {
+    //     //printf(" ");
+    //     return 2;
+    // }
 
 }
 
@@ -110,7 +129,19 @@ void app_main(void)
         //     ESP_LOGE(TAG, "Light Off");
         // }
 
-        readMorse(debouncedSignal);
+        morseSignal = readMorse(debouncedSignal);
+
+        // if we see a space character, a new morse character is comming
+        if (morseSignal == 2) {
+            charIncoming = 1;
+        }
+        // if we just recieved a character, stop expecting one for now
+        else {
+            charIncoming = 0;
+        }
+
+
+
 
         vTaskDelay(pdMS_TO_TICKS(20));  // Delay for 0.02 seconds
     }
