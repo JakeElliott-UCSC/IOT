@@ -104,12 +104,15 @@ void app_main(void)
 
         debounceSignal(adc_value);
 
-        if (debouncedSignal) {
-            ESP_LOGI(TAG, "Light On");
-        }
-        else {
-            ESP_LOGE(TAG, "Light Off");
-        }
+        // if (debouncedSignal) {
+        //     ESP_LOGI(TAG, "Light On");
+        // }
+        // else {
+        //     ESP_LOGE(TAG, "Light Off");
+        // }
+
+        readMorse(debouncedSignal);
+
         vTaskDelay(pdMS_TO_TICKS(20));  // Delay for 0.02 seconds
     }
 }
