@@ -109,10 +109,10 @@ int readMorse(int signal) {
 void printMorse(int symbol) {
     switch (symbol) {
         case 0:
-        printf(".");
+        printf(".\n");
         break;
         case 1:
-        printf("-");
+        printf("-\n");
         break;
         case 10:
         //printf("Nothing\n");
@@ -153,7 +153,7 @@ void app_main(void)
         //printf("charIncoming: %d\n",charIncoming);
         if (charIncoming) {
             printMorse(morseSignal);
-            //printf("\n");
+            // printf("\n");
             if (morseSignal == 1 || morseSignal == 0) {
                 charIncoming = 0;
             }
