@@ -73,7 +73,7 @@ void readMorse(int signal) {
         morseCharacter += readArray[i];
     }
 
-    printf("morseCharacter: %d\n",morseCharacter);
+    //printf("morseCharacter: %d\n",morseCharacter);
     if (morseCharacter > 6) {
         printf("-");
     }
