@@ -157,10 +157,10 @@ void app_main(void)
             if (morseSignal == 1 || morseSignal == 0) {
                 charIncoming = 0;
             }
-            else if (morseSignal == 2){
+        }
+        if (morseSignal == 2){
                 charIncoming = 1;
             }
-        }
         //printMorse(morseSignal);
 
 
