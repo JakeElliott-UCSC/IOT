@@ -109,10 +109,12 @@ int readMorse(int signal) {
 void printMorse(int symbol) {
     switch (symbol) {
         case 0:
-        printf(".\n");
+        printf(".");
+        fflush(stdout);
         break;
         case 1:
-        printf("-\n");
+        printf("-");
+        fflush(stdout);
         break;
         case 10:
         //printf("Nothing\n");
