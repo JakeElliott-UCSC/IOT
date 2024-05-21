@@ -80,6 +80,7 @@ int readMorse(int signal) {
     }
 
     if (morseCharacter == 0){
+        charIncoming = 1;
         return 2;
     }
     else if (morseCharacter == 10) {
@@ -145,10 +146,10 @@ void app_main(void)
         // printf("charIncoming: %d\n",charIncoming);
 
         // if we see a space character, a new morse character is comming
-        if (morseSignal == 2) {
-            charIncoming = 1;
-        }
-
+        // if (morseSignal == 2) {
+        //     charIncoming = 1;
+        // }
+        printf("charIncoming: %d/n",charIncoming);
         if (charIncoming) {
             printMorse(morseSignal);
         }
