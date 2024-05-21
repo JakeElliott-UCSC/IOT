@@ -156,9 +156,9 @@ void app_main(void)
         //printf("charIncoming: %d\n",charIncoming);
         if (charIncoming) {
             printMorse(morseSignal);
-            printf("\n");
             if (morseSignal == 1 || morseSignal == 0) {
                 charIncoming = 0;
+                printf("\n");
             }
         }
         if (morseSignal == 2){
