@@ -16,7 +16,13 @@ void app_main(void)
 
     while (1) {
         int adc_value = adc1_get_raw(ADC_CHANNEL);  // Get ADC value
-        ESP_LOGI(TAG, "ADC Value: %d", adc_value);  // Log ADC value
-        vTaskDelay(pdMS_TO_TICKS(1000));  // Delay for 1 second
+        //ESP_LOGI(TAG, "ADC Value: %d", adc_value);  // Log ADC value
+        if (adc_value > 40) {
+            ESP_LOGI(TAG, "Light On");
+        }
+        else {
+            ESP_LOGE(TAG, "Light Off");
+        }
+        vTaskDelay(pdMS_TO_TICKS(500));  // Delay for 1 second
     }
 }
