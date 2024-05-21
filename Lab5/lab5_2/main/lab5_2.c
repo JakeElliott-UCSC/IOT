@@ -44,6 +44,12 @@ void debounceSignal(int signal) {
 
 
 
+
+
+
+
+
+
 void app_main(void)
 {
     // Configure ADC
@@ -62,6 +68,6 @@ void app_main(void)
         else {
             ESP_LOGE(TAG, "Light Off");
         }
-        vTaskDelay(pdMS_TO_TICKS(250));  // Delay for 1 second
+        vTaskDelay(pdMS_TO_TICKS(10));  // Delay for 1 second
     }
 }
