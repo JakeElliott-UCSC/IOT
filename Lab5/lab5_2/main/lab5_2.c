@@ -149,7 +149,7 @@ void app_main(void)
         // if (morseSignal == 2) {
         //     charIncoming = 1;
         // }
-        printf("charIncoming: %d/n",charIncoming);
+        printf("charIncoming: %d\n",charIncoming);
         if (charIncoming) {
             printMorse(morseSignal);
         }
