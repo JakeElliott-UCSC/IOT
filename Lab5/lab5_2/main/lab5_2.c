@@ -139,14 +139,24 @@ void app_main(void)
 
         debounceSignal(adc_value);
 
-        // if (debouncedSignal) {
-        //     ESP_LOGI(TAG, "Light On");
-        // }
-        // else {
-        //     ESP_LOGE(TAG, "Light Off");
-        // }
+        // ----------------------------------------
+        if (debouncedSignal) {
+            ESP_LOGI(TAG, "Light On");
+        }
+        else {
+            ESP_LOGE(TAG, "Light Off");
+        }
+        // ----------------------------------------
 
-        morseSignal = readMorse(debouncedSignal);
+
+        // --------------------------------------------------------
+        //morseSignal = readMorse(debouncedSignal);
+        // ----------------------------------------------------------
+        
+
+
+
+
         // printf("Morse Signal: %d\n",morseSignal);
         // printf("charIncoming: %d\n",charIncoming);
 
