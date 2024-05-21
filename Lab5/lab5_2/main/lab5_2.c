@@ -6,10 +6,19 @@
 
 #define ADC_CHANNEL ADC1_CHANNEL_0  // GPIO 0 (ADC1_CH0) is used for reading
 
+#define READ_ARRAY_SIZE 10
+
 static const char *TAG = "ADC Example";
 
 int debounceArray[4];
 int debouncedSignal = 0;
+
+int readArray[READ_ARRAY_SIZE];
+
+
+// dash - high for 800
+// dot - high for 100
+
 
 void debounceSignal(int signal) {
     // enter values into array
@@ -42,8 +51,44 @@ void debounceSignal(int signal) {
     }
 }
 
+// each bit read is 0.025 seconds
+int readMorse(signal) {
+    
+    // feed new data into array
+    int oldval = readArray[0];
+    readArray[0] = signal;
+
+    // shift old data over to the right
+    int i = 0;
+    for (i = 1; i < READ_ARRAY_SIZE; i++) {
+        readArray[i] = oldval;
+        // prevent memory fault error
+        if (i < (READ_ARRAY_SIZE - 1)){
+            oldval = readArray[i+1]
+        }
+    }
+
+    // interpret the data (first 10 bits)
+    int morseCharacter = 0;
+    for (i=0;i<READ_ARRAY_SIZE;i++) {
+        morseCharacter += readArray[i];
+    }
 
 
+    if (morseCharacter > 6) {
+        printf("-");
+    }
+    else if (morseCharacter > 4) {
+        printf(".");
+    }
+    else if (morseCharacter == 0) {
+        printf(" ")
+    }
+
+
+
+
+}
 
 
 
@@ -68,6 +113,6 @@ void app_main(void)
         else {
             ESP_LOGE(TAG, "Light Off");
         }
-        vTaskDelay(pdMS_TO_TICKS(10));  // Delay for 1 second
+        vTaskDelay(pdMS_TO_TICKS(20));  // Delay for 0.02 seconds
     }
 }
