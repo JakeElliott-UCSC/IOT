@@ -106,7 +106,16 @@ int readMorse(int signal) {
 }
 
 
-
+void printMorse(int symbol) {
+    switch (symbol) {
+        case 0:
+        printf(".");
+        break;
+        case 1:
+        printf("-");
+        break;
+    }
+}
 
 
 
@@ -138,6 +147,10 @@ void app_main(void)
         // if we just recieved a character, stop expecting one for now
         else {
             charIncoming = 0;
+        }
+
+        if (charIncoming) {
+            printMorse(morseSignal)
         }
 
 
