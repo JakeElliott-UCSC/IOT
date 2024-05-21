@@ -34,7 +34,7 @@ void debounceSignal(int signal) {
         debouncedSignal = 1;
     }
     else if (highSignal == 0) {
-        debounceSignal = 0;
+        debouncedSignal = 0;
     }
 }
 
@@ -52,7 +52,7 @@ void app_main(void)
 
         debounceSignal(adc_value);
 
-        if (adebouncedSignal) {
+        if (debouncedSignal) {
             ESP_LOGI(TAG, "Light On");
         }
         else {
