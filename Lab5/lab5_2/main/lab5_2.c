@@ -86,7 +86,7 @@ int readMorse(int signal) {
         return 1;
     }
     else if ((readArray[0] + readArray[READ_ARRAY_SIZE-1] == 0) && morseCharacter > 4) {
-        return 0
+        return 0;
     }
 
     //printf("morseCharacter: %d\n",morseCharacter);
