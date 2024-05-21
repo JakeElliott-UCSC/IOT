@@ -121,7 +121,7 @@ void printMorse(int symbol) {
     //     printf("Nothing\n");
     //     break;
     // }
-    printf("symbol: %d\n");
+    printf("symbol: %d\n",symbol);
 }
 
 
