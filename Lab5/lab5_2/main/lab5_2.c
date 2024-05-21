@@ -127,7 +127,7 @@ void printMorse(int symbol) {
 
 void app_main(void)
 {
-    setbuf(stdout, NULL);
+    // setbuf(stdout, NULL);
     // Configure ADC
     adc1_config_width(ADC_WIDTH_BIT_12);  // Set ADC width to 12 bits
     adc1_config_channel_atten(ADC_CHANNEL, ADC_ATTEN_DB_0);  // Set attenuation to 0dB
@@ -156,7 +156,7 @@ void app_main(void)
         //printf("charIncoming: %d\n",charIncoming);
         if (charIncoming) {
             printMorse(morseSignal);
-            // printf("\n");
+            printf("\n");
             if (morseSignal == 1 || morseSignal == 0) {
                 charIncoming = 0;
             }
