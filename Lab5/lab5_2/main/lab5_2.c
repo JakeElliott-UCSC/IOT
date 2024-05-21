@@ -85,7 +85,8 @@ int readMorse(int signal) {
     else if (morseCharacter == 10) {
         return 1;
     }
-    else if ((readArray[0] + readArray[READ_ARRAY_SIZE-1] == 0) && morseCharacter > 4) {
+    // two 0 values on either side of 
+    else if ((readArray[0] + readArray[1] + readArray[READ_ARRAY_SIZE-1] + readArray[READ_ARRAY_SIZE-2] == 0) && morseCharacter > 2) {
         return 0;
     }
 
@@ -109,11 +110,11 @@ int readMorse(int signal) {
 void printMorse(int symbol) {
     switch (symbol) {
         case 0:
-        printf(".");
+        printf("0");
         //fflush(stdout);
         break;
         case 1:
-        printf("-");
+        printf("1");
         //fflush(stdout);
         break;
         case 10:
