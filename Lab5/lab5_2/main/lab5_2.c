@@ -119,7 +119,7 @@ void printMorse(int symbol) {
         break;
         case 10:
         printf("Nothing\n");
-        break
+        break;
     }
 }
 
