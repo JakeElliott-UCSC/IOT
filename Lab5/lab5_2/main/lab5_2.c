@@ -150,7 +150,7 @@ void app_main(void)
         }
 
         if (charIncoming) {
-            printMorse(morseSignal)
+            printMorse(morseSignal);
         }
 
 
