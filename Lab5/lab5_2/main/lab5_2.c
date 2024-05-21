@@ -86,7 +86,7 @@ int readMorse(int signal) {
         return 1;
     }
     // two 0 values on either side of 
-    else if ((readArray[0] + readArray[1] + readArray[READ_ARRAY_SIZE-1] + readArray[READ_ARRAY_SIZE-2] == 0) && morseCharacter > 2) {
+    else if ((readArray[0] + readArray[1] + readArray[READ_ARRAY_SIZE-1] + readArray[READ_ARRAY_SIZE-2] == 0) && morseCharacter > 3) {
         return 0;
     }
 
