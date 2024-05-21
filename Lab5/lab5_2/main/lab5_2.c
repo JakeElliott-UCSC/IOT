@@ -8,6 +8,38 @@
 
 static const char *TAG = "ADC Example";
 
+int debounceArray[3];
+int debouncedSignal = 0;
+
+void debounceSignal(int signal) {
+    // enter values into array
+    int oldValue0;
+    int oldValue1;
+    oldValue0 = debounceArray[0];
+    oldValue1 = debounceArray[1];
+    if (signal > 40) {
+        debounceArray[0] = 1;
+        debounceArray[1] = oldValue0;
+        debounceArray[2] = oldValue1;
+    }
+    else {
+        debounceArray[0] = 0;
+        debounceArray[1] = oldValue0;
+        debounceArray[2] = oldValue1;
+    }
+
+    // interpret debounce array
+    int highSignal = debounceArray[0] + debounceArray[0] + debounceArray[0]
+    if (highSignal == 3) {
+        debouncedSignal = 1;
+    }
+    else if (highSignal == 0) {
+        debounceSignal = 0;
+    }
+}
+
+
+
 void app_main(void)
 {
     // Configure ADC
@@ -17,7 +49,10 @@ void app_main(void)
     while (1) {
         int adc_value = adc1_get_raw(ADC_CHANNEL);  // Get ADC value
         //ESP_LOGI(TAG, "ADC Value: %d", adc_value);  // Log ADC value
-        if (adc_value > 40) {
+
+        debounceSignal(adc_value);
+
+        if (adebouncedSignal) {
             ESP_LOGI(TAG, "Light On");
         }
         else {
