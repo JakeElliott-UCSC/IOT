@@ -56,12 +56,15 @@ void readMorse(int signal) {
     
     // feed new data into array
     int oldval = readArray[0];
+    int shiftval = readArray[0];
     readArray[0] = signal;
 
     // shift old data over to the right
     int i = 0;
     for (i = 1; i < READ_ARRAY_SIZE; i++) {
+        shiftval = readArray[i];
         readArray[i] = oldval;
+        oldval = shiftval;
         // prevent memory fault error
         if (i < (READ_ARRAY_SIZE - 1)){
             oldval = readArray[i+1];
