@@ -80,15 +80,12 @@ int readMorse(int signal) {
     }
 
     if (morseCharacter == 0){
-        charIncoming = 1;
         return 2;
     }
     else if (morseCharacter == 10) {
-        charIncoming = 0;
         return 1;
     }
     else if ((readArray[0] + readArray[READ_ARRAY_SIZE-1] == 0) && morseCharacter > 4) {
-        charIncoming = 0;
         return 0;
     }
 
@@ -157,6 +154,12 @@ void app_main(void)
         if (charIncoming) {
             printMorse(morseSignal);
             printf("\n");
+            if (morseSignal == 1 || morseSignal == 0) {
+                charIncoming = 0;
+            }
+            else if (morseSignal == 2){
+                charIncoming = 1;
+            }
         }
         //printMorse(morseSignal);
 
