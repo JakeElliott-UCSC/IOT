@@ -22,7 +22,7 @@ int morseSignal = 0;
 // dash - high for 800
 // dot - high for 100
 
-
+// need to work on the precision
 void debounceSignal(int signal) {
     // enter values into array
     int oldValue0;
