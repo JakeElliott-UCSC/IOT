@@ -31,7 +31,7 @@ void debounceSignal(int signal) {
     oldValue0 = debounceArray[0];
     oldValue1 = debounceArray[1];
     oldValue2 = debounceArray[2];
-    if (signal > 40) {
+    if (signal > 45) {
         debounceArray[0] = 1;
         debounceArray[1] = oldValue0;
         debounceArray[2] = oldValue1;
