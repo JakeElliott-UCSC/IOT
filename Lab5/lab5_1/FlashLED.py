@@ -84,7 +84,9 @@ time_delta = 0.1
 
 
 
-
+# time delta is 100 ticks in esp
+# dot is up for 300 ticks
+# dash is up for 800 ticks
 def printMorse(message):
     for i in message:
         for j in MorseArray[i]:
@@ -93,9 +95,9 @@ def printMorse(message):
                 led.off()
                 time.sleep(time_delta)
                 led.on()
-                time.sleep(time_delta)
+                time.sleep(time_delta*3)
                 led.off()
-                time.sleep(time_delta*8)
+                time.sleep(time_delta*7)
             if j == '-':
                 led.off()
                 time.sleep(time_delta)

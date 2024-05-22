@@ -7,6 +7,7 @@
 #define ADC_CHANNEL ADC1_CHANNEL_0  // GPIO 0 (ADC1_CH0) is used for reading
 
 #define READ_ARRAY_SIZE 10
+#define MAIN_FREQUENCY 20
 
 static const char *TAG = "ADC Example";
 
@@ -179,6 +180,6 @@ void app_main(void)
 
 
 
-        vTaskDelay(pdMS_TO_TICKS(20));  // Delay for 0.02 seconds
+        vTaskDelay(pdMS_TO_TICKS(MAIN_FREQUENCY));  // Delay for 0.02 seconds
     }
 }
