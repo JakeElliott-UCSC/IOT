@@ -120,7 +120,7 @@ def printMorse(message):
 
 message = " ".join(sys.argv[2:])
 # debugging
-print(message);
+print(message)
 
 # print the message  multiple times
 for rep in range(int(sys.argv[1])):
