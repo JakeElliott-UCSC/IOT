@@ -185,6 +185,7 @@ void app_main(void)
                 charIncoming = 0;
                 charPrinted = 1;
                 printf(" -space count: %d\n",spaceCount);
+                spaceCount = 0;
                 // fflush(stdout);
             }
         }
