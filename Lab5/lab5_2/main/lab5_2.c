@@ -89,11 +89,11 @@ int readMorse(int signal) {
     // two 0 values on either side of 
     else if ((readArray[0] + readArray[1] + readArray[READ_ARRAY_SIZE-1] + readArray[READ_ARRAY_SIZE-2] == 0) && morseCharacter > 3) {
         // print the read array if the character is available
-        // printf("Read Array on Character: ");
-        // for (i = 0;i<READ_ARRAY_SIZE;i++) {
-        //     printf("%d",readArray[i]);
-        // }
-        // printf("\n");
+        printf("Read Array on Character: ");
+        for (i = 0;i<READ_ARRAY_SIZE;i++) {
+            printf("%d",readArray[i]);
+        }
+        printf("\n");
         return 0;
     }
 
