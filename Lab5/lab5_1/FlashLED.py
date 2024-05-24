@@ -74,7 +74,7 @@ MorseArray = {
 
 
 x = 0
-time_delta = 0.05
+time_delta = 0.1
 
 
 
@@ -95,19 +95,19 @@ def printMorse(message):
                 led.off()
                 time.sleep(time_delta)
                 led.on()
-                time.sleep(time_delta)
+                time.sleep(time_delta*0.75)
                 led.off()
-                time.sleep(time_delta*40)
+                time.sleep(time_delta*8)
             if j == '-':
                 led.off()
                 time.sleep(time_delta)
                 led.on()
                 time.sleep(time_delta*8)
                 led.off()
-                time.sleep(time_delta*40)
+                time.sleep(time_delta*8)
             if j == ' ':
                 led.off()
-                time.sleep(time_delta*40)
+                time.sleep(time_delta*20)
         print(' ',end='',flush=True)
     print()
 
