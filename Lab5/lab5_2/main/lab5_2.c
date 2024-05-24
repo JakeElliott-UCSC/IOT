@@ -17,7 +17,9 @@ int debouncedSignal = 0;
 int readArray[READ_ARRAY_SIZE];
 
 int charIncoming = 1;
+int charPrinted = 0;
 int morseSignal = 0;
+int spaceCount = 0;
 
 
 // dash - high for 800
@@ -125,7 +127,7 @@ void printMorse(int symbol) {
         fflush(stdout);
         break;
         case 2:
-        printf("Space");
+        //printf("Space");
         break;
     }
     // printf("symbol: %d\n",symbol);
@@ -174,17 +176,29 @@ void app_main(void)
         //     charIncoming = 1;
         // }
         //printf("charIncoming: %d\n",charIncoming);
+
+        // Only print a character if we are expecting one
         if (charIncoming) {
             printMorse(morseSignal);
+            // if we see a valid character, reset the incoming flag, raise the printed flag
             if (morseSignal == 1 || morseSignal == 0) {
                 charIncoming = 0;
-                printf("\n");
+                charPrinted = 1;
+                printf(" -space count: %d\n",spaceCount);
                 // fflush(stdout);
             }
         }
+        // if there is a space, reset char incoming
         if (morseSignal == 2){
                 charIncoming = 1;
-            }
+                spaceCount = spaceCount+1;
+            // if a character has been printed, put a space down
+            // if (charPrinted) {
+            //     charPrinted = 0;
+            //     printf(" ");
+            // }
+        }
+        
         //printMorse(morseSignal);
 
 
