@@ -90,7 +90,7 @@ int readMorse(int signal) {
         return 1;
     }
     // two 0 values on either side of 
-    else if ((readArray[0] + readArray[1] + readArray[READ_ARRAY_SIZE-1] + readArray[READ_ARRAY_SIZE-2] == 0) && morseCharacter > 3) {
+    else if ((readArray[0] + readArray[1] + readArray[READ_ARRAY_SIZE-1] + readArray[READ_ARRAY_SIZE-2] == 0) && morseCharacter > 2) {
         // print the read array if the character is available
         // printf("Read Array on Character: ");
         // for (i = 0;i<READ_ARRAY_SIZE;i++) {
@@ -188,7 +188,7 @@ void app_main(void)
                 }
                 // this character is coming after a space
                 else if (spaceCount > 100) {
-                    printf(" ");
+                    printf(" / ");
                 }
                 // if not above, this character is part of a word
                 printMorse(morseSignal);
@@ -208,7 +208,7 @@ void app_main(void)
             // if a character has been printed, put a space down
             if (charPrinted) {
                 charPrinted = 0;
-                printf(" ");
+                //printf(" ");
             }
         }
 
