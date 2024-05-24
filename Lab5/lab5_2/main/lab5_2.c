@@ -178,8 +178,8 @@ void app_main(void)
             printMorse(morseSignal);
             if (morseSignal == 1 || morseSignal == 0) {
                 charIncoming = 0;
-                //printf("\n");
-                fflush(stdout);
+                printf("\n");
+                // fflush(stdout);
             }
         }
         if (morseSignal == 2){
