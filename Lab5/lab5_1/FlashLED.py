@@ -101,14 +101,14 @@ def printMorse(message):
                 led.on()
                 time.sleep(time_delta*0.75) # 75 ticks / 3 main loops
                 led.off()
-                time.sleep(time_delta*8) # 800 ticks / 32 main loops
+                time.sleep(time_delta*8.25) # 800 ticks / 32 main loops
             if j == '-':
                 led.off()
                 time.sleep(time_delta) # 100 ticks / 4 main loops
                 led.on()
                 time.sleep(time_delta*3) # 300 ticks / 12 main loops
                 led.off()
-                time.sleep(time_delta*6) # 600 ticks / 24 main loops
+                time.sleep(time_delta*8) # 600 ticks / 24 main loops
             if j == '/ ':
                 led.off()
                 time.sleep(time_delta*20) # 2000 ticks / 80 main loops
@@ -125,6 +125,7 @@ print(message)
 # print the message  multiple times
 for rep in range(int(sys.argv[1])):
     printMorse(message)
-    time.sleep(time_delta * 30) # 5000 ticks / 200 main loops
+    # new line
+    time.sleep(time_delta * 30) # 3000 ticks / 120 main loops
 
 
