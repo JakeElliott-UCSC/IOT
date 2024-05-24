@@ -20,6 +20,7 @@ int charIncoming = 1;
 int charPrinted = 0;
 int morseSignal = 0;
 int spaceCount = 0;
+int idle = 0;
 
 
 // dash - high for 800
@@ -179,13 +180,24 @@ void app_main(void)
 
         // Only print a character if we are expecting one
         if (charIncoming) {
-            printMorse(morseSignal);
             // if we see a valid character, reset the incoming flag, raise the printed flag
             if (morseSignal == 1 || morseSignal == 0) {
+                // This character is coming after a new line
+                if (spaceCount > 150) {
+                    printf("\n");
+                }
+                // this character is coming after a space
+                else if (spaceCount > 100) {
+                    printf(" ");
+                }
+                // if not above, this character is part of a word
+                printMorse(morseSignal);
                 charIncoming = 0;
                 charPrinted = 1;
-                printf(" -space count: %d\n",spaceCount);
+                // this new line print flushes stdout
+                //printf(" -space count: %d\n",spaceCount);
                 spaceCount = 0;
+                idle = 0;
                 // fflush(stdout);
             }
         }
@@ -194,10 +206,15 @@ void app_main(void)
                 charIncoming = 1;
                 spaceCount = spaceCount+1;
             // if a character has been printed, put a space down
-            // if (charPrinted) {
-            //     charPrinted = 0;
-            //     printf(" ");
-            // }
+            if (charPrinted) {
+                charPrinted = 0;
+                printf(" ");
+            }
+        }
+
+        if (idle == 0 && spaceCount > 500) {
+            printf("\n");
+            idle = 1;
         }
         
         //printMorse(morseSignal);
