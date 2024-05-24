@@ -109,7 +109,7 @@ def printMorse(message):
                 time.sleep(time_delta*3) # 300 ticks / 12 main loops
                 led.off()
                 time.sleep(time_delta*6) # 600 ticks / 24 main loops
-            if j == ' ':
+            if j == '/':
                 led.off()
                 time.sleep(time_delta*20) # 2000 ticks / 80 main loops
         print(' ',end='',flush=True)
