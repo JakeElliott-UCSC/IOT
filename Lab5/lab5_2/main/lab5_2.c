@@ -124,8 +124,8 @@ void printMorse(int symbol) {
         printf("1");
         fflush(stdout);
         break;
-        case 10:
-        //printf("Nothing\n");
+        case 2:
+        printf("Space");
         break;
     }
     // printf("symbol: %d\n",symbol);
