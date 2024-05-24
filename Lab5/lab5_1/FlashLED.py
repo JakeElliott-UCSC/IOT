@@ -88,33 +88,43 @@ time_delta = 0.1
 # dot is up for 300 ticks
 # dash is up for 800 ticks
 def printMorse(message):
+    # iterate over recieved text
     for i in message:
+        # iterate over morse code version of each ascii character
         for j in MorseArray[i]:
+            # print the morse character
             print(j,end='',flush=True)
+            # flash the morse character
             if j == '.':
                 led.off()
-                time.sleep(time_delta)
+                time.sleep(time_delta) # 100 ticks / 4 main loops
                 led.on()
-                time.sleep(time_delta*0.75)
+                time.sleep(time_delta*0.75) # 75 ticks / 3 main loops
                 led.off()
-                time.sleep(time_delta*8)
+                time.sleep(time_delta*8) # 800 ticks / 32 main loops
             if j == '-':
                 led.off()
-                time.sleep(time_delta)
+                time.sleep(time_delta) # 100 ticks / 4 main loops
                 led.on()
-                time.sleep(time_delta*3)
+                time.sleep(time_delta*3) # 300 ticks / 12 main loops
                 led.off()
-                time.sleep(time_delta*6)
+                time.sleep(time_delta*6) # 600 ticks / 24 main loops
             if j == ' ':
                 led.off()
-                time.sleep(time_delta*20)
+                time.sleep(time_delta*20) # 2000 ticks / 80 main loops
         print(' ',end='',flush=True)
     print()
 
+
+# runtime code
+
 message = " ".join(sys.argv[2:])
+# debugging
+print(message);
 
 # print the message  multiple times
 for rep in range(int(sys.argv[1])):
     printMorse(message)
+    time.sleep(time_delta * 50) # 5000 ticks / 200 main loops
 
 
