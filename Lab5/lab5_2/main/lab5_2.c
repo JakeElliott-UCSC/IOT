@@ -82,8 +82,14 @@ int readMorse(int signal) {
 
     if (morseCharacter == 0){
         return 2;
-    }
+    } 
     else if (morseCharacter == 10) {
+        // print the read array if the character is available
+        printf("Read Array on Character: ");
+        for (i = 0;i<READ_ARRAY_SIZE;i++) {
+            prnitf("%d",readArray[i]);
+        }
+        printf("\n");
         return 1;
     }
     // two 0 values on either side of 
@@ -143,10 +149,12 @@ void app_main(void)
         // ----------------------------------------
         if (debouncedSignal) {
             ESP_LOGI(TAG, "Light On");
+            
         }
         else {
             ESP_LOGE(TAG, "Light Off");
         }
+        printf("Light Value: %d",adc_value);
         // ----------------------------------------
 
 
