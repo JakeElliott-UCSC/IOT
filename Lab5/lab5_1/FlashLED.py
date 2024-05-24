@@ -112,6 +112,8 @@ def printMorse(message):
             if j == '/':
                 led.off()
                 time.sleep(time_delta*50) # 2000 ticks / 80 main loops
+            if j == '5':
+                print("placeholder")
         print(' ',end='',flush=True)
     print()
 
