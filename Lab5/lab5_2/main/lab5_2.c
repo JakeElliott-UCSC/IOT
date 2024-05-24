@@ -7,7 +7,7 @@
 #define ADC_CHANNEL ADC1_CHANNEL_0  // GPIO 0 (ADC1_CH0) is used for reading
 
 #define READ_ARRAY_SIZE 10
-#define MAIN_FREQUENCY 20
+#define MAIN_FREQUENCY 25
 
 static const char *TAG = "ADC Example";
 
