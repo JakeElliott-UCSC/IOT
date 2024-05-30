@@ -36,7 +36,7 @@ static void init_hcsr04() {
 }
 
 // activate distance sensor
-static int64_t measure_distance() {
+static int64_t measure_distance(float temperature) {
     // Send trigger pulse
     gpio_set_level(TRIG_PIN, 1);
     esp_rom_delay_us(10);  // 10 microseconds delay
@@ -55,8 +55,11 @@ static int64_t measure_distance() {
     int64_t end_time = esp_timer_get_time();
     int64_t duration = end_time - start_time;
 
-    // Calculate distance in centimeters
-    int64_t distance = (duration * 0.034) / 2;
+    // determine speed of sound in this temperature
+    int64_t speed = (331 + (0.61*temperature))/1000000;
+
+    // Calculate distance in centimeters (previously using 0.034 for speed)
+    int64_t distance = (duration * speed) / 2;
 
     return distance;
 }
@@ -328,7 +331,6 @@ void app_main(void)
     flushSHTC3();
     // wake up, read temp and humidity, wait 2 seconds, shutdown
     while (1) {
-        int64_t distance = measure_distance();
         WakeupSHTC3();
         //printf("Temperature and Humidity:\n");
         if (read_temperature(&temperature) == ESP_OK) {
@@ -345,8 +347,11 @@ void app_main(void)
             printf("Failed to read humidity!\n");
         }
         ShutdownSHTC3();
-        printf("Temperature: %f\n",temperature);
-        printf("Distance: %lld cm\n", distance);
+
+        int64_t distance = measure_distance(temperature);
+
+        //printf("Temperature: %f\n",temperature);
+        printf("Distance: %lld cm at %f C\n", distance,temperature);
         vTaskDelay(pdMS_TO_TICKS(2000)); // Poll every 2 seconds
     }
 }
