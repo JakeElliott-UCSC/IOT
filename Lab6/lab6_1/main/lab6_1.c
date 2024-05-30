@@ -352,6 +352,6 @@ void app_main(void)
 
         //printf("Temperature: %f\n",temperature);
         printf("Distance: %lld cm at %d C\n", distance,(int)temperature);
-        vTaskDelay(pdMS_TO_TICKS(2000)); // Poll every 2 seconds
+        vTaskDelay(pdMS_TO_TICKS(1000)); // Poll every 2 seconds
     }
 }
