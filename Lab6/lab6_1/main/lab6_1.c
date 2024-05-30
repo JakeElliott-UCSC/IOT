@@ -56,7 +56,7 @@ static int64_t measure_distance(float temperature) {
     int64_t duration = end_time - start_time;
 
     // determine speed of sound in this temperature
-    int64_t speed = (331 + (0.61*temperature))/10000;
+    float speed = (331 + (0.61*temperature))/10000;
 
     // Calculate distance in centimeters (previously using 0.034 for speed)
     int64_t distance = (duration * speed) / 2;
