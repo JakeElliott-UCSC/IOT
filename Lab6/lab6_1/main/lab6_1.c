@@ -56,7 +56,7 @@ static int64_t measure_distance(float temperature) {
     int64_t duration = end_time - start_time;
 
     // determine speed of sound in this temperature
-    int64_t speed = (331 + (0.61*temperature))/1000000;
+    int64_t speed = (331 + (0.61*temperature))/10000;
 
     // Calculate distance in centimeters (previously using 0.034 for speed)
     int64_t distance = (duration * speed) / 2;
@@ -351,7 +351,7 @@ void app_main(void)
         int64_t distance = measure_distance(temperature);
 
         //printf("Temperature: %f\n",temperature);
-        printf("Distance: %lld cm at %f C\n", distance,temperature);
+        printf("Distance: %lld cm at %d C\n", distance,(int)temperature);
         vTaskDelay(pdMS_TO_TICKS(2000)); // Poll every 2 seconds
     }
 }
