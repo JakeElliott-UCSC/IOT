@@ -163,7 +163,7 @@ static esp_err_t read_temperature(float *temperature)
     // check data for accuracy
     uint8_t crc = sensor_data[2];
     if (crc8(crc,temp_raw)) {
-        ESP_LOGI(TAG, "Temperature Good Read");
+        //ESP_LOGI(TAG, "Temperature Good Read");
     }
     else {
         ESP_LOGE(TAG, "Temperature Bad Read");
@@ -174,7 +174,7 @@ static esp_err_t read_temperature(float *temperature)
     // Convert to Farenheit
     float fahrenheit = *temperature * 1.8 + 32;
     // Return temperature
-    ESP_LOGI(TAG, "Read temperature: %.2f C (%.2f F)", *temperature, fahrenheit);
+    //ESP_LOGI(TAG, "Read temperature: %.2f C (%.2f F)", *temperature, fahrenheit);
     return ret;
 }
 
@@ -215,14 +215,14 @@ static esp_err_t read_humidity(float *humidity)
 
     // Convert the data
     *humidity = (100 * ((float)humid_raw/65535));
-    ESP_LOGI(TAG, "Read Humidity: %.2f %%", *humidity);
+    //ESP_LOGI(TAG, "Read Humidity: %.2f %%", *humidity);
 
     // check data for accuracy
     uint8_t crc = sensor_data[2];
 
 
     if (crc8(crc,humid_raw)) {
-        ESP_LOGI(TAG, "Humidity Good Read");
+        //ESP_LOGI(TAG, "Humidity Good Read");
     }
     else {
         ESP_LOGE(TAG, "Humidity Bad Read");
@@ -252,7 +252,7 @@ static void WakeupSHTC3(){
         ESP_LOGE(TAG, "Sensor wake-up command failed!");
     }
     else {
-        ESP_LOGE(TAG, "Sensor Awake");
+        //ESP_LOGE(TAG, "Sensor Awake");
     }
 
     // Wait for sensor to wake up
@@ -280,7 +280,7 @@ static void ShutdownSHTC3() {
         ESP_LOGE(TAG, "Sensor sleep command failed!");
     }
     else {
-        ESP_LOGE(TAG, "Sensor Asleep\n");
+        //ESP_LOGE(TAG, "Sensor Asleep\n");
     }
 
     // Wait for sensor to finish sleeping
@@ -330,7 +330,7 @@ void app_main(void)
     while (1) {
         int64_t distance = measure_distance();
         WakeupSHTC3();
-        printf("Temperature and Humidity:\n");
+        //printf("Temperature and Humidity:\n");
         if (read_temperature(&temperature) == ESP_OK) {
             //printf("Temperature: %.2f°C\n", temperature);
             //printf("Temperature and Humidity:\n");
@@ -345,6 +345,7 @@ void app_main(void)
             printf("Failed to read humidity!\n");
         }
         ShutdownSHTC3();
+        printf("Temperature: %f\n",temperature);
         printf("Distance: %lld cm\n", distance);
         vTaskDelay(pdMS_TO_TICKS(2000)); // Poll every 2 seconds
     }
