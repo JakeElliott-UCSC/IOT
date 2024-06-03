@@ -8,6 +8,6 @@ def get_temperature(city=""):
     else:
         return "Error: Unable to fetch the temperature"
 
-city = "London"  # Replace with your city or leave it blank for the default location
+city = "Santa Cruz"  # Replace with your city or leave it blank for the default location
 temperature = get_temperature(city)
 print(f"The temperature in {city} is {temperature}")
