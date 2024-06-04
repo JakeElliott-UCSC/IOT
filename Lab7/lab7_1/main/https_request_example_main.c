@@ -182,7 +182,7 @@ static void https_get_request(esp_tls_cfg_t cfg, const char *WEB_SERVER_URL, con
                 // if this character IS a number
                 else {
                     // extract the celcius data from it
-                    temp = ((buf[i] - 48) * 10) + (buf[i+1] - 48)
+                    temp = ((buf[i] - 48) * 10) + (buf[i+1] - 48);
                     break;
                 }
             }
