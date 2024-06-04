@@ -479,9 +479,8 @@ void app_main(void)
 
         
         http_post_request((int)temperature); // Example temperature value
-        vTaskDelay(pdMS_TO_TICKS(1000));
         http_get_request();
-        vTaskDelay(pdMS_TO_TICKS(1000)); // Poll every 2 seconds
+        vTaskDelay(pdMS_TO_TICKS(2000)); // Poll every 2 seconds
     }
 
 
