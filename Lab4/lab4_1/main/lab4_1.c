@@ -45,7 +45,7 @@ void app_main(void)
     i2c_master_init();
 
     // Create ICM42670 sensor instance
-    icm42670_handle_t sensor = icm42670_create(I2C_MASTER_NUM, ICM42670_ID);
+    icm42670_handle_t sensor = icm42670_create(I2C_MASTER_NUM, IMU_SENSOR_ADDR);
     if (sensor == NULL) {
         ESP_LOGI(TAG, "Failed to initialize ICM42670");
         return;
@@ -64,13 +64,13 @@ void app_main(void)
     }
 
     // Set accelerometer power mode
-    if (icm42670_acce_set_pwr(sensor, ICM42670_ACCE_PWR_ON) != ESP_OK) {
+    if (icm42670_acce_set_pwr(sensor, ACCE_PWR_ON) != ESP_OK) {
         ESP_LOGI(TAG, "Failed to set accelerometer power mode");
         return;
     }
 
     // Set gyroscope power mode
-    if (icm42670_gyro_set_pwr(sensor, ICM42670_GYRO_PWR_ON) != ESP_OK) {
+    if (icm42670_gyro_set_pwr(sensor, GYRO_PWR_STANDBY) != ESP_OK) {
         ESP_LOGI(TAG, "Failed to set gyroscope power mode");
         return;
     }
