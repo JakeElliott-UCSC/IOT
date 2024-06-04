@@ -19,7 +19,7 @@
 #define WEB_SERVER "100.80.129.212"
 #define WEB_PORT "5000"
 #define POST_PATH "/weather"
-#define GET_PATH "/"
+#define GET_PATH "/weather"
 
 static const char *TAG = "example";
 
