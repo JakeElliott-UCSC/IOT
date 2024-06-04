@@ -54,9 +54,9 @@ void app_main(void)
     // Configure the ICM42670 sensor
     icm42670_cfg_t icm_config = {
         .gyro_fs = GYRO_FS_250DPS,
-        .gyro_odr = 0x0B,
+        .gyro_odr = GYRO_ODR_1600HZ,
         .acce_fs = ACCE_FS_2G,
-        .acce_odr = 0x0A
+        .acce_odr = ACCE_ODR_1600HZ
     };
     if (icm42670_config(sensor, &icm_config) != ESP_OK) {
         ESP_LOGI(TAG, "Failed to configure ICM42670");
