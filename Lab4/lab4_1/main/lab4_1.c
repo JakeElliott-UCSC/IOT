@@ -123,6 +123,6 @@ void app_main(void)
         //     ESP_LOGE(TAG, "Failed to read accelerometer data");
         // }
 
-        vTaskDelay(pdMS_TO_TICKS(1000)); // Delay for 1 second
+        vTaskDelay(pdMS_TO_TICKS(200)); // Delay for 1 second
     }
 }
