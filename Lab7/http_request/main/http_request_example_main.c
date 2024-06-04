@@ -18,12 +18,12 @@
 /* Constants that aren't configurable in menuconfig */
 #define WEB_SERVER "100.80.129.212"
 #define WEB_PORT "5000"
-#define WEB_PATH "/"
-#define PUT_PATH "/weather"
+#define POST_PATH "/weather"
+#define GET_PATH "/"
 
 static const char *TAG = "example";
 
-static const char *REQUEST = "GET " WEB_PATH " HTTP/1.0\r\n"
+static const char *REQUEST_GET = "GET " GET_PATH " HTTP/1.0\r\n"
     "Host: " WEB_SERVER "\r\n"
     "User-Agent: esp-idf/1.0 esp32\r\n"
     "\r\n";
@@ -60,7 +60,7 @@ void http_get_request(void)
 
     freeaddrinfo(res);
 
-    if (write(s, REQUEST, strlen(REQUEST)) < 0) {
+    if (write(s, REQUEST_GET, strlen(REQUEST_GET)) < 0) {
         close(s);
         return;
     }
@@ -88,7 +88,7 @@ void http_get_request(void)
     close(s);
 }
 
-void http_put_request(int temp)
+void http_post_request(int temp)
 {
     const struct addrinfo hints = {
         .ai_family = AF_INET,
@@ -102,9 +102,9 @@ void http_put_request(int temp)
 
     snprintf(payload, sizeof(payload), "{\"weather\": %d}", temp);
 
-    char request[500];
+    char request[256];
     snprintf(request, sizeof(request),
-             "PUT " PUT_PATH " HTTP/1.0\r\n"
+             "POST " POST_PATH " HTTP/1.0\r\n"
              "Host: " WEB_SERVER "\r\n"
              "Content-Type: application/json\r\n"
              "Content-Length: %d\r\n"
@@ -171,5 +171,5 @@ void app_main(void)
     ESP_ERROR_CHECK(example_connect());
 
     http_get_request();
-    http_put_request(25); // Example temperature value
+    http_post_request(25); // Example temperature value
 }
