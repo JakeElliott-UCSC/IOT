@@ -360,7 +360,7 @@ static esp_err_t icm42670_write(icm42670_handle_t sensor, const uint8_t reg_star
     assert(ESP_OK == ret);
     ret = i2c_master_cmd_begin(sens->bus, cmd, 1000 / portTICK_PERIOD_MS);
     i2c_cmd_link_delete(cmd);
-
+    vTaskDelay(pdMS_TO_TICKS(10));
     return ret;
 }
 
