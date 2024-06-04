@@ -64,17 +64,23 @@ void app_main(void)
         return;
     }
 
+    vTaskDelay(pdMS_TO_TICKS(1000)); // Delay for 1 second
+
     // Set accelerometer power mode
     if (icm42670_acce_set_pwr(sensor, ACCE_PWR_ON) != ESP_OK) {
         ESP_LOGI(TAG, "Failed to set accelerometer power mode");
         return;
     }
 
+    vTaskDelay(pdMS_TO_TICKS(1000)); // Delay for 1 second
+
     // Set gyroscope power mode
     if (icm42670_gyro_set_pwr(sensor, GYRO_PWR_STANDBY) != ESP_OK) {
         ESP_LOGI(TAG, "Failed to set gyroscope power mode");
         return;
     }
+
+    vTaskDelay(pdMS_TO_TICKS(1000)); // Delay for 1 second
 
     icm42670_value_t acce_value;
 
