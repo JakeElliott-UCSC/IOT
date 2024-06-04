@@ -165,6 +165,32 @@ static void https_get_request(esp_tls_cfg_t cfg, const char *WEB_SERVER_URL, con
             putchar(buf[i]);
         }
         putchar('\n'); // JSON output doesn't have a newline at end
+
+        // Begin lab code
+        int flag = 0;
+        int temp = 0;
+        // loop over response
+        for (int i = 0; i < len; i++) {
+            // if we have seen a +
+            if (flag == 1) {
+                // If this character is not a number,
+                if (buf[i] < 48 || 57 < buf[i]) {
+                    // reset flag
+                    flag = 0;
+                    continue;
+                }
+                // if this character IS a number
+                else {
+                    // extract the celcius data from it
+                    temp = ((buf[i] - 48) * 10) + (buf[i+1] - 48)
+                    break;
+                }
+            }
+            else if (buf[i] == '+') {
+                flag = 1;
+            }
+        }
+        printf("Temperature in Santa Cruz: %d\n",temp);
     } while (1);
 
 cleanup:
