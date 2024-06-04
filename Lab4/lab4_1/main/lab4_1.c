@@ -4,6 +4,7 @@
 #include "esp_system.h"
 #include "esp_log.h"
 #include "driver/i2c.h"
+#include "icm42670.h"
 
 // Constants
 #define I2C_MASTER_SCL_IO    8    /*!< GPIO number used for I2C master clock */
