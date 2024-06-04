@@ -1,0 +1,54 @@
+[0;33m--- esp-idf-monitor 1.4.0 on /dev/ttyACM0 115200 ---[0m
+[0;33m--- Quit: Ctrl+] | Menu: Ctrl+T | Help: Ctrl+T followed by Ctrl+H ---[0m
+[0;33m0x40384b4e: rv_utils_wait_for_intr at /home/ubuntu/esp/esp-idf/components/riscv/include/riscv/rv_utils.h:73
+ (inlined by) esp_cpu_wait_for_intr at /home/ubuntu/esp/esp-idf/components/esp_hw_support/cpu.c:148
+[0m
+[0;33m0x4200a51c: app_main at /home/ubuntu/esp/IOT/Lab7/lab7_1/main/https_request_example_main.c:310 (discriminator 1)
+[0m
+[0;33m0x40385fb3: _esp_error_check_failed at /home/ubuntu/esp/esp-idf/components/esp_system/esp_err.c:49
+[0m
+[0;33mStack dump detected[0m
+[0;33m0x40380806: panic_abort at /home/ubuntu/esp/esp-idf/components/esp_system/panic.c:463
+0x40385fbe: __ubsan_include at /home/ubuntu/esp/esp-idf/components/esp_system/ubsan.c:311
+[0m
+[0;33m0x40380001: _vector_table at /home/ubuntu/esp/esp-idf/components/riscv/vectors_intc.S:54
+[0m
+[0;33mFailed to run gdb_panic_server.py script: Command '['riscv32-esp-elf-gdb', '--batch', '-n', '/home/ubuntu/esp/IOT/Lab7/lab7_1/build/lab7_1.elf', '-ex', 'target remote | "/home/ubuntu/.espressif/python_env/idf5.3_py3.10_env/bin/python" -m esp_idf_panic_decoder --target esp32c3 "/tmp/tmprge9l7df"', '-ex', 'bt']' returned non-zero exit status 1.
+b'Traceback (most recent call last):\n  File "/usr/lib/python3.10/runpy.py", line 196, in _run_module_as_main\n    return _run_code(code, main_globals, None,\n  File "/usr/lib/python3.10/runpy.py", line 86, in _run_code\n    exec(code, run_globals)\n  File "/home/ubuntu/.espressif/python_env/idf5.3_py3.10_env/lib/python3.10/site-packages/esp_idf_panic_decoder/__main__.py", line 4, in <module>\n    main()\n  File "/home/ubuntu/.espressif/python_env/idf5.3_py3.10_env/lib/python3.10/site-packages/esp_idf_panic_decoder/gdb_panic_server.py", line 285, in main\n    panic_info = PANIC_OUTPUT_PARSERS[args.target](args.input_file.read())\n  File "/home/ubuntu/.espressif/python_env/idf5.3_py3.10_env/lib/python3.10/site-packages/esp_idf_panic_decoder/gdb_panic_server.py", line 150, in parse_idf_riscv_panic_output\n    stack_base_addr, stack_data = get_stack_addr_and_data(res)\n  File "/home/ubuntu/.espressif/python_env/idf5.3_py3.10_env/lib/python3.10/site-packages/esp_idf_panic_decoder/gdb_panic_server.py", line 118, in get_stack_addr_and_data\n    assert base_addr == prev_base_addr + bytes_in_line\nAssertionError\nRemote communication error.  Target disconnected.: Connection reset by peer.\nNo stack.\n'
+
+[0m
+[0;33m0x403807be: esp_restart_noos at /home/ubuntu/esp/esp-idf/components/esp_system/port/soc/esp32c3/system_internal.c:110
+[0m
+[0;33m0x4200a51c: app_main at /home/ubuntu/esp/IOT/Lab7/lab7_1/main/https_request_example_main.c:310 (discriminator 1)
+[0m
+[0;33m0x40385fb3: _esp_error_check_failed at /home/ubuntu/esp/esp-idf/components/esp_system/esp_err.c:49
+[0m
+[0;33mStack dump detected[0m
+[0;33m0x40380806: panic_abort at /home/ubuntu/esp/esp-idf/components/esp_system/panic.c:463
+0x40385fbe: __ubsan_include at /home/ubuntu/esp/esp-idf/components/esp_system/ubsan.c:311
+[0m
+[0;33m0x40380001: _vector_table at /home/ubuntu/esp/esp-idf/components/riscv/vectors_intc.S:54
+[0m
+[0;33mFailed to run gdb_panic_server.py script: Command '['riscv32-esp-elf-gdb', '--batch', '-n', '/home/ubuntu/esp/IOT/Lab7/lab7_1/build/lab7_1.elf', '-ex', 'target remote | "/home/ubuntu/.espressif/python_env/idf5.3_py3.10_env/bin/python" -m esp_idf_panic_decoder --target esp32c3 "/tmp/tmprxfli__6"', '-ex', 'bt']' returned non-zero exit status 1.
+b'Traceback (most recent call last):\n  File "/usr/lib/python3.10/runpy.py", line 196, in _run_module_as_main\n    return _run_code(code, main_globals, None,\n  File "/usr/lib/python3.10/runpy.py", line 86, in _run_code\n    exec(code, run_globals)\n  File "/home/ubuntu/.espressif/python_env/idf5.3_py3.10_env/lib/python3.10/site-packages/esp_idf_panic_decoder/__main__.py", line 4, in <module>\n    main()\n  File "/home/ubuntu/.espressif/python_env/idf5.3_py3.10_env/lib/python3.10/site-packages/esp_idf_panic_decoder/gdb_panic_server.py", line 285, in main\n    panic_info = PANIC_OUTPUT_PARSERS[args.target](args.input_file.read())\n  File "/home/ubuntu/.espressif/python_env/idf5.3_py3.10_env/lib/python3.10/site-packages/esp_idf_panic_decoder/gdb_panic_server.py", line 150, in parse_idf_riscv_panic_output\n    stack_base_addr, stack_data = get_stack_addr_and_data(res)\n  File "/home/ubuntu/.espressif/python_env/idf5.3_py3.10_env/lib/python3.10/site-packages/esp_idf_panic_decoder/gdb_panic_server.py", line 118, in get_stack_addr_and_data\n    assert base_addr == prev_base_addr + bytes_in_line\nAssertionError\nRemote communication error.  Target disconnected.: Connection reset by peer.\nNo stack.\n'
+
+[0m
+[0;33m0x403807be: esp_restart_noos at /home/ubuntu/esp/esp-idf/components/esp_system/port/soc/esp32c3/system_internal.c:110
+[0m
+[0;33m0x4200a51c: app_main at /home/ubuntu/esp/IOT/Lab7/lab7_1/main/https_request_example_main.c:310 (discriminator 1)
+[0m
+[0;33m0x40385fb3: _esp_error_check_failed at /home/ubuntu/esp/esp-idf/components/esp_system/esp_err.c:49
+[0m
+[0;33mStack dump detected[0m
+[0;33m0x40380806: panic_abort at /home/ubuntu/esp/esp-idf/components/esp_system/panic.c:463
+0x40385fbe: __ubsan_include at /home/ubuntu/esp/esp-idf/components/esp_system/ubsan.c:311
+[0m
+[0;33m0x40380001: _vector_table at /home/ubuntu/esp/esp-idf/components/riscv/vectors_intc.S:54
+[0m
+[0;33mFailed to run gdb_panic_server.py script: Command '['riscv32-esp-elf-gdb', '--batch', '-n', '/home/ubuntu/esp/IOT/Lab7/lab7_1/build/lab7_1.elf', '-ex', 'target remote | "/home/ubuntu/.espressif/python_env/idf5.3_py3.10_env/bin/python" -m esp_idf_panic_decoder --target esp32c3 "/tmp/tmpdabqhelw"', '-ex', 'bt']' returned non-zero exit status 1.
+b'Traceback (most recent call last):\n  File "/usr/lib/python3.10/runpy.py", line 196, in _run_module_as_main\n    return _run_code(code, main_globals, None,\n  File "/usr/lib/python3.10/runpy.py", line 86, in _run_code\n    exec(code, run_globals)\n  File "/home/ubuntu/.espressif/python_env/idf5.3_py3.10_env/lib/python3.10/site-packages/esp_idf_panic_decoder/__main__.py", line 4, in <module>\n    main()\n  File "/home/ubuntu/.espressif/python_env/idf5.3_py3.10_env/lib/python3.10/site-packages/esp_idf_panic_decoder/gdb_panic_server.py", line 285, in main\n    panic_info = PANIC_OUTPUT_PARSERS[args.target](args.input_file.read())\n  File "/home/ubuntu/.espressif/python_env/idf5.3_py3.10_env/lib/python3.10/site-packages/esp_idf_panic_decoder/gdb_panic_server.py", line 150, in parse_idf_riscv_panic_output\n    stack_base_addr, stack_data = get_stack_addr_and_data(res)\n  File "/home/ubuntu/.espressif/python_env/idf5.3_py3.10_env/lib/python3.10/site-packages/esp_idf_panic_decoder/gdb_panic_server.py", line 118, in get_stack_addr_and_data\n    assert base_addr == prev_base_addr + bytes_in_line\nAssertionError\nRemote communication error.  Target disconnected.: Connection reset by peer.\nNo stack.\n'
+
+[0m
+[0;33m0x403807be: esp_restart_noos at /home/ubuntu/esp/esp-idf/components/esp_system/port/soc/esp32c3/system_internal.c:110
+[0m
+[0m
