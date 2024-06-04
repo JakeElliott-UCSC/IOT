@@ -59,6 +59,10 @@ void app_main(void)
         .acce_fs = ACCE_FS_2G,
         .acce_odr = ACCE_ODR_1600HZ
     };
+    while (icm42670_config(sensor, &icm_config) != ESP_OK){
+        vTaskDelay(pdMS_TO_TICKS(1000));
+        ESP_LOGE(TAG, "Failed to configure ICM42670");
+    }
     if (icm42670_config(sensor, &icm_config) != ESP_OK) {
         ESP_LOGI(TAG, "Failed to configure ICM42670");
         return;
@@ -67,6 +71,10 @@ void app_main(void)
     vTaskDelay(pdMS_TO_TICKS(1000)); // Delay for 1 second
 
     // Set accelerometer power mode
+    while (icm42670_acce_set_pwr(sensor, ACCE_PWR_ON) != ESP_OK) {
+        ESP_LOGE(TAG, "Failed to set accelerometer power mode");
+        vTaskDelay(pdMS_TO_TICKS(1000));
+    }
     if (icm42670_acce_set_pwr(sensor, ACCE_PWR_ON) != ESP_OK) {
         ESP_LOGI(TAG, "Failed to set accelerometer power mode");
         return;
@@ -75,6 +83,10 @@ void app_main(void)
     vTaskDelay(pdMS_TO_TICKS(1000)); // Delay for 1 second
 
     // Set gyroscope power mode
+    while (icm42670_gyro_set_pwr(sensor, GYRO_PWR_STANDBY) != ESP_OK) {
+        vTaskDelay(pdMS_TO_TICKS(1000));
+        ESP_LOGE(TAG, "Failed to set gyroscope power mode");
+    }
     if (icm42670_gyro_set_pwr(sensor, GYRO_PWR_STANDBY) != ESP_OK) {
         ESP_LOGI(TAG, "Failed to set gyroscope power mode");
         return;
@@ -85,6 +97,7 @@ void app_main(void)
     icm42670_value_t acce_value;
 
     while (1) {
+        printf("entering while loop\n");
         // Read accelerometer data
         if (icm42670_get_acce_value(sensor, &acce_value) == ESP_OK) {
             // Determine the inclination
