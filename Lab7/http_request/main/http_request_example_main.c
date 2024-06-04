@@ -93,5 +93,7 @@ void app_main(void)
 
     ESP_ERROR_CHECK(example_connect());
 
-    http_get_request();
+    for (int i = 0; i<10; i++) {
+        http_get_request();
+    }
 }
