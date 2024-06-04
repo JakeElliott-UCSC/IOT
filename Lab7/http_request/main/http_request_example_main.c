@@ -443,12 +443,50 @@ static void flushSHTC3() {
 
 void app_main(void)
 {
+    float temperature = 0.0;
+    float humidity = 0.0;
+
     ESP_ERROR_CHECK(nvs_flash_init());
     ESP_ERROR_CHECK(esp_netif_init());
     ESP_ERROR_CHECK(esp_event_loop_create_default());
 
     ESP_ERROR_CHECK(example_connect());
 
-    http_get_request();
-    http_post_request(25); // Example temperature value
+    ESP_ERROR_CHECK(i2c_master_init());
+    ESP_LOGI(TAG, "I2C Initialized Successfully");
+    // Trying to remove the initial error message
+    // flush initial message
+    flushSHTC3();
+
+    // wake up, read temp and humidity, wait 2 seconds, shutdown
+    while (1) {
+        WakeupSHTC3();
+        printf("Temperature and Humidity:\n");
+        if (read_temperature(&temperature) == ESP_OK) {
+            //printf("Temperature: %.2f°C\n", temperature);
+            //printf("Temperature and Humidity:\n");
+        } else {
+            printf("Failed to read temperature!\n");
+        }
+
+        if (read_humidity(&humidity) == ESP_OK) {
+            //printf("Temperature: %.2f°C\n", temperature);
+            //printf("Temperature and Humidity:\n");
+        } else {
+            printf("Failed to read humidity!\n");
+        }
+        ShutdownSHTC3();
+
+        
+        http_post_request(int(temperature)); // Example temperature value
+        vTaskDelay(pdMS_TO_TICKS(1000));
+        http_get_request();
+        vTaskDelay(pdMS_TO_TICKS(1000)); // Poll every 2 seconds
+    }
+
+
+
+
+
+
 }
