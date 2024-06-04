@@ -1,7 +1,7 @@
 import requests
 
 def get_temperature(city=""):
-    url = f"http://wttr.in/{city}?format=%t"
+    url = f"http://wttr.in/{city}?m&format=3"
     response = requests.get(url)
     if response.status_code == 200:
         return response.text.strip()
