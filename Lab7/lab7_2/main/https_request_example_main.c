@@ -48,7 +48,7 @@
 /* Constants that aren't configurable in menuconfig */
 #define WEB_SERVER "100.80.129.212:5000"
 #define WEB_PORT "443"
-#define WEB_URL "http:100.80.129.212:5000"
+#define WEB_URL "http://100.80.129.212:5000"
 #define WEB_PATH "/"
 
 #define SERVER_URL_MAX_SZ 256
