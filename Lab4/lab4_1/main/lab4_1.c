@@ -63,10 +63,10 @@ void app_main(void)
         vTaskDelay(pdMS_TO_TICKS(1000));
         ESP_LOGE(TAG, "Failed to configure ICM42670");
     }
-    if (icm42670_config(sensor, &icm_config) != ESP_OK) {
-        ESP_LOGI(TAG, "Failed to configure ICM42670");
-        return;
-    }
+    // if (icm42670_config(sensor, &icm_config) != ESP_OK) {
+    //     ESP_LOGI(TAG, "Failed to configure ICM42670");
+    //     return;
+    // }
 
     vTaskDelay(pdMS_TO_TICKS(1000)); // Delay for 1 second
 
@@ -75,10 +75,10 @@ void app_main(void)
         ESP_LOGE(TAG, "Failed to set accelerometer power mode");
         vTaskDelay(pdMS_TO_TICKS(1000));
     }
-    if (icm42670_acce_set_pwr(sensor, ACCE_PWR_ON) != ESP_OK) {
-        ESP_LOGI(TAG, "Failed to set accelerometer power mode");
-        return;
-    }
+    // if (icm42670_acce_set_pwr(sensor, ACCE_PWR_ON) != ESP_OK) {
+    //     ESP_LOGI(TAG, "Failed to set accelerometer power mode");
+    //     return;
+    // }
 
     vTaskDelay(pdMS_TO_TICKS(1000)); // Delay for 1 second
 
@@ -87,10 +87,10 @@ void app_main(void)
         vTaskDelay(pdMS_TO_TICKS(1000));
         ESP_LOGE(TAG, "Failed to set gyroscope power mode");
     }
-    if (icm42670_gyro_set_pwr(sensor, GYRO_PWR_STANDBY) != ESP_OK) {
-        ESP_LOGI(TAG, "Failed to set gyroscope power mode");
-        return;
-    }
+    // if (icm42670_gyro_set_pwr(sensor, GYRO_PWR_STANDBY) != ESP_OK) {
+    //     ESP_LOGI(TAG, "Failed to set gyroscope power mode");
+    //     return;
+    // }
 
     vTaskDelay(pdMS_TO_TICKS(1000)); // Delay for 1 second
 
