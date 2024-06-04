@@ -95,26 +95,33 @@ void app_main(void)
     vTaskDelay(pdMS_TO_TICKS(1000)); // Delay for 1 second
 
     icm42670_value_t acce_value;
+    icm42670_value_t gyro;
 
+    printf("entering while loop\n");
     while (1) {
-        printf("entering while loop\n");
-        // Read accelerometer data
-        if (icm42670_get_acce_value(sensor, &acce_value) == ESP_OK) {
-            // Determine the inclination
-            if (acce_value.x > 0.5) {
-                ESP_LOGI(TAG, "UP");
-            } else if (acce_value.x < -0.5) {
-                ESP_LOGI(TAG, "DOWN");
-            }
+        
 
-            if (acce_value.y > 0.5) {
-                ESP_LOGI(TAG, "RIGHT");
-            } else if (acce_value.y < -0.5) {
-                ESP_LOGI(TAG, "LEFT");
-            }
-        } else {
-            ESP_LOGI(TAG, "Failed to read accelerometer data");
-        }
+        icm42670_get_gyro_value(sensor, &gyro);
+        printf("Gyro x, y, z: %f, %f, %f\n",gyro.x,gyro.y,gyro.z);
+
+
+        // // Read accelerometer data
+        // if (icm42670_get_acce_value(sensor, &acce_value) == ESP_OK) {
+        //     // Determine the inclination
+        //     if (acce_value.x > 0.5) {
+        //         ESP_LOGI(TAG, "UP");
+        //     } else if (acce_value.x < -0.5) {
+        //         ESP_LOGI(TAG, "DOWN");
+        //     }
+
+        //     if (acce_value.y > 0.5) {
+        //         ESP_LOGI(TAG, "RIGHT");
+        //     } else if (acce_value.y < -0.5) {
+        //         ESP_LOGI(TAG, "LEFT");
+        //     }
+        // } else {
+        //     ESP_LOGE(TAG, "Failed to read accelerometer data");
+        // }
 
         vTaskDelay(pdMS_TO_TICKS(1000)); // Delay for 1 second
     }
