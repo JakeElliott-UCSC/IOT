@@ -12,7 +12,7 @@
 #define I2C_MASTER_NUM       I2C_NUM_0 /*!< I2C port number for master dev */
 #define I2C_MASTER_FREQ_HZ   100000   /*!< I2C master clock frequency */
 #define SHTC3_SENSOR_ADDR    0x70     /*!< Slave address of the SHTC3 sensor */
-#define IMU_SENSOR_ADDR      0x67     /*!< Slave address of the IMU sensor */
+#define IMU_SENSOR_ADDR      0x68     /*!< Slave address of the IMU sensor */
 
 #define ACK_CHECK_EN         0x1     /*!< I2C master will check ack from slave*/
 #define ACK_CHECK_DIS        0x0     /*!< I2C master will not check ack from slave */
@@ -47,7 +47,7 @@ void app_main(void)
     // Create ICM42670 sensor instance
     icm42670_handle_t sensor = icm42670_create(I2C_MASTER_NUM, IMU_SENSOR_ADDR);
     if (sensor == NULL) {
-        ESP_LOGI(TAG, "Failed to initialize ICM42670");
+        ESP_LOGE(TAG, "Failed to initialize ICM42670");
         return;
     }
 
