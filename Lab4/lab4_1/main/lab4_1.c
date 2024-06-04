@@ -47,7 +47,7 @@ void app_main(void)
     // Create ICM42670 sensor instance
     icm42670_handle_t sensor = icm42670_create(I2C_MASTER_NUM, IMU_SENSOR_ADDR);
     if (sensor == NULL) {
-        ESP_LOGE(TAG, "Failed to initialize ICM42670");
+        ESP_LOGI(TAG, "Failed to initialize ICM42670");
         return;
     }
 
