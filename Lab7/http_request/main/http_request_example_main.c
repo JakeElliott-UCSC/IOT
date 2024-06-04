@@ -102,7 +102,7 @@ void http_post_request(int temp)
 
     snprintf(payload, sizeof(payload), "{\"weather\": %d}", temp);
 
-    char request[256];
+    char request[500];
     snprintf(request, sizeof(request),
              "POST " POST_PATH " HTTP/1.0\r\n"
              "Host: " WEB_SERVER "\r\n"
