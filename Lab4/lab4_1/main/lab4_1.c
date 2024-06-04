@@ -3,7 +3,7 @@
 #include "freertos/task.h"
 #include "driver/i2c.h"
 #include "esp_log.h"
-#include "icm42670.h"
+#include <icm42670.h>
 
 #define I2C_MASTER_SCL_IO 22  // Set these to your I2C pins
 #define I2C_MASTER_SDA_IO 21
