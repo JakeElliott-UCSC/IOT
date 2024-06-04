@@ -24,7 +24,7 @@
 #include "sdkconfig.h"
 
 /* Constants that aren't configurable in menuconfig */
-#define WEB_SERVER "http://100.80.129.212:5000"
+#define WEB_SERVER "100.80.129.212"
 #define WEB_PORT "5000"
 #define WEB_PATH "/"
 
