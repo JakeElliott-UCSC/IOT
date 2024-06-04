@@ -97,12 +97,12 @@ void http_put_request(int temp)
     struct addrinfo *res;
     struct in_addr *addr;
     int s, r;
-    char recv_buf[64];
-    char payload[128];
+    char recv_buf[500];
+    char payload[500];
 
     snprintf(payload, sizeof(payload), "{\"weather\": %d}", temp);
 
-    char request[256];
+    char request[600];
     snprintf(request, sizeof(request),
              "PUT " PUT_PATH " HTTP/1.0\r\n"
              "Host: " WEB_SERVER "\r\n"
