@@ -18,7 +18,7 @@
 /* Constants that aren't configurable in menuconfig */
 #define WEB_SERVER "100.80.129.212"
 #define WEB_PORT "5000"
-#define WEB_PATH "/"
+#define WEB_PATH "/weather"
 
 static const char *REQUEST = "GET " WEB_PATH " HTTP/1.0\r\n"
     "Host: " WEB_SERVER "\r\n"
