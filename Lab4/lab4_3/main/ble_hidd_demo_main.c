@@ -168,7 +168,6 @@ void tiltEvent(uint16_t id,float x, float y, float z){
             vertical_delta = 0;
     }
     tilt_flag = 0;
-}
     
     
     esp_hidd_send_mouse_value(id, 0, horizontal_delta, vertical_delta);  // Move mouse left
