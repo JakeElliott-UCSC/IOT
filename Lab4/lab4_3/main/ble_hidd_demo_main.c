@@ -56,6 +56,7 @@ int up_count = 0;
 int down_count = 0;
 int left_count = 0;
 int right_count = 0;
+int rest_count = 0;
 
 
 
@@ -96,24 +97,28 @@ void tiltEvent(uint16_t id,float x, float y, float z){
         tilt_flag = tilt_flag ^ UP_TOGGLE;
         up_count++;
         down_count = 0;
+        rest_count = 0;
     }
     // DOWN
     else if (x < (TILT_THRESHOLD * -1)) {
         tilt_flag = tilt_flag ^ DOWN_TOGGLE;
         up_count = 0;
         down_count++;
+        rest_count = 0;
     }
     // RIGHT
     if (y > TILT_THRESHOLD) {
         tilt_flag = tilt_flag ^ RIGHT_TOGGLE;
         left_count = 0;
         right_count++;
+        rest_count = 0;
     }
     // LEFT
     else if (y < (TILT_THRESHOLD * -1)) {
         tilt_flag = tilt_flag ^ LEFT_TOGGLE;
         left_count++;
         right_count = 0;
+        rest_count = 0;
     }
 
     // down will tend positive, up will tend negative
@@ -164,13 +169,24 @@ void tiltEvent(uint16_t id,float x, float y, float z){
             ESP_LOGI(TAG, "DOWN RIGHT");
             break;
         case 0b00000000:
-            horizontal_delta = 0;
-            vertical_delta = 0;
+            rest_count++;
     }
     tilt_flag = 0;
+
+    if (rest_count > 30) {
+        horizontal_delta = 0;
+        vertical_delta = 0;
+    }
     
+    if (rest_count > 200) {
+        // left click on stopping
+        esp_hidd_send_mouse_value(id, 253, 0, 0);  // Move mouse left
+        rest_count = 40;
+    }
+    else {
+        esp_hidd_send_mouse_value(id, 0, horizontal_delta, vertical_delta);  // Move mouse left
+    }
     
-    esp_hidd_send_mouse_value(id, 0, horizontal_delta, vertical_delta);  // Move mouse left
     vTaskDelay(pdMS_TO_TICKS(10));
 
     
