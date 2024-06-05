@@ -179,18 +179,20 @@ void hid_demo_task(void *pvParameters)
             // esp_hidd_send_mouse_value(hid_conn_id,0);
             for (int i = 0; i < 100; i++) {
                 esp_hidd_send_mouse_value(hid_conn_id, 0, -10, 0);  // Move mouse left
+                vTaskDelay(pdMS_TO_TICKS(10));
             }
-            vTaskDelay(1000 / portTICK_PERIOD_MS);
+            vTaskDelay(pdMS_TO_TICKS(1000));
             if (move_mouse_left) {
                 move_mouse_left = false;
                 esp_hidd_send_mouse_value(hid_conn_id, 0, 0, 0);  // Stop mouse
                 for (int i = 0; i < 100; i++) {
-                    esp_hidd_send_mouse_value(hid_conn_id, 0, 10, 0);  // Move mouse right 
+                    esp_hidd_send_mouse_value(hid_conn_id, 0, 10, 0);  // Move mouse right
+                    vTaskDelay(pdMS_TO_TICKS(10));
                 }
                 
                 //esp_hidd_send_consumer_value(hid_conn_id, HID_CONSUMER_VOLUME_UP, false);
                 //esp_hidd_send_consumer_value(hid_conn_id, HID_CONSUMER_VOLUME_DOWN, true);
-                vTaskDelay(1000 / portTICK_PERIOD_MS);
+                vTaskDelay(pdMS_TO_TICKS(1000));
                 //esp_hidd_send_consumer_value(hid_conn_id, HID_CONSUMER_VOLUME_DOWN, false);
                 esp_hidd_send_mouse_value(hid_conn_id, 0, 0, 0);  // Stop mouse
             }
