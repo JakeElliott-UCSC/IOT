@@ -180,8 +180,8 @@ void app_main(void)
         
 
         icm42670_get_gyro_value(sensor, &gyro);
-        //printf("Gyro x, y, z: %f, %f, %f\n",gyro.x,gyro.y,gyro.z);
-        tiltEvent(gyro.x,gyro.y,gyro.z);
+        printf("Gyro x, y, z: %f, %f, %f\n",gyro.x,gyro.y,gyro.z);
+        // tiltEvent(gyro.x,gyro.y,gyro.z);
 
 
         // // Read accelerometer data
