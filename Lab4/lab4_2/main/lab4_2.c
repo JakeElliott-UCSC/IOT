@@ -1,17 +1,31 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include "freertos/FreeRTOS.h"
+#include "freertos/task.h"
+#include "freertos/event_groups.h"
 #include "esp_system.h"
+#include "esp_wifi.h"
+#include "esp_event.h"
+#include "esp_log.h"
 #include "nvs_flash.h"
 #include "esp_bt.h"
+
+#include "esp_hidd_prf_api.h"
+#include "esp_bt_defs.h"
+#include "esp_gap_ble_api.h"
+#include "esp_gatts_api.h"
+#include "esp_gatt_defs.h"
 #include "esp_bt_main.h"
 #include "esp_bt_device.h"
-#include "esp_bt_defs.h"
-#include "esp_gap_bt_api.h"
-#include "esp_hidd_api.h"
-#include "esp_log.h"
+#include "driver/gpio.h"
+#include "hid_dev.h"
 
 #define TAG "BT_MOUSE"
 
-static esp_hidd_cb_t bt_hid_callback;
+static esp_hidd_dev_t *hidd_dev = NULL;
+
+static void bt_hid_callback(esp_hidd_cb_event_t event, esp_hidd_cb_param_t *param);
 
 void app_main(void) {
     esp_err_t ret = nvs_flash_init();
@@ -28,7 +42,7 @@ void app_main(void) {
         return;
     }
 
-    ret = esp_bt_controller_enable(ESP_BT_MODE_CLASSIC_BT);
+    ret = esp_bt_controller_enable(ESP_BT_MODE_BLE);
     if (ret) {
         ESP_LOGE(TAG, "%s enable controller failed: %s\n", __func__, esp_err_to_name(ret));
         return;
@@ -46,12 +60,11 @@ void app_main(void) {
         return;
     }
 
-    esp_hidd_dev_t *hidd_dev = NULL;
-    esp_hidd_dev_init_params_t params = {
+    esp_hidd_profile_t profile = {
+        .device_name = "ESP32C3_MOUSE",
         .vendor_id = 0x1234,
         .product_id = 0x5678,
         .version = 0x0100,
-        .device_name = "ESP32C3_MOUSE",
         .manufacturer_name = "Espressif",
     };
 
@@ -61,7 +74,7 @@ void app_main(void) {
         return;
     }
 
-    ret = esp_hidd_dev_init(&params, &hidd_dev);
+    ret = esp_hidd_dev_init(&profile, &hidd_dev);
     if (ret != ESP_OK) {
         ESP_LOGE(TAG, "HID device init failed: %s", esp_err_to_name(ret));
         return;
