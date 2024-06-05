@@ -102,7 +102,7 @@ void tiltEvent(float x, float y, float z){
             ESP_LOGI(TAG, "DOWN RIGHT");
             break;
     }
-    
+    tilt_flag = 0;
 }
 
 
