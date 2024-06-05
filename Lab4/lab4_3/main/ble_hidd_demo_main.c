@@ -45,7 +45,12 @@
 
 #define TILT_THRESHOLD       500
 
+#define UP_TOGGLE            0b1000
+#define DOWN_TOGGLE          0b0100
+#define LEFT_TOGGLE          0b0010
+#define RIGHT_TOGGLE         0b0001
 
+uint8_t tilt_flag = 0;
 
 int up_count = 0;
 int down_count = 0;
@@ -88,28 +93,32 @@ void tiltEvent(uint16_t id,float x, float y, float z){
 
     // UP
     if (x > TILT_THRESHOLD) {
+        tilt_flag = tilt_flag ^ UP_TOGGLE;
         up_count++;
         down_count = 0;
     }
     // DOWN
     else if (x < (TILT_THRESHOLD * -1)) {
+        tilt_flag = tilt_flag ^ DOWN_TOGGLE;
         up_count = 0;
         down_count++;
     }
     // RIGHT
     if (y > TILT_THRESHOLD) {
+        tilt_flag = tilt_flag ^ RIGHT_TOGGLE;
         left_count = 0;
         right_count++;
     }
     // LEFT
     else if (y < (TILT_THRESHOLD * -1)) {
+        tilt_flag = tilt_flag ^ LEFT_TOGGLE;
         left_count++;
         right_count = 0;
     }
 
-    // up will tend positive, down will tend negative
+    // down will tend positive, up will tend negative
     if (abs(vertical_delta) <= 10) {
-        vertical_delta = 2*(up_count - down_count);
+        vertical_delta = 2*( down_count - up_count);
     }
     else if ((up_count - down_count) < 0) {
         vertical_delta = -10;
@@ -128,6 +137,38 @@ void tiltEvent(uint16_t id,float x, float y, float z){
     else {
         horizontal_delta = 10;
     }
+
+    switch (tilt_flag) {
+        case 0b00001000:
+            ESP_LOGI(TAG, "UP");
+            break;
+        case 0b00000100:
+            ESP_LOGI(TAG, "DOWN");
+            break;
+        case 0b00000010:
+            ESP_LOGI(TAG, "LEFT");
+            break;
+        case 0b00000001:
+            ESP_LOGI(TAG, "RIGHT");
+            break;
+        case 0b00001010:
+            ESP_LOGI(TAG, "UP LEFT");
+            break;
+        case 0b00001001:
+            ESP_LOGI(TAG, "UP RIGHT");
+            break;
+        case 0b00000110:
+            ESP_LOGI(TAG, "DOWN LEFT");
+            break;
+        case 0b00000101:
+            ESP_LOGI(TAG, "DOWN RIGHT");
+            break;
+        case 0b00000000:
+            horizontal_delta = 0;
+            vertical_delta = 0;
+    }
+    tilt_flag = 0;
+}
     
     
     esp_hidd_send_mouse_value(id, 0, horizontal_delta, vertical_delta);  // Move mouse left
