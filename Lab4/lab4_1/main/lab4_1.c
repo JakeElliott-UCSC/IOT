@@ -21,6 +21,19 @@
 
 #define TILT_THRESHOLD       500
 
+#define UP_TOGGLE            0b1000
+#define DOWN_TOGGLE          0b0100
+#define LEFT_TOGGLE          0b0010
+#define RIGHT_TOGGLE         0b0001
+
+uint8_t tilt_flag = 0;
+
+
+
+
+
+
+
 static const char *TAG = "main";
 
 /**
@@ -46,18 +59,50 @@ static esp_err_t i2c_master_init(void)
 // UP    +X
 // DOWN  -X
 void tiltEvent(float x, float y, float z){
+    // UP
     if (x > TILT_THRESHOLD) {
-        ESP_LOGI(TAG, "UP EVENT");
+        tilt_flag = tilt_flag ^ UP_TOGGLE;
     }
+    // DOWN
     else if (x < (TILT_THRESHOLD * -1)) {
-        ESP_LOGI(TAG, "DOWN EVENT");
+        tilt_flag = tilt_flag ^ DOWN_TOGGLE;
     }
+    // RIGHT
     if (y > TILT_THRESHOLD) {
-        ESP_LOGI(TAG, "RIGHT EVENT");
+        tilt_flag = tilt_flag ^ RIGHT_TOGGLE;
     }
+    // LEFT
     else if (y < (TILT_THRESHOLD * -1)) {
-        ESP_LOGI(TAG, "LEFT EVENT");
+        tilt_flag = tilt_flag ^ LEFT_TOGGLE;
     }
+
+    switch (tilt_flag) {
+        case 0b00001000:
+            ESP_LOGI(TAG, "UP");
+            break;
+        case 0b00000100:
+            ESP_LOGI(TAG, "DOWN");
+            break;
+        case 0b00000010:
+            ESP_LOGI(TAG, "LEFT");
+            break;
+        case 0b00000001:
+            ESP_LOGI(TAG, "RIGHT");
+            break;
+        case 0b00001010:
+            ESP_LOGI(TAG, "UP LEFT");
+            break;
+        case 0b00001001:
+            ESP_LOGI(TAG, "UP RIGHT");
+            break;
+        case 0b00000110:
+            ESP_LOGI(TAG, "DOWN LEFT");
+            break;
+        case 0b00000101:
+            ESP_LOGI(TAG, "DOWN RIGHT");
+            break;
+    }
+    
 }
 
 
