@@ -19,6 +19,8 @@
 #define ACK_VAL              0x0     /*!< I2C ack value */
 #define NACK_VAL             0x1     /*!< I2C nack value */
 
+#define TILT_THRESHOLD       50
+
 static const char *TAG = "main";
 
 /**
@@ -38,6 +40,37 @@ static esp_err_t i2c_master_init(void)
     i2c_param_config(i2c_master_port, &conf);
     return i2c_driver_install(i2c_master_port, conf.mode, 0, 0, 0);
 }
+
+// LEFT  -Y
+// RIGHT +Y
+// UP    +X
+// DOWN  -X
+void tiltEvent(float x, float y, float z){
+    if (x > TILT_THRESHOLD) {
+        ESP_LOGI(TAG, "UP EVENT");
+    }
+    else if (x < (TILT_THRESHOLD * -1)) {
+        ESP_LOGI(TAG, "DOWN EVENT");
+    }
+    if (y > TILT_THRESHOLD) {
+        ESP_LOGI(TAG, "RIGHT EVENT");
+    }
+    else if (y < (TILT_THRESHOLD * -1)) {
+        ESP_LOGI(TAG, "LEFT EVENT");
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
 
 void app_main(void)
 {
@@ -102,7 +135,8 @@ void app_main(void)
         
 
         icm42670_get_gyro_value(sensor, &gyro);
-        printf("Gyro x, y, z: %f, %f, %f\n",gyro.x,gyro.y,gyro.z);
+        //printf("Gyro x, y, z: %f, %f, %f\n",gyro.x,gyro.y,gyro.z);
+        tiltEvent(gyro.x,gyro.y,gyro.z);
 
 
         // // Read accelerometer data
@@ -123,6 +157,6 @@ void app_main(void)
         //     ESP_LOGE(TAG, "Failed to read accelerometer data");
         // }
 
-        vTaskDelay(pdMS_TO_TICKS(200)); // Delay for 1 second
+        vTaskDelay(pdMS_TO_TICKS(10)); // Delay for 1 second
     }
 }
