@@ -49,7 +49,7 @@ void app_main(void) {
         return;
     }
 
-    ret = esp_bluedroid_init_with_cfg();
+    ret = esp_bluedroid_init();
     if (ret) {
         ESP_LOGE(TAG, "%s init bluetooth failed: %s\n", __func__, esp_err_to_name(ret));
         return;
