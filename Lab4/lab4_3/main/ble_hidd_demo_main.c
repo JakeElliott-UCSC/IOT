@@ -269,6 +269,26 @@ static void gap_event_handler(esp_gap_ble_cb_event_t event, esp_ble_gap_cb_param
 
 void hid_demo_task(void *pvParameters)
 {
+    icm42670_value_t gyro;
+    // Create ICM42670 sensor instance
+    icm42670_handle_t sensor = icm42670_create(I2C_MASTER_NUM, IMU_SENSOR_ADDR);
+    if (sensor == NULL) {
+        ESP_LOGI(TAG, "Failed to initialize ICM42670");
+        return;
+    }
+    vTaskDelay(pdMS_TO_TICKS(1000)); // Delay for 1 second
+
+    // Configure the ICM42670 sensor
+    icm42670_cfg_t icm_config = {
+        .gyro_fs = GYRO_FS_250DPS,
+        .gyro_odr = GYRO_ODR_1600HZ,
+        .acce_fs = ACCE_FS_2G,
+        .acce_odr = ACCE_ODR_1600HZ
+    };
+    while (icm42670_config(sensor, &icm_config) != ESP_OK){
+        vTaskDelay(pdMS_TO_TICKS(1000));
+        ESP_LOGE(TAG, "Failed to configure ICM42670");
+    }
     vTaskDelay(1000 / portTICK_PERIOD_MS);
     while(1) {
         
@@ -301,8 +321,8 @@ void hid_demo_task(void *pvParameters)
         //         vTaskDelay(pdMS_TO_TICKS(1000));
         //         //esp_hidd_send_consumer_value(hid_conn_id, HID_CONSUMER_VOLUME_DOWN, false);
         //         esp_hidd_send_mouse_value(hid_conn_id, 0, 0, 0);  // Stop mouse
-            }
-        }
+        //     }
+        // }
     }
 }
 
@@ -312,25 +332,7 @@ void app_main(void)
     // Initialize I2C
     i2c_master_init();
 
-    // Create ICM42670 sensor instance
-    icm42670_handle_t sensor = icm42670_create(I2C_MASTER_NUM, IMU_SENSOR_ADDR);
-    if (sensor == NULL) {
-        ESP_LOGI(TAG, "Failed to initialize ICM42670");
-        return;
-    }
-    vTaskDelay(pdMS_TO_TICKS(1000)); // Delay for 1 second
 
-    // Configure the ICM42670 sensor
-    icm42670_cfg_t icm_config = {
-        .gyro_fs = GYRO_FS_250DPS,
-        .gyro_odr = GYRO_ODR_1600HZ,
-        .acce_fs = ACCE_FS_2G,
-        .acce_odr = ACCE_ODR_1600HZ
-    };
-    while (icm42670_config(sensor, &icm_config) != ESP_OK){
-        vTaskDelay(pdMS_TO_TICKS(1000));
-        ESP_LOGE(TAG, "Failed to configure ICM42670");
-    }
     // if (icm42670_config(sensor, &icm_config) != ESP_OK) {
     //     ESP_LOGI(TAG, "Failed to configure ICM42670");
     //     return;
@@ -362,8 +364,7 @@ void app_main(void)
 
     vTaskDelay(pdMS_TO_TICKS(1000)); // Delay for 1 second
 
-    icm42670_value_t acce_value;
-    icm42670_value_t gyro;
+
 
 
     esp_err_t ret;
