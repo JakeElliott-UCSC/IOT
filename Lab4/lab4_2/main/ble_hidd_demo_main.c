@@ -187,7 +187,7 @@ void hid_demo_task(void *pvParameters)
                 //esp_hidd_send_consumer_value(hid_conn_id, HID_CONSUMER_VOLUME_DOWN, true);
                 vTaskDelay(3000 / portTICK_PERIOD_MS);
                 //esp_hidd_send_consumer_value(hid_conn_id, HID_CONSUMER_VOLUME_DOWN, false);
-                esp_hidd_send_mouse_value(hid_conn_id, 0, 0, 0, 0, 0, 0);  // Stop mouse
+                esp_hidd_send_mouse_value(hid_conn_id, 0, 0, 0);  // Stop mouse
             }
         }
     }
