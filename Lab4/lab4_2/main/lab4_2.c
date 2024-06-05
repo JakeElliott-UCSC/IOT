@@ -20,6 +20,7 @@
 #include "esp_bt_device.h"
 #include "driver/gpio.h"
 #include "hid_dev.h"
+#include "esp_hidd.h"
 
 #define TAG "BT_MOUSE"
 
@@ -48,7 +49,7 @@ void app_main(void) {
         return;
     }
 
-    ret = esp_bluedroid_init();
+    ret = esp_bluedroid_init_with_cfg();
     if (ret) {
         ESP_LOGE(TAG, "%s init bluetooth failed: %s\n", __func__, esp_err_to_name(ret));
         return;
@@ -60,23 +61,9 @@ void app_main(void) {
         return;
     }
 
-    esp_hidd_profile_t profile = {
-        .device_name = "ESP32C3_MOUSE",
-        .vendor_id = 0x1234,
-        .product_id = 0x5678,
-        .version = 0x0100,
-        .manufacturer_name = "Espressif",
-    };
-
-    ret = esp_hidd_dev_register_callbacks(bt_hid_callback);
+    ret = esp_hidd_dev_init(bt_hid_callback);
     if (ret != ESP_OK) {
-        ESP_LOGE(TAG, "HID device callback register failed: %s", esp_err_to_name(ret));
-        return;
-    }
-
-    ret = esp_hidd_dev_init(&profile, &hidd_dev);
-    if (ret != ESP_OK) {
-        ESP_LOGE(TAG, "HID device init failed: %s", esp_err_to_name(ret));
+        ESP_LOGE(TAG, "HID device initialization failed: %s", esp_err_to_name(ret));
         return;
     }
 
