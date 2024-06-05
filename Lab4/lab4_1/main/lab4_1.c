@@ -19,7 +19,7 @@
 #define ACK_VAL              0x0     /*!< I2C ack value */
 #define NACK_VAL             0x1     /*!< I2C nack value */
 
-#define TILT_THRESHOLD       50
+#define TILT_THRESHOLD       500
 
 static const char *TAG = "main";
 
