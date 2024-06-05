@@ -177,15 +177,20 @@ void hid_demo_task(void *pvParameters)
             //esp_hidd_send_keyboard_value(hid_conn_id, 0, &key_vaule, 1);
             //esp_hidd_send_consumer_value(hid_conn_id, HID_CONSUMER_VOLUME_UP, true);
             // esp_hidd_send_mouse_value(hid_conn_id,0);
-            esp_hidd_send_mouse_value(hid_conn_id, 0, -10, 0);  // Move mouse left
-            vTaskDelay(3000 / portTICK_PERIOD_MS);
+            for (int i = 0; i < 100; i++) {
+                esp_hidd_send_mouse_value(hid_conn_id, 0, -10, 0);  // Move mouse left
+            }
+            vTaskDelay(1000 / portTICK_PERIOD_MS);
             if (move_mouse_left) {
                 move_mouse_left = false;
                 esp_hidd_send_mouse_value(hid_conn_id, 0, 0, 0);  // Stop mouse
-                esp_hidd_send_mouse_value(hid_conn_id, 0, 10, 0);  // Move mouse right
+                for (int i = 0; i < 100; i++) {
+                    esp_hidd_send_mouse_value(hid_conn_id, 0, 10, 0);  // Move mouse right 
+                }
+                
                 //esp_hidd_send_consumer_value(hid_conn_id, HID_CONSUMER_VOLUME_UP, false);
                 //esp_hidd_send_consumer_value(hid_conn_id, HID_CONSUMER_VOLUME_DOWN, true);
-                vTaskDelay(3000 / portTICK_PERIOD_MS);
+                vTaskDelay(1000 / portTICK_PERIOD_MS);
                 //esp_hidd_send_consumer_value(hid_conn_id, HID_CONSUMER_VOLUME_DOWN, false);
                 esp_hidd_send_mouse_value(hid_conn_id, 0, 0, 0);  // Stop mouse
             }
