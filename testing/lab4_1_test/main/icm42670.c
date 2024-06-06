@@ -292,7 +292,7 @@ esp_err_t icm42670_get_gyro_value(icm42670_handle_t sensor, icm42670_value_t *va
     ESP_RETURN_ON_ERROR(ret, TAG, "Get raw value error!");
     // DEBUGGING -----------------------------------------------------------------
     ESP_LOGI(TAG,"Get gyro called");
-    printf("GET_GYRO_RAW: x - %f, y - %f, z - %f\n",raw_value.x,raw_value.y,raw_value.z);
+    printf("GET_GYRO_RAW: x - %d, y - %d, z - %d\n",raw_value.x,raw_value.y,raw_value.z);
 
     value->x = raw_value.x / sensitivity;
     value->y = raw_value.y / sensitivity;
