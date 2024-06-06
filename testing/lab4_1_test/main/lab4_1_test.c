@@ -178,7 +178,7 @@ void app_main(void)
     printf("entering while loop\n");
     while (1) {
         
-        if (icm42670_get_gyro_value(sensor, &gyro) != != ESP_OK ) {
+        if (icm42670_get_gyro_value(sensor, &gyro) != ESP_OK ) {
             ESP_LOGE(TAG, "get gyro failed");
         }
         printf("Gyro x, y, z: %f, %f, %f\n",gyro.x,gyro.y,gyro.z);
