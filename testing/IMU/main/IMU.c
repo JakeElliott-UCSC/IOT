@@ -54,66 +54,6 @@ static esp_err_t i2c_master_init(void)
     return i2c_driver_install(i2c_master_port, conf.mode, 0, 0, 0);
 }
 
-// LEFT  -Y
-// RIGHT +Y
-// UP    +X
-// DOWN  -X
-void tiltEvent(float x, float y, float z){
-    // UP
-    if (x > TILT_THRESHOLD) {
-        tilt_flag = tilt_flag ^ UP_TOGGLE;
-    }
-    // DOWN
-    else if (x < (TILT_THRESHOLD * -1)) {
-        tilt_flag = tilt_flag ^ DOWN_TOGGLE;
-    }
-    // RIGHT
-    if (y > TILT_THRESHOLD) {
-        tilt_flag = tilt_flag ^ RIGHT_TOGGLE;
-    }
-    // LEFT
-    else if (y < (TILT_THRESHOLD * -1)) {
-        tilt_flag = tilt_flag ^ LEFT_TOGGLE;
-    }
-
-    switch (tilt_flag) {
-        case 0b00001000:
-            ESP_LOGI(TAG, "UP");
-            break;
-        case 0b00000100:
-            ESP_LOGI(TAG, "DOWN");
-            break;
-        case 0b00000010:
-            ESP_LOGI(TAG, "LEFT");
-            break;
-        case 0b00000001:
-            ESP_LOGI(TAG, "RIGHT");
-            break;
-        case 0b00001010:
-            ESP_LOGI(TAG, "UP LEFT");
-            break;
-        case 0b00001001:
-            ESP_LOGI(TAG, "UP RIGHT");
-            break;
-        case 0b00000110:
-            ESP_LOGI(TAG, "DOWN LEFT");
-            break;
-        case 0b00000101:
-            ESP_LOGI(TAG, "DOWN RIGHT");
-            break;
-    }
-    tilt_flag = 0;
-}
-
-
-
-
-
-
-
-
-
-
 
 
 
