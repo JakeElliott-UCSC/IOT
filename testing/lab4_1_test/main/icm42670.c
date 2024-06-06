@@ -290,6 +290,8 @@ esp_err_t icm42670_get_gyro_value(icm42670_handle_t sensor, icm42670_value_t *va
 
     ret = icm42670_get_gyro_raw_value(sensor, &raw_value);
     ESP_RETURN_ON_ERROR(ret, TAG, "Get raw value error!");
+    // DEBUGGING -----------------------------------------------------------------
+    ESP_LOGI(TAG, "GET_GYRO_RAW: x - %f, y - %f, z - %f",raw_value.x,raw_value.y,raw_value.z);
 
     value->x = raw_value.x / sensitivity;
     value->y = raw_value.y / sensitivity;
