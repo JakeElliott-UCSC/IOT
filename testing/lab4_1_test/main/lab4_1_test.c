@@ -181,27 +181,10 @@ void app_main(void)
 
         icm42670_get_gyro_value(sensor, &gyro);
         printf("Gyro x, y, z: %f, %f, %f\n",gyro.x,gyro.y,gyro.z);
+        printf("Reduced Gyro x, y, z: %f, %f, %f\n",gyro.x/1000,gyro.y/1000,gyro.z/1000);
         // tiltEvent(gyro.x,gyro.y,gyro.z);
 
 
-        // // Read accelerometer data
-        // if (icm42670_get_acce_value(sensor, &acce_value) == ESP_OK) {
-        //     // Determine the inclination
-        //     if (acce_value.x > 0.5) {
-        //         ESP_LOGI(TAG, "UP");
-        //     } else if (acce_value.x < -0.5) {
-        //         ESP_LOGI(TAG, "DOWN");
-        //     }
-
-        //     if (acce_value.y > 0.5) {
-        //         ESP_LOGI(TAG, "RIGHT");
-        //     } else if (acce_value.y < -0.5) {
-        //         ESP_LOGI(TAG, "LEFT");
-        //     }
-        // } else {
-        //     ESP_LOGE(TAG, "Failed to read accelerometer data");
-        // }
-
-        vTaskDelay(pdMS_TO_TICKS(10)); // Delay for 1 second
+        vTaskDelay(pdMS_TO_TICKS(1000)); // Delay for 1 second
     }
 }
