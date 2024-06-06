@@ -73,9 +73,9 @@ void app_main(void)
     // Configure the ICM42670 sensor
     icm42670_cfg_t icm_config = {
         .gyro_fs = GYRO_FS_250DPS,
-        .gyro_odr = "String",
+        .gyro_odr = 100,
         .acce_fs = ACCE_FS_2G,
-        .acce_odr = "string"
+        .acce_odr = 100
     };
     while (icm42670_config(sensor, &icm_config) != ESP_OK){
         vTaskDelay(pdMS_TO_TICKS(1000));
