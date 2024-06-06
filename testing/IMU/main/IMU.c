@@ -125,7 +125,7 @@ void app_main(void)
             ESP_LOGE(TAG, "get gyro failed");
         }
         printf("Gyro x, y, z: %f, %f, %f\n",gyro.x,gyro.y,gyro.z);
-        printf("Acce x, y, z: %f, %f, %f\n",gyro.x,gyro.y,gyro.z);
+        printf("Acce x, y, z: %f, %f, %f\n",acceleration.x,acceleration.y,acceleration.z);
         // tiltEvent(gyro.x,gyro.y,gyro.z);
 
 
