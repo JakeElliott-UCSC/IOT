@@ -140,6 +140,7 @@ esp_err_t icm42670_acce_set_pwr(icm42670_handle_t sensor, icm42670_acce_pwr_t st
 
         ret = icm42670_write(sensor, ICM42670_PWR_MGMT0, &data, sizeof(data));
     }
+    else ESP_LOGE(TAG, "Failed to set accel power mode due to read failure ICM42670");
 
     return ret;
 }
@@ -290,9 +291,6 @@ esp_err_t icm42670_get_gyro_value(icm42670_handle_t sensor, icm42670_value_t *va
 
     ret = icm42670_get_gyro_raw_value(sensor, &raw_value);
     ESP_RETURN_ON_ERROR(ret, TAG, "Get raw value error!");
-    // DEBUGGING -----------------------------------------------------------------
-    // ESP_LOGI(TAG,"Get gyro called");
-    // printf("GET_GYRO_RAW: x - %d, y - %d, z - %d\n",raw_value.x,raw_value.y,raw_value.z);
 
     value->x = raw_value.x / sensitivity;
     value->y = raw_value.y / sensitivity;
@@ -364,9 +362,7 @@ static esp_err_t icm42670_write(icm42670_handle_t sensor, const uint8_t reg_star
     ret = i2c_master_cmd_begin(sens->bus, cmd, 1000 / portTICK_PERIOD_MS);
     i2c_cmd_link_delete(cmd);
     vTaskDelay(pdMS_TO_TICKS(10));
-    if (ret != ESP_OK) {
-        ESP_LOGE(TAG, "I2C write failure!");
-    }
+
     return ret;
 }
 
