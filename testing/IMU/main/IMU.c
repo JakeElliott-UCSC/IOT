@@ -113,6 +113,7 @@ void app_main(void)
     vTaskDelay(pdMS_TO_TICKS(1000)); // Delay for 1 second
 
     icm42670_value_t gyro;
+    icm42670_value_t acceleration;
 
     printf("entering while loop\n");
     while (1) {
@@ -120,7 +121,11 @@ void app_main(void)
         if (icm42670_get_gyro_value(sensor, &gyro) != ESP_OK ) {
             ESP_LOGE(TAG, "get gyro failed");
         }
+        if (icm42670_get_acce_value(sensor,&acceleration) != ESP_OK) {
+            ESP_LOGE(TAG, "get gyro failed");
+        }
         printf("Gyro x, y, z: %f, %f, %f\n",gyro.x,gyro.y,gyro.z);
+        printf("Acce x, y, z: %f, %f, %f\n",gyro.x,gyro.y,gyro.z);
         // tiltEvent(gyro.x,gyro.y,gyro.z);
 
 
