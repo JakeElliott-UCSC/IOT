@@ -181,7 +181,6 @@ void app_main(void)
 
         icm42670_get_gyro_value(sensor, &gyro);
         printf("Gyro x, y, z: %f, %f, %f\n",gyro.x,gyro.y,gyro.z);
-        printf("Reduced Gyro x, y, z: %f, %f, %f\n",gyro.x/1000,gyro.y/1000,gyro.z/1000);
         // tiltEvent(gyro.x,gyro.y,gyro.z);
 
 
