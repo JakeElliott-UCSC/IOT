@@ -75,7 +75,7 @@ void app_main(void)
         .gyro_fs = GYRO_FS_250DPS,
         .gyro_odr = GYRO_ODR_1600HZ,
         .acce_fs = ACCE_FS_2G,
-        .acce_odr = ACCE_ODR_1600HZ
+        .acce_odr = 5
     };
     while (icm42670_config(sensor, &icm_config) != ESP_OK){
         vTaskDelay(pdMS_TO_TICKS(1000));
@@ -112,7 +112,6 @@ void app_main(void)
 
     vTaskDelay(pdMS_TO_TICKS(1000)); // Delay for 1 second
 
-    icm42670_value_t acce_value;
     icm42670_value_t gyro;
 
     printf("entering while loop\n");
