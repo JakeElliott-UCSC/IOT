@@ -182,7 +182,7 @@ static esp_err_t read_gyro(int16_t *x,int16_t *y,int16_t *z) {
     }
 
     *x = (int16_t)((sensor_data[0] << 8) + sensor_data[1]);
-    *y = (int16_t)((sensor_data[1] << 8) + sensor_data[2]);
+    *y = (int16_t)((sensor_data[2] << 8) + sensor_data[3]);
     *z = (int16_t)((sensor_data[4] << 8) + sensor_data[5]);
 
     return ret;
