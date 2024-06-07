@@ -14,6 +14,17 @@
 #define SHTC3_SENSOR_ADDR    0x70     /*!< Slave address of the SHTC3 sensor */
 #define IMU_SENSOR_ADDR      0x68     /*!< Slave address of the IMU sensor */
 
+#define GYROX1 0X11
+#define GYROX0 0X12
+#define GYROY1 0X13
+#define GYROY0 0X14
+
+#define POWER_MAN 0x1F
+#define POWER_SET 0x0C
+
+#define GYRO_CONFIG 0x20
+#define GYRO_SET 0x6C
+
 #define ACK_CHECK_EN         0x1     /*!< I2C master will check ack from slave*/
 #define ACK_CHECK_DIS        0x0     /*!< I2C master will not check ack from slave */
 #define ACK_VAL              0x0     /*!< I2C ack value */
@@ -106,11 +117,72 @@ void tiltEvent(float x, float y, float z){
 }
 
 
+/**
+ * @brief Send Data to gyro sensor
+ */
+static esp_err_t write_gyro(char data) {
+    uint8_t sensor_data[3];
+    esp_err_t ret;
+    i2c_cmd_handle_t cmd = i2c_cmd_link_create();
+
+
+    // Send read command
+    cmd = i2c_cmd_link_create();
+    i2c_master_start(cmd);
+    i2c_master_write_byte(cmd, (IMU_SENSOR_ADDR << 1) | I2C_MASTER_WRITE, ACK_CHECK_EN);
+    i2c_master_write_byte(cmd, data, ACK_CHECK_EN);
+    i2c_master_stop(cmd);
+
+    // send to sensor
+    ret = i2c_master_cmd_begin(I2C_MASTER_NUM, cmd, 1000 / portTICK_PERIOD_MS);
+    // end transmission
+    i2c_cmd_link_delete(cmd);
+
+    // Process data if OK
+    if (ret == ESP_OK) {
+    } else {
+        ESP_LOGE(TAG, "Failed to send data!");
+    }
+    return ret;
+}
 
 
 
 
+/**
+ * @brief Send Data to gyro sensor
+ */
+static esp_err_t read_gyro(int16_t *x,int16_t *y,int16_t *z) {
+    uint8_t sensor_data[6];
+    esp_err_t ret;
 
+
+    i2c_cmd_handle_t cmd = i2c_cmd_link_create();
+    // Send read command
+    cmd = i2c_cmd_link_create();
+    // Read data from sensor
+    i2c_master_start(cmd);
+    i2c_master_write_byte(cmd, (SHTC3_SENSOR_ADDR << 1) | I2C_MASTER_READ, ACK_CHECK_EN);
+    i2c_master_read(cmd, sensor_data, 6, I2C_MASTER_LAST_NACK); // Read 6 bytes data
+    i2c_master_stop(cmd);
+
+    // send and read from sensor
+    ret = i2c_master_cmd_begin(I2C_MASTER_NUM, cmd, 1000 / portTICK_PERIOD_MS);
+    // end transmission
+    i2c_cmd_link_delete(cmd);
+
+    // Process data if OK
+    if (ret == ESP_OK) {
+    } else {
+        ESP_LOGE(TAG, "Failed to read data!");
+    }
+
+    x = (int16_t)((data[0] << 8) + data[1]);
+    y = (int16_t)((data[1] << 8) + data[2]);
+    z = (int16_t)((data[4] << 8) + data[5]);
+
+    return ret;
+}
 
 
 
@@ -174,6 +246,30 @@ void app_main(void)
 
     // icm42670_value_t acce_value;
     // icm42670_value_t gyro;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     printf("entering while loop\n");
     while (1) {
