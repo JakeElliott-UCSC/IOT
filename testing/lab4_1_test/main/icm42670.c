@@ -16,8 +16,8 @@
 #define ALPHA                       0.99f        /*!< Weight of gyroscope */
 #define RAD_TO_DEG                  57.27272727f /*!< Radians to degrees */
 
-#define ICM42607_ID 0x68
-#define ICM42670_ID 0x68
+#define ICM42607_ID 0x60
+#define ICM42670_ID 0x67
 
 /* ICM42670 register */
 #define ICM42670_WHOAMI         0x75
