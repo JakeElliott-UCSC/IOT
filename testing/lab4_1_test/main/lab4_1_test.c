@@ -4,7 +4,7 @@
 #include "esp_system.h"
 #include "esp_log.h"
 #include "driver/i2c.h"
-#include "icm42670.h"
+// #include "icm42670.h"
 
 // Constants
 #define I2C_MASTER_SCL_IO    8    /*!< GPIO number used for I2C master clock */
@@ -123,24 +123,24 @@ void app_main(void)
     i2c_master_init();
 
     // Create ICM42670 sensor instance
-    icm42670_handle_t sensor = icm42670_create(I2C_MASTER_NUM, IMU_SENSOR_ADDR);
-    if (sensor == NULL) {
-        ESP_LOGI(TAG, "Failed to initialize ICM42670");
-        return;
-    }
+    // icm42670_handle_t sensor = icm42670_create(I2C_MASTER_NUM, IMU_SENSOR_ADDR);
+    // if (sensor == NULL) {
+    //     ESP_LOGI(TAG, "Failed to initialize ICM42670");
+    //     return;
+    // }
     vTaskDelay(pdMS_TO_TICKS(1000)); // Delay for 1 second
 
     // Configure the ICM42670 sensor
-    icm42670_cfg_t icm_config = {
-        .gyro_fs = GYRO_FS_250DPS,
-        .gyro_odr = GYRO_ODR_1600HZ,
-        .acce_fs = ACCE_FS_2G,
-        .acce_odr = ACCE_ODR_1600HZ
-    };
-    while (icm42670_config(sensor, &icm_config) != ESP_OK){
-        vTaskDelay(pdMS_TO_TICKS(1000));
-        ESP_LOGE(TAG, "Failed to configure ICM42670");
-    }
+    // icm42670_cfg_t icm_config = {
+    //     .gyro_fs = GYRO_FS_250DPS,
+    //     .gyro_odr = GYRO_ODR_1600HZ,
+    //     .acce_fs = ACCE_FS_2G,
+    //     .acce_odr = ACCE_ODR_1600HZ
+    // };
+    // while (icm42670_config(sensor, &icm_config) != ESP_OK){
+    //     vTaskDelay(pdMS_TO_TICKS(1000));
+    //     ESP_LOGE(TAG, "Failed to configure ICM42670");
+    // }
     // if (icm42670_config(sensor, &icm_config) != ESP_OK) {
     //     ESP_LOGI(TAG, "Failed to configure ICM42670");
     //     return;
@@ -149,10 +149,10 @@ void app_main(void)
     vTaskDelay(pdMS_TO_TICKS(1000)); // Delay for 1 second
 
     // Set accelerometer power mode
-    while (icm42670_acce_set_pwr(sensor, ACCE_PWR_ON) != ESP_OK) {
-        ESP_LOGE(TAG, "Failed to set accelerometer power mode");
-        vTaskDelay(pdMS_TO_TICKS(1000));
-    }
+    // while (icm42670_acce_set_pwr(sensor, ACCE_PWR_ON) != ESP_OK) {
+    //     ESP_LOGE(TAG, "Failed to set accelerometer power mode");
+    //     vTaskDelay(pdMS_TO_TICKS(1000));
+    // }
     // if (icm42670_acce_set_pwr(sensor, ACCE_PWR_ON) != ESP_OK) {
     //     ESP_LOGI(TAG, "Failed to set accelerometer power mode");
     //     return;
@@ -161,10 +161,10 @@ void app_main(void)
     vTaskDelay(pdMS_TO_TICKS(1000)); // Delay for 1 second
 
     // Set gyroscope power mode
-    while (icm42670_gyro_set_pwr(sensor, GYRO_PWR_STANDBY) != ESP_OK) {
-        vTaskDelay(pdMS_TO_TICKS(1000));
-        ESP_LOGE(TAG, "Failed to set gyroscope power mode");
-    }
+    // while (icm42670_gyro_set_pwr(sensor, GYRO_PWR_STANDBY) != ESP_OK) {
+    //     vTaskDelay(pdMS_TO_TICKS(1000));
+    //     ESP_LOGE(TAG, "Failed to set gyroscope power mode");
+    // }
     // if (icm42670_gyro_set_pwr(sensor, GYRO_PWR_STANDBY) != ESP_OK) {
     //     ESP_LOGI(TAG, "Failed to set gyroscope power mode");
     //     return;
@@ -178,10 +178,10 @@ void app_main(void)
     printf("entering while loop\n");
     while (1) {
         
-        if (icm42670_get_gyro_value(sensor, &gyro) != ESP_OK ) {
-            ESP_LOGE(TAG, "get gyro failed");
-        }
-        printf("Gyro x, y, z: %f, %f, %f\n",gyro.x,gyro.y,gyro.z);
+        // if (icm42670_get_gyro_value(sensor, &gyro) != ESP_OK ) {
+        //     ESP_LOGE(TAG, "get gyro failed");
+        // }
+        // printf("Gyro x, y, z: %f, %f, %f\n",gyro.x,gyro.y,gyro.z);
         // tiltEvent(gyro.x,gyro.y,gyro.z);
 
 
