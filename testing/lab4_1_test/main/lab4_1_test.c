@@ -30,7 +30,7 @@
 #define ACK_VAL              0x0     /*!< I2C ack value */
 #define NACK_VAL             0x1     /*!< I2C nack value */
 
-#define TILT_THRESHOLD       500
+#define TILT_THRESHOLD       1000
 
 #define UP_TOGGLE            0b1000
 #define DOWN_TOGGLE          0b0100
@@ -78,13 +78,13 @@ void tiltEvent(float x, float y, float z){
     else if (x < (TILT_THRESHOLD * -1)) {
         tilt_flag = tilt_flag ^ DOWN_TOGGLE;
     }
-    // RIGHT
-    if (z > TILT_THRESHOLD) {
-        tilt_flag = tilt_flag ^ RIGHT_TOGGLE;
-    }
     // LEFT
-    else if (z < (TILT_THRESHOLD * -1)) {
+    if (z > TILT_THRESHOLD) {
         tilt_flag = tilt_flag ^ LEFT_TOGGLE;
+    }
+    // RIGHT
+    else if (z < (TILT_THRESHOLD * -1)) {
+        tilt_flag = tilt_flag ^ RIGHT_TOGGLE;
     }
 
     switch (tilt_flag) {
