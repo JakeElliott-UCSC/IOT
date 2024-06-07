@@ -79,11 +79,11 @@ void tiltEvent(float x, float y, float z){
         tilt_flag = tilt_flag ^ DOWN_TOGGLE;
     }
     // RIGHT
-    if (y > TILT_THRESHOLD) {
+    if (z > TILT_THRESHOLD) {
         tilt_flag = tilt_flag ^ RIGHT_TOGGLE;
     }
     // LEFT
-    else if (y < (TILT_THRESHOLD * -1)) {
+    else if (z < (TILT_THRESHOLD * -1)) {
         tilt_flag = tilt_flag ^ LEFT_TOGGLE;
     }
 
