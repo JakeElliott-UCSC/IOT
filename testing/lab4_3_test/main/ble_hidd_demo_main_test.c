@@ -28,7 +28,6 @@
 #include "hid_dev.h"
 
 #include "driver/i2c.h"
-#include "icm42670.h"
 
 // Constants
 #define I2C_MASTER_SCL_IO    8    /*!< GPIO number used for I2C master clock */
@@ -43,7 +42,18 @@
 #define ACK_VAL              0x0     /*!< I2C ack value */
 #define NACK_VAL             0x1     /*!< I2C nack value */
 
-#define TILT_THRESHOLD       500
+#define TILT_THRESHOLD       1000
+
+#define GYROX1 0X11
+#define GYROX0 0X12
+#define GYROY1 0X13
+#define GYROY0 0X14
+
+#define POWER_MAN 0x1F
+#define POWER_SET 0x0C
+
+#define GYRO_CONFIG 0x20
+#define GYRO_SET 0x6C
 
 #define UP_TOGGLE            0b1000
 #define DOWN_TOGGLE          0b0100
@@ -106,16 +116,16 @@ void tiltEvent(uint16_t id,float x, float y, float z){
         down_count++;
         rest_count = 0;
     }
-    // RIGHT
+    // LEFT
     if (y > TILT_THRESHOLD) {
-        tilt_flag = tilt_flag ^ RIGHT_TOGGLE;
+        tilt_flag = tilt_flag ^ LEFT_TOGGLE;
         left_count = 0;
         right_count++;
         rest_count = 0;
     }
-    // LEFT
+    // RIGHT
     else if (y < (TILT_THRESHOLD * -1)) {
-        tilt_flag = tilt_flag ^ LEFT_TOGGLE;
+        tilt_flag = tilt_flag ^ RIGHT_TOGGLE;
         left_count++;
         right_count = 0;
         rest_count = 0;
@@ -335,48 +345,62 @@ static void gap_event_handler(esp_gap_ble_cb_event_t event, esp_ble_gap_cb_param
 
 void hid_demo_task(void *pvParameters)
 {
-    icm42670_value_t gyro;
-    // Create ICM42670 sensor instance
-    icm42670_handle_t sensor = icm42670_create(I2C_MASTER_NUM, IMU_SENSOR_ADDR);
-    if (sensor == NULL) {
-        ESP_LOGI(TAG, "Failed to initialize ICM42670");
-        return;
-    }
-    vTaskDelay(pdMS_TO_TICKS(1000)); // Delay for 1 second
+    // icm42670_value_t gyro;
+    // // Create ICM42670 sensor instance
+    // icm42670_handle_t sensor = icm42670_create(I2C_MASTER_NUM, IMU_SENSOR_ADDR);
+    // if (sensor == NULL) {
+    //     ESP_LOGI(TAG, "Failed to initialize ICM42670");
+    //     return;
+    // }
+    // vTaskDelay(pdMS_TO_TICKS(1000)); // Delay for 1 second
 
     // Configure the ICM42670 sensor
-    icm42670_cfg_t icm_config = {
-        .gyro_fs = GYRO_FS_250DPS,
-        .gyro_odr = GYRO_ODR_1600HZ,
-        .acce_fs = ACCE_FS_2G,
-        .acce_odr = ACCE_ODR_1600HZ
-    };
-    while (icm42670_config(sensor, &icm_config) != ESP_OK){
-        vTaskDelay(pdMS_TO_TICKS(1000));
-        ESP_LOGE(TAG, "Failed to configure ICM42670");
-    }
-    vTaskDelay(1000 / portTICK_PERIOD_MS);
+    // icm42670_cfg_t icm_config = {
+    //     .gyro_fs = GYRO_FS_250DPS,
+    //     .gyro_odr = GYRO_ODR_1600HZ,
+    //     .acce_fs = ACCE_FS_2G,
+    //     .acce_odr = ACCE_ODR_1600HZ
+    // };
+    // while (icm42670_config(sensor, &icm_config) != ESP_OK){
+    //     vTaskDelay(pdMS_TO_TICKS(1000));
+    //     ESP_LOGE(TAG, "Failed to configure ICM42670");
+    // }
+    // vTaskDelay(1000 / portTICK_PERIOD_MS);
       // Set accelerometer power mode
-    while (icm42670_acce_set_pwr(sensor, ACCE_PWR_ON) != ESP_OK) {
-        ESP_LOGE(TAG, "Failed to set accelerometer power mode");
-        vTaskDelay(pdMS_TO_TICKS(1000));
-    }
+    // while (icm42670_acce_set_pwr(sensor, ACCE_PWR_ON) != ESP_OK) {
+    //     ESP_LOGE(TAG, "Failed to set accelerometer power mode");
+    //     vTaskDelay(pdMS_TO_TICKS(1000));
+    // }
     // if (icm42670_acce_set_pwr(sensor, ACCE_PWR_ON) != ESP_OK) {
     //     ESP_LOGI(TAG, "Failed to set accelerometer power mode");
     //     return;
     // }
 
-    vTaskDelay(pdMS_TO_TICKS(1000)); // Delay for 1 second
+    // vTaskDelay(pdMS_TO_TICKS(1000)); // Delay for 1 second
 
     // Set gyroscope power mode
-    while (icm42670_gyro_set_pwr(sensor, GYRO_PWR_STANDBY) != ESP_OK) {
-        vTaskDelay(pdMS_TO_TICKS(1000));
-        ESP_LOGE(TAG, "Failed to set gyroscope power mode");
-    }
+    // while (icm42670_gyro_set_pwr(sensor, GYRO_PWR_STANDBY) != ESP_OK) {
+    //     vTaskDelay(pdMS_TO_TICKS(1000));
+    //     ESP_LOGE(TAG, "Failed to set gyroscope power mode");
+    // }
+
+    // config sensor
+    write_gyro(POWER_MAN,POWER_SET);
+    write_gyro(GYRO_CONFIG,GYRO_SET);
+
+
+
+    int16_t gyroX = 0;
+    int16_t gyroY = 0;
+    int16_t gyroZ = 0;
+
     while(1) {
         
-        icm42670_get_gyro_value(sensor, &gyro);
-        tiltEvent(hid_conn_id,gyro.x,gyro.y,gyro.z);
+        // icm42670_get_gyro_value(sensor, &gyro);
+        // tiltEvent(hid_conn_id,gyro.x,gyro.y,gyro.z);
+
+        read_gyro(&gyroX,&gyroY,&gyroZ);
+        tiltEvent(gyroX,gyroY,gyroZ);
 
         // vTaskDelay(2000 / portTICK_PERIOD_MS);
         // if (sec_conn) {
