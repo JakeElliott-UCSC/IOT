@@ -470,7 +470,7 @@ void hid_demo_task(void *pvParameters)
         // tiltEvent(hid_conn_id,gyro.x,gyro.y,gyro.z);
 
         read_gyro(&gyroX,&gyroY,&gyroZ);
-        tiltEvent(gyroX,gyroY,gyroZ);
+        tiltEvent(hid_conn_id,gyroX,gyroY,gyroZ);
 
         // vTaskDelay(2000 / portTICK_PERIOD_MS);
         // if (sec_conn) {
