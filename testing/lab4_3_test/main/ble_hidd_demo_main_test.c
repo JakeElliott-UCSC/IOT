@@ -117,17 +117,20 @@ void tiltEvent(uint16_t id,float x, float y, float z){
         rest_count = 0;
     }
     // LEFT
-    if (y > TILT_THRESHOLD) {
+    if (z > TILT_THRESHOLD) {
         tilt_flag = tilt_flag ^ LEFT_TOGGLE;
-        left_count = 0;
-        right_count++;
-        rest_count = 0;
+        left_count++;
+        right_count = 0;
+        rest_count = 0; 
     }
     // RIGHT
-    else if (y < (TILT_THRESHOLD * -1)) {
+    else if (z < (TILT_THRESHOLD * -1)) {
         tilt_flag = tilt_flag ^ RIGHT_TOGGLE;
         left_count++;
         right_count = 0;
+        rest_count = 0;
+        left_count = 0;
+        right_count++;
         rest_count = 0;
     }
 
