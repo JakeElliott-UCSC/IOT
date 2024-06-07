@@ -157,19 +157,23 @@ static esp_err_t read_gyro(int16_t *x,int16_t *y,int16_t *z) {
     esp_err_t ret;
 
 
-    i2c_cmd_handle_t cmd = i2c_cmd_link_create();
-    // Send read command
-    cmd = i2c_cmd_link_create();
-    // Read data from sensor
-    i2c_master_start(cmd);
-    i2c_master_write_byte(cmd, (SHTC3_SENSOR_ADDR << 1) | I2C_MASTER_READ, ACK_CHECK_EN);
-    i2c_master_read(cmd, sensor_data, 6, I2C_MASTER_LAST_NACK); // Read 6 bytes data
-    i2c_master_stop(cmd);
+    // i2c_cmd_handle_t cmd = i2c_cmd_link_create();
+    // // Send read command
+    // cmd = i2c_cmd_link_create();
+    // // Read data from sensor
+    // i2c_master_start(cmd);
+    // i2c_master_write_byte(cmd, (SHTC3_SENSOR_ADDR << 1) | I2C_MASTER_READ, ACK_CHECK_EN);
+    // i2c_master_read(cmd, sensor_data, 6, I2C_MASTER_LAST_NACK); // Read 6 bytes data
+    // i2c_master_stop(cmd);
 
-    // send and read from sensor
-    ret = i2c_master_cmd_begin(I2C_MASTER_NUM, cmd, 1000 / portTICK_PERIOD_MS);
-    // end transmission
-    i2c_cmd_link_delete(cmd);
+    // // send and read from sensor
+    // ret = i2c_master_cmd_begin(I2C_MASTER_NUM, cmd, 1000 / portTICK_PERIOD_MS);
+    // // end transmission
+    // i2c_cmd_link_delete(cmd);
+
+    uint8_t reg_buff[] = {GYROX1};
+
+    i2c_master_write_read_device(I2C_MASTER_WRITE, IMU_SENSOR_ADDR, reg_buff, sizeof(reg_buff), sensor_data, sizeof(sensor_data), 1000 / portTICK_PERIOD_MS);
 
     // Process data if OK
     if (ret == ESP_OK) {
@@ -260,19 +264,23 @@ void app_main(void)
 
 
 
-
+    // config sensor
     write_gyro(POWER_MAN,POWER_SET);
+    write_gyro(GYRO_CONFIG,GYRO_SET);
 
 
 
-
-
+    int16_t gyroX = 0;
+    int16_t gyroY = 0;
+    int16_t gyroZ = 0;
 
 
 
 
     printf("entering while loop\n");
     while (1) {
+
+        read_gyro();
         
         // if (icm42670_get_gyro_value(sensor, &gyro) != ESP_OK ) {
         //     ESP_LOGE(TAG, "get gyro failed");
