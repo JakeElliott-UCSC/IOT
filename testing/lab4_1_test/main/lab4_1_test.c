@@ -121,7 +121,6 @@ void tiltEvent(float x, float y, float z){
  * @brief Send Data to gyro sensor
  */
 static esp_err_t write_gyro(char data) {
-    uint8_t sensor_data[3];
     esp_err_t ret;
     i2c_cmd_handle_t cmd = i2c_cmd_link_create();
 
@@ -177,9 +176,9 @@ static esp_err_t read_gyro(int16_t *x,int16_t *y,int16_t *z) {
         ESP_LOGE(TAG, "Failed to read data!");
     }
 
-    x = (int16_t)((data[0] << 8) + data[1]);
-    y = (int16_t)((data[1] << 8) + data[2]);
-    z = (int16_t)((data[4] << 8) + data[5]);
+    *x = (int16_t)((sensor_data[0] << 8) + sensor_data[1]);
+    *y = (int16_t)((sensor_data[1] << 8) + sensor_data[2]);
+    *z = (int16_t)((sensor_data[4] << 8) + sensor_data[5]);
 
     return ret;
 }
