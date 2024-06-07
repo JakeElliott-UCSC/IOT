@@ -128,7 +128,7 @@ void app_main(void)
     //     ESP_LOGI(TAG, "Failed to initialize ICM42670");
     //     return;
     // }
-    vTaskDelay(pdMS_TO_TICKS(1000)); // Delay for 1 second
+    // vTaskDelay(pdMS_TO_TICKS(1000)); // Delay for 1 second
 
     // Configure the ICM42670 sensor
     // icm42670_cfg_t icm_config = {
@@ -146,7 +146,7 @@ void app_main(void)
     //     return;
     // }
 
-    vTaskDelay(pdMS_TO_TICKS(1000)); // Delay for 1 second
+    // vTaskDelay(pdMS_TO_TICKS(1000)); // Delay for 1 second
 
     // Set accelerometer power mode
     // while (icm42670_acce_set_pwr(sensor, ACCE_PWR_ON) != ESP_OK) {
@@ -158,7 +158,7 @@ void app_main(void)
     //     return;
     // }
 
-    vTaskDelay(pdMS_TO_TICKS(1000)); // Delay for 1 second
+    // vTaskDelay(pdMS_TO_TICKS(1000)); // Delay for 1 second
 
     // Set gyroscope power mode
     // while (icm42670_gyro_set_pwr(sensor, GYRO_PWR_STANDBY) != ESP_OK) {
@@ -170,10 +170,10 @@ void app_main(void)
     //     return;
     // }
 
-    vTaskDelay(pdMS_TO_TICKS(1000)); // Delay for 1 second
+    // vTaskDelay(pdMS_TO_TICKS(1000)); // Delay for 1 second
 
-    icm42670_value_t acce_value;
-    icm42670_value_t gyro;
+    // icm42670_value_t acce_value;
+    // icm42670_value_t gyro;
 
     printf("entering while loop\n");
     while (1) {
