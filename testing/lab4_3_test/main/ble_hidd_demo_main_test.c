@@ -203,6 +203,76 @@ void tiltEvent(uint16_t id,float x, float y, float z){
 }
 
 
+/**
+ * @brief Send Data to gyro sensor
+ */
+static esp_err_t write_gyro(uint8_t reg, uint8_t data) {
+    esp_err_t ret;
+    i2c_cmd_handle_t cmd = i2c_cmd_link_create();
+
+
+    // Send read command
+    cmd = i2c_cmd_link_create();
+    i2c_master_start(cmd);
+    i2c_master_write_byte(cmd, (IMU_SENSOR_ADDR << 1) | I2C_MASTER_WRITE, ACK_CHECK_EN);
+    i2c_master_write_byte(cmd, reg, ACK_CHECK_EN);
+    i2c_master_write_byte(cmd, data, ACK_CHECK_EN);
+    i2c_master_stop(cmd);
+
+    // send to sensor
+    ret = i2c_master_cmd_begin(I2C_MASTER_NUM, cmd, 1000 / portTICK_PERIOD_MS);
+    // end transmission
+    i2c_cmd_link_delete(cmd);
+
+    // Process data if OK
+    if (ret == ESP_OK) {
+    } else {
+        ESP_LOGE(TAG, "Failed to send data!");
+    }
+    return ret;
+}
+
+
+
+
+/**
+ * @brief Read Data to gyro sensor
+ */
+static esp_err_t read_gyro(int16_t *x,int16_t *y,int16_t *z) {
+    uint8_t sensor_data[6];
+    esp_err_t ret;
+
+
+    // i2c_cmd_handle_t cmd = i2c_cmd_link_create();
+    // // Send read command
+    // cmd = i2c_cmd_link_create();
+    // // Read data from sensor
+    // i2c_master_start(cmd);
+    // i2c_master_write_byte(cmd, (SHTC3_SENSOR_ADDR << 1) | I2C_MASTER_READ, ACK_CHECK_EN);
+    // i2c_master_read(cmd, sensor_data, 6, I2C_MASTER_LAST_NACK); // Read 6 bytes data
+    // i2c_master_stop(cmd);
+
+    // // send and read from sensor
+    // ret = i2c_master_cmd_begin(I2C_MASTER_NUM, cmd, 1000 / portTICK_PERIOD_MS);
+    // // end transmission
+    // i2c_cmd_link_delete(cmd);
+
+    uint8_t reg_buff[] = {GYROX1};
+
+    ret = i2c_master_write_read_device(I2C_MASTER_WRITE, IMU_SENSOR_ADDR, reg_buff, sizeof(reg_buff), sensor_data, sizeof(sensor_data), 1000 / portTICK_PERIOD_MS);
+
+    // Process data if OK
+    if (ret == ESP_OK) {
+    } else {
+        ESP_LOGE(TAG, "Failed to read data!");
+    }
+
+    *x = (int16_t)((sensor_data[0] << 8) + sensor_data[1]);
+    *y = (int16_t)((sensor_data[2] << 8) + sensor_data[3]);
+    *z = (int16_t)((sensor_data[4] << 8) + sensor_data[5]);
+
+    return ret;
+}
 
 
 /**
