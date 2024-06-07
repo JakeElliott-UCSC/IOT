@@ -4,7 +4,7 @@
 #include "esp_system.h"
 #include "esp_log.h"
 #include "driver/i2c.h"
-#include "icm42670.h"
+// #include "icm42670.h"
 
 // Constants
 #define I2C_MASTER_SCL_IO    8    /*!< GPIO number used for I2C master clock */
@@ -107,9 +107,75 @@ void tiltEvent(float x, float y, float z){
 
 
 
+/**
+ * @brief Send Data to gyro sensor
+ */
+static esp_err_t write_gyro(uint8_t reg, uint8_t data) {
+    esp_err_t ret;
+    i2c_cmd_handle_t cmd = i2c_cmd_link_create();
+
+
+    // Send read command
+    cmd = i2c_cmd_link_create();
+    i2c_master_start(cmd);
+    i2c_master_write_byte(cmd, (IMU_SENSOR_ADDR << 1) | I2C_MASTER_WRITE, ACK_CHECK_EN);
+    i2c_master_write_byte(cmd, reg, ACK_CHECK_EN);
+    i2c_master_write_byte(cmd, data, ACK_CHECK_EN);
+    i2c_master_stop(cmd);
+
+    // send to sensor
+    ret = i2c_master_cmd_begin(I2C_MASTER_NUM, cmd, 1000 / portTICK_PERIOD_MS);
+    // end transmission
+    i2c_cmd_link_delete(cmd);
+
+    // Process data if OK
+    if (ret == ESP_OK) {
+    } else {
+        ESP_LOGE(TAG, "Failed to send data!");
+    }
+    return ret;
+}
 
 
 
+/**
+ * @brief Read Data to gyro sensor
+ */
+static esp_err_t read_gyro(int16_t *x,int16_t *y,int16_t *z) {
+    uint8_t sensor_data[6];
+    esp_err_t ret;
+
+
+    // i2c_cmd_handle_t cmd = i2c_cmd_link_create();
+    // // Send read command
+    // cmd = i2c_cmd_link_create();
+    // // Read data from sensor
+    // i2c_master_start(cmd);
+    // i2c_master_write_byte(cmd, (SHTC3_SENSOR_ADDR << 1) | I2C_MASTER_READ, ACK_CHECK_EN);
+    // i2c_master_read(cmd, sensor_data, 6, I2C_MASTER_LAST_NACK); // Read 6 bytes data
+    // i2c_master_stop(cmd);
+
+    // // send and read from sensor
+    // ret = i2c_master_cmd_begin(I2C_MASTER_NUM, cmd, 1000 / portTICK_PERIOD_MS);
+    // // end transmission
+    // i2c_cmd_link_delete(cmd);
+
+    uint8_t reg_buff[] = {GYROX1};
+
+    ret = i2c_master_write_read_device(I2C_MASTER_WRITE, IMU_SENSOR_ADDR, reg_buff, sizeof(reg_buff), sensor_data, sizeof(sensor_data), 1000 / portTICK_PERIOD_MS);
+
+    // Process data if OK
+    if (ret == ESP_OK) {
+    } else {
+        ESP_LOGE(TAG, "Failed to read data!");
+    }
+
+    *x = (int16_t)((sensor_data[0] << 8) + sensor_data[1]);
+    *y = (int16_t)((sensor_data[2] << 8) + sensor_data[3]);
+    *z = (int16_t)((sensor_data[4] << 8) + sensor_data[5]);
+
+    return ret;
+}
 
 
 
@@ -123,63 +189,78 @@ void app_main(void)
     i2c_master_init();
 
     // Create ICM42670 sensor instance
-    icm42670_handle_t sensor = icm42670_create(I2C_MASTER_NUM, IMU_SENSOR_ADDR);
-    if (sensor == NULL) {
-        ESP_LOGI(TAG, "Failed to initialize ICM42670");
-        return;
-    }
-    vTaskDelay(pdMS_TO_TICKS(1000)); // Delay for 1 second
+    // icm42670_handle_t sensor = icm42670_create(I2C_MASTER_NUM, IMU_SENSOR_ADDR);
+    // if (sensor == NULL) {
+    //     ESP_LOGI(TAG, "Failed to initialize ICM42670");
+    //     return;
+    // }
+    // vTaskDelay(pdMS_TO_TICKS(1000)); // Delay for 1 second
 
     // Configure the ICM42670 sensor
-    icm42670_cfg_t icm_config = {
-        .gyro_fs = GYRO_FS_250DPS,
-        .gyro_odr = GYRO_ODR_1600HZ,
-        .acce_fs = ACCE_FS_2G,
-        .acce_odr = ACCE_ODR_1600HZ
-    };
-    while (icm42670_config(sensor, &icm_config) != ESP_OK){
-        vTaskDelay(pdMS_TO_TICKS(1000));
-        ESP_LOGE(TAG, "Failed to configure ICM42670");
-    }
+    // icm42670_cfg_t icm_config = {
+    //     .gyro_fs = GYRO_FS_250DPS,
+    //     .gyro_odr = GYRO_ODR_1600HZ,
+    //     .acce_fs = ACCE_FS_2G,
+    //     .acce_odr = ACCE_ODR_1600HZ
+    // };
+    // while (icm42670_config(sensor, &icm_config) != ESP_OK){
+    //     vTaskDelay(pdMS_TO_TICKS(1000));
+    //     ESP_LOGE(TAG, "Failed to configure ICM42670");
+    // }
     // if (icm42670_config(sensor, &icm_config) != ESP_OK) {
     //     ESP_LOGI(TAG, "Failed to configure ICM42670");
     //     return;
     // }
 
-    vTaskDelay(pdMS_TO_TICKS(1000)); // Delay for 1 second
+    // vTaskDelay(pdMS_TO_TICKS(1000)); // Delay for 1 second
 
-    // Set accelerometer power mode
-    while (icm42670_acce_set_pwr(sensor, ACCE_PWR_ON) != ESP_OK) {
-        ESP_LOGE(TAG, "Failed to set accelerometer power mode");
-        vTaskDelay(pdMS_TO_TICKS(1000));
-    }
+    // // Set accelerometer power mode
+    // while (icm42670_acce_set_pwr(sensor, ACCE_PWR_ON) != ESP_OK) {
+    //     ESP_LOGE(TAG, "Failed to set accelerometer power mode");
+    //     vTaskDelay(pdMS_TO_TICKS(1000));
+    // }
     // if (icm42670_acce_set_pwr(sensor, ACCE_PWR_ON) != ESP_OK) {
     //     ESP_LOGI(TAG, "Failed to set accelerometer power mode");
     //     return;
     // }
 
-    vTaskDelay(pdMS_TO_TICKS(1000)); // Delay for 1 second
+    // vTaskDelay(pdMS_TO_TICKS(1000)); // Delay for 1 second
 
-    // Set gyroscope power mode
-    while (icm42670_gyro_set_pwr(sensor, GYRO_PWR_STANDBY) != ESP_OK) {
-        vTaskDelay(pdMS_TO_TICKS(1000));
-        ESP_LOGE(TAG, "Failed to set gyroscope power mode");
-    }
+    // // Set gyroscope power mode
+    // while (icm42670_gyro_set_pwr(sensor, GYRO_PWR_STANDBY) != ESP_OK) {
+    //     vTaskDelay(pdMS_TO_TICKS(1000));
+    //     ESP_LOGE(TAG, "Failed to set gyroscope power mode");
+    // }
     // if (icm42670_gyro_set_pwr(sensor, GYRO_PWR_STANDBY) != ESP_OK) {
     //     ESP_LOGI(TAG, "Failed to set gyroscope power mode");
     //     return;
     // }
 
-    vTaskDelay(pdMS_TO_TICKS(1000)); // Delay for 1 second
+    // vTaskDelay(pdMS_TO_TICKS(1000)); // Delay for 1 second
 
-    icm42670_value_t acce_value;
-    icm42670_value_t gyro;
+    // icm42670_value_t acce_value;
+    // icm42670_value_t gyro;
+
+
+    // config sensor
+    write_gyro(POWER_MAN,POWER_SET);
+    write_gyro(GYRO_CONFIG,GYRO_SET);
+
+
+
+    int16_t gyroX = 0;
+    int16_t gyroY = 0;
+    int16_t gyroZ = 0;
+
+
+    
 
     printf("entering while loop\n");
     while (1) {
         
-
-        icm42670_get_gyro_value(sensor, &gyro);
+        read_gyro(&gyroX,&gyroY,&gyroZ);
+        printf("Gyro x, y, z: %d, %d, %d\n",gyroX,gyroY,gyroZ);
+        // icm42670_get_gyro_value(sensor, &gyro);
         // printf("Gyro x, y, z: %f, %f, %f\n",gyro.x,gyro.y,gyro.z);
         tiltEvent(gyro.x,gyro.y,gyro.z);
 

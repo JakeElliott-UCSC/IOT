@@ -150,7 +150,7 @@ static esp_err_t write_gyro(uint8_t reg, uint8_t data) {
 
 
 /**
- * @brief Send Data to gyro sensor
+ * @brief Read Data to gyro sensor
  */
 static esp_err_t read_gyro(int16_t *x,int16_t *y,int16_t *z) {
     uint8_t sensor_data[6];
@@ -281,14 +281,14 @@ void app_main(void)
     while (1) {
 
         read_gyro(&gyroX,&gyroY,&gyroZ);
-        printf("Gyro x, y, z: %d, %d, %d\n",gyroX,gyroY,gyroZ);
+        // printf("Gyro x, y, z: %d, %d, %d\n",gyroX,gyroY,gyroZ);
         // if (icm42670_get_gyro_value(sensor, &gyro) != ESP_OK ) {
         //     ESP_LOGE(TAG, "get gyro failed");
         // }
         // printf("Gyro x, y, z: %f, %f, %f\n",gyro.x,gyro.y,gyro.z);
-        // tiltEvent(gyro.x,gyro.y,gyro.z);
+        tiltEvent(gyroX,gyroY,gyroZ);
 
 
-        vTaskDelay(pdMS_TO_TICKS(1000)); // Delay for 1 second
+        vTaskDelay(pdMS_TO_TICKS(100)); // Delay for 1 second
     }
 }
