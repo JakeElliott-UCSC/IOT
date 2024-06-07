@@ -173,7 +173,7 @@ static esp_err_t read_gyro(int16_t *x,int16_t *y,int16_t *z) {
 
     uint8_t reg_buff[] = {GYROX1};
 
-    i2c_master_write_read_device(I2C_MASTER_WRITE, IMU_SENSOR_ADDR, reg_buff, sizeof(reg_buff), sensor_data, sizeof(sensor_data), 1000 / portTICK_PERIOD_MS);
+    ret = i2c_master_write_read_device(I2C_MASTER_WRITE, IMU_SENSOR_ADDR, reg_buff, sizeof(reg_buff), sensor_data, sizeof(sensor_data), 1000 / portTICK_PERIOD_MS);
 
     // Process data if OK
     if (ret == ESP_OK) {
