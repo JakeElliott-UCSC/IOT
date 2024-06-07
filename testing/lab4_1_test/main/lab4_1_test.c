@@ -120,7 +120,7 @@ void tiltEvent(float x, float y, float z){
 /**
  * @brief Send Data to gyro sensor
  */
-static esp_err_t write_gyro(char data) {
+static esp_err_t write_gyro(uint8_t reg, uint8_t data) {
     esp_err_t ret;
     i2c_cmd_handle_t cmd = i2c_cmd_link_create();
 
@@ -129,6 +129,7 @@ static esp_err_t write_gyro(char data) {
     cmd = i2c_cmd_link_create();
     i2c_master_start(cmd);
     i2c_master_write_byte(cmd, (IMU_SENSOR_ADDR << 1) | I2C_MASTER_WRITE, ACK_CHECK_EN);
+    i2c_master_write_byte(cmd, reg, ACK_CHECK_EN);
     i2c_master_write_byte(cmd, data, ACK_CHECK_EN);
     i2c_master_stop(cmd);
 
@@ -260,7 +261,7 @@ void app_main(void)
 
 
 
-
+    write_gyro(POWER_MAN,POWER_SET);
 
 
 
